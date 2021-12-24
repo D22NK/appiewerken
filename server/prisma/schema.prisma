@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Shifts {
+  id              String         @id @unique @default(uuid())
+  datum           DateTime
+  jaarWeek        String
+  dag             Dag
+  tijdslot        Tijdslots      @relation(fields: [tijdslotId], references: [id])
+  tijdslotId      String
+  urenGewerkt     Int
+  urenBetaald     Int
+  voltooid        Boolean
+  winkel          Winkels        @relation(fields: [winkelId], references: [id])
+  winkelId        String
+  uurloon         Uurlonen       @relation(fields: [uurloonId], references: [id])
+  uurloonId       String
+  feestdag        Boolean
+  betaalperiode   Betaalperiodes @relation(fields: [betaalperiodeId], references: [id])
+  betaalperiodeId String
+}
+
+model Betalingen {
+  id              String         @id @unique @default(uuid())
+  betaalPeriode   Betaalperiodes @relation(fields: [betaalPeriodeId], references: [id])
+  betaalPeriodeId String         @unique
+  bedrag          Float
+  ontvangstdatum  DateTime
+}
+
+model Betaalperiodes {
+  id                String      @id @unique @default(uuid())
+  startDatum        DateTime
+  eindDatum         DateTime
+  persoonlijkeBonus Boolean
+  winstuitkering    Boolean
+  slug              String      @unique
+  shifts            Shifts[]
+  betaling          Betalingen?
+}
+
+model Uurlonen {
+  id       String   @id @unique @default(uuid())
+  loon     Float
+  leeftijd Int
+  shifts   Shifts[]
+}
+
+model Winkels {
+  id       String   @id @unique @default(uuid())
+  winkelNr String   @unique
+  adres    String
+  shifts   Shifts[]
+}
+
+model Tijdslots {
+  id     String   @id @unique @default(uuid())
+  slot   String
+  begin  String
+  eind   String
+  uren   Int
+  shifts Shifts[]
+}
+
+enum Dag {
+  MAANDAG
+  DINSDAG
+  WOENSDAG
+  DONDERDAG
+  VRIJDAG
+  ZATERDAG
+  ZONDAG
+}
