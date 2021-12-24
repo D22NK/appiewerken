@@ -33,9 +33,13 @@ export default function Winkels() {
                 <CashIcon className=" w-6 text-sky-700" />
               </div>
               <div className="flex items-center w-full mr-4">
-                <h2 className="text-sky-700 font-bold ml-6 flex-1">
+                <h2 className="text-sky-700 font-bold ml-6">
                   € {uurloon.loon}
                 </h2>
+
+                <p className="text-slate-400 flex-1 ml-2">
+                  Shifts: {uurloon.shifts && uurloon.shifts.length}
+                </p>
                 <p className="text-slate-400">Leeftijd: {uurloon.leeftijd}</p>
               </div>
             </div>

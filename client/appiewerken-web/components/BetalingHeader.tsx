@@ -41,7 +41,9 @@ export default function BetalingHeader({ page }: any) {
         <Link href="/Betalingen/Periodes">
           <div
             className={` cursor-pointer font-semibold mx-2 hover:bg-sky-600 rounded-md px-2 py-0 hover:text-white ${
-              page === "Periodes" || page === "Nieuwe Periode"
+              page === "Periodes" ||
+              page === "Nieuwe Periode" ||
+              page === "Periode Infromatie"
                 ? "text-white bg-sky-700"
                 : "text-sky-700"
             }`}

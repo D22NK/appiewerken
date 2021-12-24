@@ -33,10 +33,14 @@ export default function Winkels() {
                 <OfficeBuildingIcon className=" w-6 text-sky-700" />
               </div>
               <div className="flex items-center w-full mr-4">
-                <h2 className="text-sky-700 font-bold ml-6 flex-1">
+                <h2 className="text-sky-700 font-bold ml-6">
                   {winkel.winkelNr}
                 </h2>
-                <p className="text-slate-400">{winkel.adres}</p>
+                <p className="text-slate-400 flex-1 ml-2">
+                  Shifts: {winkel.shifts && winkel.shifts.length}
+                </p>
+
+                <p className="text-slate-400"> {winkel.adres}</p>
               </div>
             </div>
           </Link>

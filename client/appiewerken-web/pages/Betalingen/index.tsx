@@ -11,7 +11,6 @@ export default function Betalingen() {
   async function getPeriodes() {
     try {
       const res = await axios.get("http://192.168.68.100:1213/betalingen");
-      //   winkels = res.data;
       setBetalingen(res.data);
     } catch (error) {
       console.error(error);
@@ -38,9 +37,14 @@ export default function Betalingen() {
                 <CurrencyEuroIcon className=" w-6 text-sky-700" />
               </div>
               <div className="flex items-center w-full mr-4">
-                <h2 className="text-sky-700 font-bold ml-6 flex-1">
+                <h2 className="text-sky-700 font-bold ml-6">
                   {betaling.bedrag}
                 </h2>
+                <p className="text-slate-400 flex-1 ml-2">
+                  Shifts:{" "}
+                  {betaling.betaalPeriode.shifts &&
+                    betaling.betaalPeriode.shifts.length}
+                </p>
                 <p className="text-slate-400">
                   {betaling.ontvangstdatum.replace("T00:00:00.000Z", "")}
                 </p>

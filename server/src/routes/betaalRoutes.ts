@@ -1,7 +1,7 @@
 import { Express, Request, Response } from "express";
 
 export default function betaalRoutes(prisma: any, app: Express) {
-  app.post("/betaalperiodes", async (req: Request, res: Response) => {
+  app.post("/periodes", async (req: Request, res: Response) => {
     try {
       const periode = await prisma.betaalperiodes.create({
         data: {
@@ -22,9 +22,31 @@ export default function betaalRoutes(prisma: any, app: Express) {
 
   app.get("/periodes", async (req: Request, res: Response) => {
     try {
-      const periodes = await prisma.betaalperiodes.findMany();
+      const periodes = await prisma.betaalperiodes.findMany({
+        include: {
+          shifts: true,
+        },
+      });
       console.log("periodes", periodes);
       res.json(periodes);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
+
+  app.get("/periode/:id", async (req: Request, res: Response) => {
+    try {
+      const periode = await prisma.betaalperiodes.findUnique({
+        where: {
+          id: req.params.id,
+        },
+        include: {
+          shifts: true,
+        },
+      });
+      console.log("periode", periode);
+      res.json(periode);
     } catch (error) {
       console.log(error);
       res.sendStatus(500);
@@ -53,7 +75,11 @@ export default function betaalRoutes(prisma: any, app: Express) {
     try {
       const betalingen = await prisma.betalingen.findMany({
         include: {
-          betaalPeriode: true,
+          betaalPeriode: {
+            include: {
+              shifts: true,
+            },
+          },
         },
       });
       console.log("betalingen", betalingen);
@@ -71,7 +97,11 @@ export default function betaalRoutes(prisma: any, app: Express) {
           id: req.params.id,
         },
         include: {
-          betaalPeriode: true,
+          betaalPeriode: {
+            include: {
+              shifts: true,
+            },
+          },
         },
       });
       console.log("betaling", betaling);
