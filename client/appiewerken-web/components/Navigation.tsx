@@ -52,6 +52,12 @@ export default function Navigation({ extramenu }: any) {
                 Overig
               </div>
             </Link>
+
+            <Link href="/Shiftfollower">
+              <div className="cursor-pointer rounded-md p-1 text-sky-100 font-semibold hover:text-sky-800 mr-4">
+                Shiftfollower
+              </div>
+            </Link>
           </div>
         </div>
 
@@ -59,7 +65,38 @@ export default function Navigation({ extramenu }: any) {
         {extramenu}
 
         {mobileMenu && (
-          <div className="bg-red-500 w-screen h-16 md:hidden">MOBILE MENU</div>
+          <div className="bg-sky-300 w-screen  md:hidden p-4">
+            <Link href="/Dashboard">
+              <div className="cursor-pointer rounded-md p-1 text-sky-100 font-semibold hover:text-sky-800 mr-4 mb-2">
+                Dashboard
+              </div>
+            </Link>
+            <Link href="/Kalender">
+              <div className="cursor-pointer rounded-md p-1 text-sky-100 font-semibold hover:text-sky-800 mr-4 mb-2">
+                Kalender
+              </div>
+            </Link>
+            <Link href="/Shifts">
+              <div className="cursor-pointer rounded-md p-1 text-sky-100 font-semibold hover:text-sky-800 mr-4 mb-2">
+                Shifts
+              </div>
+            </Link>
+            <Link href="/Betalingen">
+              <div className="cursor-pointer rounded-md p-1 text-sky-100 font-semibold hover:text-sky-800 mr-4 mb-2">
+                Betalingen
+              </div>
+            </Link>
+            <Link href="/Overig">
+              <div className="cursor-pointer rounded-md p-1 text-sky-100 font-semibold hover:text-sky-800 mr-4 mb-2">
+                Overig
+              </div>
+            </Link>
+            <Link href="/Shiftfollower">
+              <div className="cursor-pointer rounded-md p-1 text-sky-100 font-semibold hover:text-sky-800 mr-4">
+                Shiftfollower
+              </div>
+            </Link>
+          </div>
         )}
       </nav>
     </>
