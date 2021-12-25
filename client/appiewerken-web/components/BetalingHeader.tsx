@@ -43,7 +43,7 @@ export default function BetalingHeader({ page }: any) {
             className={` cursor-pointer font-semibold mx-2 hover:bg-sky-600 rounded-md px-2 py-0 hover:text-white ${
               page === "Periodes" ||
               page === "Nieuwe Periode" ||
-              page === "Periode Infromatie"
+              page === "Periode Informatie"
                 ? "text-white bg-sky-700"
                 : "text-sky-700"
             }`}

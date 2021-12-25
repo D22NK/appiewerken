@@ -74,6 +74,11 @@ export default function betaalRoutes(prisma: any, app: Express) {
   app.get("/betalingen", async (req: Request, res: Response) => {
     try {
       const betalingen = await prisma.betalingen.findMany({
+        orderBy: [
+          {
+            ontvangstdatum: "desc",
+          },
+        ],
         include: {
           betaalPeriode: {
             include: {
