@@ -61,7 +61,7 @@ export default function WinkelDetails() {
       <div className="flex flex-col lg:flex-row ">
         <div
           key={betaling.id}
-          className="flex flex-col  items-center m-2 p-4 bg-slate-100  w-[100%] lg:w-max rounded-md  h-min"
+          className="flex flex-col  items-center mt-2 p-4 bg-slate-100  w-[100%] lg:w-max rounded-md  h-min"
         >
           {/* <div className="flex  flex-1 flex-row w-[100%] mb-2 border-b-2 border-b-slate-200 pb-2 ">
             <button
@@ -122,7 +122,7 @@ export default function WinkelDetails() {
           </div>
         </div>
 
-        <div className="flex-1 m-2 p-4 bg-slate-100 w-[100%] rounded-md ">
+        <div className="flex-1 mt-2 p-4 bg-slate-100 w-[100%] rounded-md lg:ml-2">
           <h1 className="text-xl font-bold text-sky-500">
             Shifts (
             {betaling.betaalPeriode &&
