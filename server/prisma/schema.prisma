@@ -17,8 +17,8 @@ model Shifts {
   dag             Dag
   tijdslot        Tijdslots      @relation(fields: [tijdslotId], references: [id])
   tijdslotId      String
-  urenGewerkt     Int
-  urenBetaald     Int
+  urenGewerkt     Float
+  urenBetaald     Float
   voltooid        Boolean
   winkel          Winkels        @relation(fields: [winkelId], references: [id])
   winkelId        String

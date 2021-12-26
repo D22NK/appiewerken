@@ -4,6 +4,8 @@ import winkelRoutes from "./winkelRoutes";
 import betaalRoutes from "./betaalRoutes";
 import uurloonRoutes from "./uurloonRoutes";
 import tijdslotRoutes from "./tijdslotRoutes";
+import shiftsRoutes from "./shiftsRoutes";
+import utilRoutes from "./utilRoutes";
 
 const prisma = new PrismaClient();
 
@@ -20,6 +22,8 @@ function routes(app: Express) {
   betaalRoutes(prisma, app);
   uurloonRoutes(prisma, app);
   tijdslotRoutes(prisma, app);
+  shiftsRoutes(prisma, app);
+  utilRoutes(prisma, app);
   app.use("*", (req: Request, res: Response) => {
     res.sendStatus(404);
   });

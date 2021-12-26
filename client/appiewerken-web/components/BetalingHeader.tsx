@@ -10,7 +10,7 @@ export default function BetalingHeader({ page }: any) {
 
         {page === "Betalingen" && (
           <Link href="/Betalingen/Nieuw">
-            <button className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md">
+            <button className="bg-sky-500 hover:border-sky-600 border-2 border-sky-500 hover:bg-transparent hover:text-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md">
               Nieuwe Betaling
             </button>
           </Link>

@@ -8,7 +8,7 @@ export default function Navigation({ extramenu }: any) {
 
   return (
     <>
-      <nav>
+      <nav className=" z-100">
         <div className="p-2 bg-sky-500 w-screen md:flex flex-row items-center grid grid-cols-3">
           <button
             className="block md:hidden rounded-md hover:bg-sky-600 justify-self-start "
@@ -65,7 +65,7 @@ export default function Navigation({ extramenu }: any) {
         {extramenu}
 
         {mobileMenu && (
-          <div className="bg-sky-300 w-screen  md:hidden p-4">
+          <div className="bg-sky-300 w-screen  md:hidden p-4 z-100">
             <Link href="/Dashboard">
               <div className="cursor-pointer rounded-md p-1 text-sky-100 font-semibold hover:text-sky-800 mr-4 mb-2">
                 Dashboard

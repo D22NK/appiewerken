@@ -1,25 +1,65 @@
-import MainLayout from "../../components/layouts/Main";
-import ShiftHeader from "../../components/ShiftHeader";
-export default function Shifts() {
-  const shifts = [
-    { Dag: "maandag", tijdslot: "17:00-19:00", voltooid: false },
-    { Dag: "dinsdag", tijdslot: "17:00-19:00", voltooid: true },
-  ];
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
-  const list = shifts.map((shift) => {
-    return (
-      <div>
-        <h1>{shift.Dag}</h1>
-        <h2>{shift.tijdslot}</h2>
-        <h3>{shift.voltooid && "Voltooid"}</h3>
-        <br />
-      </div>
-    );
-  });
+import MainLayout from "../../components/layouts/Main";
+import axios from "axios";
+import {
+  BriefcaseIcon,
+  OfficeBuildingIcon,
+  ClockIcon,
+  BadgeCheckIcon,
+} from "@heroicons/react/outline";
+import ShiftHeader from "../../components/ShiftHeader";
+import dateformatter from "../../functions/dateformatter";
+import dagformatter from "../../functions/dagformatter";
+
+export default function Shifts() {
+  const [shifts, setShifts] = useState<any>([]);
+  //   let winkels: any = [];
+  async function getShifts() {
+    try {
+      const res = await axios.get("http://192.168.68.100:1213/shifts");
+      //   winkels = res.data;
+      setShifts(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    getShifts();
+  }, []);
+
   return (
     <MainLayout parentPage="Shifts">
-      <ShiftHeader page="Alle" />
-      {list}
+      <ShiftHeader page="Alle Shifts" />
+      {shifts.map((shift: any) => {
+        return (
+          <Link key={shift.id} href={"/Shifts/" + shift.id}>
+            <div className="cursor-pointer flex flex-row ml-2 mt-4 bg-slate-100  sm:w-[100%] xl:w-[75%] rounded-md hover:bg-transparent border-slate-200 border-2 hover:border-slate-200">
+              <div className="bg-sky-500 p-4 rounded-md bg-100 bg-opacity-25">
+                <BriefcaseIcon className=" w-6 text-sky-700" />
+              </div>
+              <div className="flex items-center w-full mr-4">
+                <h2 className="text-sky-700 font-bold ml-6">
+                  {dagformatter(shift.dag)} &middot;{" "}
+                  {dateformatter(shift.datum.replace("T00:00:00.000Z", ""))}
+                </h2>
+                <p className="text-slate-400 flex-1  flex flex-row ml-2">
+                  <ClockIcon className="w-4" /> {shift.tijdslot.slot}
+                </p>
+                <p className="text-slate-400 flex flex-row">
+                  {" "}
+                  <OfficeBuildingIcon className="w-4" /> {shift.winkel.winkelNr}
+                </p>
+                {shift.voltooid && (
+                  <BadgeCheckIcon className="ml-4 w-4 text-violet-500" />
+                )}
+              </div>
+            </div>
+          </Link>
+        );
+      })}
     </MainLayout>
   );
 }

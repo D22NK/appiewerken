@@ -13,12 +13,14 @@ import ShiftHeader from "../../components/ShiftHeader";
 import dateformatter from "../../functions/dateformatter";
 import dagformatter from "../../functions/dagformatter";
 
-export default function VoltooideShifts() {
+export default function OnvoltooideShifts() {
   const [shifts, setShifts] = useState<any>([]);
   //   let winkels: any = [];
   async function getShifts() {
     try {
-      const res = await axios.get("http://192.168.68.100:1213/shifts/voltooid");
+      const res = await axios.get(
+        "http://192.168.68.100:1213/shifts/onvoltooid"
+      );
       //   winkels = res.data;
       setShifts(res.data);
     } catch (error) {
@@ -32,7 +34,7 @@ export default function VoltooideShifts() {
 
   return (
     <MainLayout parentPage="Shifts">
-      <ShiftHeader page="Voltooide Shifts" />
+      <ShiftHeader page="Onvoltooide Shifts" />
       {shifts.map((shift: any) => {
         return (
           <Link key={shift.id} href={"/Shifts/" + shift.id}>

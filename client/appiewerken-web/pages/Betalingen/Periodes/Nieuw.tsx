@@ -92,7 +92,6 @@ export default function NieuweWinkel() {
                 className="form-checkbox"
                 checked={persoonlijkebonus}
                 onChange={() => {
-                  console.log(!persoonlijkebonus);
                   setPersoonlijkebonus(!persoonlijkebonus);
                 }}
               />

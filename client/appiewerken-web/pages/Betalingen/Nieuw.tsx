@@ -86,7 +86,6 @@ export default function NieuweWinkel() {
           <div className="relative inline-block w-full text-gray-700 mb-4">
             <select
               className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
-              placeholder="Regular input"
               name="periode"
               onChange={(e) => setPeriode(e.target.value)}
             >

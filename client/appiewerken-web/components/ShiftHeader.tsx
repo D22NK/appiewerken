@@ -8,7 +8,7 @@ export default function ShiftHeader({ page }: any) {
           Shifts &middot; {page}
         </h1>
         <Link href="/Shifts/Nieuw">
-          <button className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md">
+          <button className="bg-sky-500 hover:border-sky-600 border-2 border-sky-500 hover:bg-transparent hover:text-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md">
             Nieuwe Shift
           </button>
         </Link>
@@ -23,15 +23,13 @@ export default function ShiftHeader({ page }: any) {
             Alle
           </div>
         </Link>
-        <Link href="/Shifts/Niet-voltooid">
+        <Link href="/Shifts/Onvoltooid">
           <div
             className={` cursor-pointer font-semibold mx-2 hover:bg-sky-600 rounded-md px-2 py-0 hover:text-white ${
-              page === "Niet Voltooid"
-                ? "text-white bg-sky-700"
-                : "text-sky-700"
+              page === "Onvoltooid" ? "text-white bg-sky-700" : "text-sky-700"
             }`}
           >
-            Niet voltooid
+            Onvoltooid
           </div>
         </Link>
         <Link href="/Shifts/Voltooid">
