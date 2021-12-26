@@ -9,7 +9,7 @@ export default function OverigHeader({ page }: any) {
         </h1>
         {page === "Winkels" && (
           <Link href="/Overig/Winkels/Nieuw">
-            <button className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md">
+            <button className="bg-sky-500 hover:border-sky-600 border-2 border-sky-500 hover:bg-transparent hover:text-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md">
               Nieuwe Winkel
             </button>
           </Link>
@@ -17,7 +17,7 @@ export default function OverigHeader({ page }: any) {
 
         {page === "Uurlonen" && (
           <Link href="/Overig/Uurlonen/Nieuw">
-            <button className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md">
+            <button className="bg-sky-500 hover:border-sky-600 border-2 border-sky-500 hover:bg-transparent hover:text-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md">
               Nieuw Uurloon
             </button>
           </Link>
@@ -25,7 +25,7 @@ export default function OverigHeader({ page }: any) {
 
         {page === "Tijdslots" && (
           <Link href="/Overig/Tijdslots/Nieuw">
-            <button className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md">
+            <button className="bg-sky-500 hover:border-sky-600 border-2 border-sky-500 hover:bg-transparent hover:text-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md">
               Nieuw Tijdslot
             </button>
           </Link>

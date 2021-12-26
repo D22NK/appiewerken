@@ -28,7 +28,7 @@ export default function Winkels() {
       {winkels.reverse().map((winkel: any) => {
         return (
           <Link key={winkel.id} href={"/Overig/Winkels/" + winkel.id}>
-            <div className="cursor-pointer flex flex-row ml-2 mt-4 bg-slate-100  sm:w-[100%] xl:w-[75%] rounded-md hover:bg-slate-200">
+            <div className="cursor-pointer flex flex-row ml-2 mt-4 bg-slate-100  sm:w-[100%] xl:w-[75%] rounded-md hover:bg-transparent border-slate-200 border-2 hover:border-slate-200">
               <div className="bg-sky-500 p-4 rounded-md bg-100 bg-opacity-25">
                 <OfficeBuildingIcon className=" w-6 text-sky-700" />
               </div>

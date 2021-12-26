@@ -1,6 +1,8 @@
 self.addEventListener("push", function onPush(event) {
   event.waitUntil(
-    self.registration.showNotification(event.data.text(), {
+    self.registration.showNotification(JSON.parse(event.data.text()).title, {
+      body: JSON.parse(event.data.text()).body,
+      title: JSON.parse(event.data.text()).title,
       icon: "https://static.ah.nl/ah-static/images/logo-ah.png",
       actions: [{ action: "shifts", title: "Alle Shifts" }],
     })
