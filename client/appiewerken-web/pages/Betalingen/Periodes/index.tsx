@@ -14,7 +14,7 @@ export default function Periodes() {
   //   let winkels: any = [];
   async function getPeriodes() {
     try {
-      const res = await axios.get("http://localhost:1213/periodes");
+      const res = await axios.get("http://192.168.68.100:1213/periodes");
       //   winkels = res.data;
       setPeriodes(res.data);
     } catch (error) {

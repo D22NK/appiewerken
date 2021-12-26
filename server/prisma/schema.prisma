@@ -64,10 +64,10 @@ model Winkels {
 
 model Tijdslots {
   id     String   @id @unique @default(uuid())
-  slot   String
+  slot   String   @unique
   begin  String
   eind   String
-  uren   Int
+  uren   Float
   shifts Shifts[]
 }
 

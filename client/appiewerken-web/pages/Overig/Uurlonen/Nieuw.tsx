@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import MainLayout from "../../../components/layouts/Main";
 import axios from "axios";
 import OverigHeader from "../../../components/OverigHeader";
-export default function NieuweWinkel() {
+export default function NieuwUurloon() {
   const [leeftijd, setLeeftijd] = useState<Number>();
   const [uurloon, setUurloon] = useState<Number>();
   const [bericht, setBericht] = useState("");
@@ -13,7 +13,7 @@ export default function NieuweWinkel() {
     setBericht("");
     console.log(uurloon, leeftijd);
     axios
-      .post("http://localhost:1213/uurlonen", {
+      .post("http://192.168.68.100:1213/uurlonen", {
         leeftijd: leeftijd,
         uurloon: uurloon,
       })

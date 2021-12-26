@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Tijdslots" ALTER COLUMN "uren" SET DATA TYPE DOUBLE PRECISION;

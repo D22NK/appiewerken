@@ -4,26 +4,31 @@ import { useRouter } from "next/router";
 import MainLayout from "../../../components/layouts/Main";
 import axios from "axios";
 import OverigHeader from "../../../components/OverigHeader";
-export default function NieuweWinkel() {
-  const [winkelnummer, setWinkelnummer] = useState<String>();
-  const [bericht, setBericht] = useState("");
-  const [adres, setAdres] = useState<String>();
-  const router = useRouter();
-  function createWinkel() {
-    setBericht("");
+export default function NieuwTijdslot() {
+  const [begin, setBegin] = useState<String>("");
+  const [eind, setEind] = useState<String>("");
+  const [uren, setUren] = useState<Number>();
 
+  const [bericht, setBericht] = useState<String>("");
+
+  const router = useRouter();
+  function createTijdslot() {
+    setBericht("");
+    console.log(uren);
     axios
-      .post("http://192.168.68.100:1213/Winkels", {
-        winkelnummer: winkelnummer,
-        adres: adres,
+      .post("http://192.168.68.100:1213/tijdslots", {
+        begin: begin,
+        eind: eind,
+        uren: uren,
+        slot: begin + "-" + eind,
       })
       .then(function (response) {
         if (response.status === 200) {
-          setBericht("Winkel toegevoegd");
+          setBericht("Tijdslot toegevoegd");
 
           setTimeout(() => {
-            router.push("/Overig/Winkels");
-          }, 1500);
+            router.push("/Overig/Tijdslots");
+          }, 1000);
         } else if (response.status === 500) {
           setBericht("Er ging iets mis");
         }
@@ -36,7 +41,7 @@ export default function NieuweWinkel() {
   return (
     <>
       <MainLayout parentPage="Overig">
-        <OverigHeader page="Nieuwe Winkel" />
+        <OverigHeader page="Nieuw Tijdslot" />
 
         <div className="w-[50%] ml-2 mt-4">
           {bericht !== "" && (
@@ -44,33 +49,37 @@ export default function NieuweWinkel() {
               <p>{bericht}</p>
             </div>
           )}
-          <label
-            className="mb-4 font-semibold text-sky-500"
-            htmlFor="winkelnummer"
-          >
-            Winkelnummer:
+          <label className="mb-4 font-semibold text-sky-500" htmlFor="begin">
+            Begin:
           </label>
           <input
             className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
             type="text"
-            name="winkelnummer"
-            placeholder="xxxx"
-            onChange={(e) => setWinkelnummer(e.target.value)}
+            name="begin"
+            onChange={(e) => setBegin(e.target.value)}
           />
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="adres">
-            Adres:
+          <label className="mb-4 font-semibold text-sky-500" htmlFor="eind">
+            Eind:
           </label>
           <input
             className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
             type="text"
-            name="adres"
-            placeholder="Melkweg 1, De Maan"
-            onChange={(e) => setAdres(e.target.value)}
+            name="eind"
+            onChange={(e) => setEind(e.target.value)}
+          />
+          <label className="mb-4 font-semibold text-sky-500" htmlFor="uren">
+            Uren:
+          </label>
+          <input
+            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+            type="number"
+            name="uren"
+            onChange={(e) => setUren(parseFloat(e.target.value))}
           />
 
           <div className="flex  flex-1 flex-row-reverse">
             <button
-              onClick={() => createWinkel()}
+              onClick={() => createTijdslot()}
               className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs px-2 py-2  rounded-md w-[50%]"
             >
               Aanmaken

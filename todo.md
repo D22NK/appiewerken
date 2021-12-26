@@ -1,18 +1,5 @@
 # Todo
 
--Alle hover effecten
--Dashboard
--Statistieken
--Betaling details
--Shifts
--uurlonen + details
--winkels editen
--kalender pagina
--tijdslots + details
--winkel details pagina
--betaal periode details
--server routes overzichtelijk maken
--alle server routes trycatch maken
--error handling server side
--error handling client side
--server side rendering
+https://trello.com/b/ookjVup7/appiewerken
+
+https://lucid.app/lucidchart/244661e0-f899-43af-8bae-8de618ca2030/edit?from_docslist=true

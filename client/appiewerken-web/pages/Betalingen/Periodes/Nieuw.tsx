@@ -18,7 +18,7 @@ export default function NieuweWinkel() {
     setBericht("");
 
     axios
-      .post("http://localhost:1213/periodes", {
+      .post("http://192.168.68.100:1213/periodes", {
         start: startdatum,
         eind: einddatum,
         persoonlijkebonus: persoonlijkebonus,

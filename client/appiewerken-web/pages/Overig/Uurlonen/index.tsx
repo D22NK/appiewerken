@@ -5,12 +5,12 @@ import MainLayout from "../../../components/layouts/Main";
 import axios from "axios";
 import { CashIcon } from "@heroicons/react/outline";
 import OverigHeader from "../../../components/OverigHeader";
-export default function Winkels() {
+export default function Uurlonen() {
   const [uurlonen, setUurlonen] = useState<any>([]);
   //   let winkels: any = [];
   async function getUurlonen() {
     try {
-      const res = await axios.get("http://localhost:1213/uurlonen");
+      const res = await axios.get("http://192.168.68.100:1213/uurlonen");
       //   winkels = res.data;
       setUurlonen(res.data);
     } catch (error) {

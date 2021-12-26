@@ -5,7 +5,7 @@ export default function OverigHeader({ page }: any) {
     <>
       <div className="flex flex-row mb-2">
         <h1 className="flex-1 text-2xl font-bold text-sky-500">
-          Shifts &middot; {page}
+          Overig &middot; {page}
         </h1>
         {page === "Winkels" && (
           <Link href="/Overig/Winkels/Nieuw">
@@ -19,6 +19,14 @@ export default function OverigHeader({ page }: any) {
           <Link href="/Overig/Uurlonen/Nieuw">
             <button className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md">
               Nieuw Uurloon
+            </button>
+          </Link>
+        )}
+
+        {page === "Tijdslots" && (
+          <Link href="/Overig/Tijdslots/Nieuw">
+            <button className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md">
+              Nieuw Tijdslot
             </button>
           </Link>
         )}
@@ -52,10 +60,12 @@ export default function OverigHeader({ page }: any) {
           </div>
         </Link>
 
-        <Link href="/Overig/Winkels">
+        <Link href="/Overig/Tijdslots">
           <div
             className={`cursor-pointer font-semibold mx-2 hover:bg-sky-600 rounded-md px-2 py-0 hover:text-white ${
-              page === "Tijdslots" || page === "Nieuw Tijdslot"
+              page === "Tijdslots" ||
+              page === "Nieuw Tijdslot" ||
+              page === "Tijdslot Informatie"
                 ? "text-white bg-sky-700"
                 : "text-sky-700"
             }`}
