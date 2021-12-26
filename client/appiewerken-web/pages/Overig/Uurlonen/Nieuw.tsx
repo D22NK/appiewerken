@@ -13,7 +13,7 @@ export default function NieuweWinkel() {
     setBericht("");
     console.log(uurloon, leeftijd);
     axios
-      .post("http://192.168.68.100:1213/uurlonen", {
+      .post("http://localhost:1213/uurlonen", {
         leeftijd: leeftijd,
         uurloon: uurloon,
       })

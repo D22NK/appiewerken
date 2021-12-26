@@ -15,7 +15,7 @@ export default function NieuweWinkel() {
   //   let winkels: any = [];
   async function getPeriodes() {
     try {
-      const res = await axios.get("http://192.168.68.100:1213/periodes");
+      const res = await axios.get("http://localhost:1213/periodes");
       setPeriodes(res.data);
     } catch (error) {
       console.error(error);
@@ -30,7 +30,7 @@ export default function NieuweWinkel() {
 
     console.log("periode", periode);
     axios
-      .post("http://192.168.68.100:1213/betalingen", {
+      .post("http://localhost:1213/betalingen", {
         datum: ontvangstdatum,
         periode: periode,
         bedrag: bedrag,

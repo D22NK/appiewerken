@@ -20,7 +20,7 @@ export default function WinkelDetails() {
       const { id } = await router.query;
       console.log("id: ", router.query.id);
       if (id) {
-        const res = await axios.get(`http://192.168.68.100:1213/uurloon/${id}`);
+        const res = await axios.get(`http://localhost:1213/uurloon/${id}`);
         setUurloon(res.data);
       }
     } catch (error) {
@@ -36,7 +36,7 @@ export default function WinkelDetails() {
   //       console.log(answer);
   //       if (!answer) return;
   //       const { id } = await router.query;
-  //       const res = await axios.delete(`http://192.168.68.100:1213/uurloon/${id}`);
+  //       const res = await axios.delete(`http://localhost:1213/uurloon/${id}`);
   //       if (res.status === 200) {
   //         alert("winkel verwijderd");
 
