@@ -27,6 +27,7 @@ model Shifts {
   feestdag        Boolean
   betaalperiode   Betaalperiodes @relation(fields: [betaalperiodeId], references: [id])
   betaalperiodeId String
+  werknemer       String         @default("Daan")
 }
 
 model Betalingen {

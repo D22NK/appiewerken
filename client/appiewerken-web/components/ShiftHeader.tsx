@@ -37,7 +37,7 @@ export default function ShiftHeader({ page }: any) {
         <Link href="/Shifts/Voltooid">
           <div
             className={` cursor-pointer font-semibold mx-2 hover:bg-sky-600 rounded-md px-2 py-0 hover:text-white ${
-              page === "Voltooid Shifts"
+              page === "Voltooide Shifts"
                 ? "text-white bg-sky-700"
                 : "text-sky-700"
             }`}

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { MenuIcon, ChevronDownIcon } from "@heroicons/react/outline";
 import ChevronDown from "./Icons/ChevronDown";
-export default function Navigation({ extramenu }: any) {
+export default function Navigation() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [overigMenu, setOverigMenu] = useState(false);
 
@@ -60,9 +60,6 @@ export default function Navigation({ extramenu }: any) {
             </Link>
           </div>
         </div>
-
-        {/* <div className="bg-sky-300 w-screen px-48 py-2">{extramenu}</div> */}
-        {extramenu}
 
         {mobileMenu && (
           <div className="bg-sky-300 w-screen  md:hidden p-4 z-100">

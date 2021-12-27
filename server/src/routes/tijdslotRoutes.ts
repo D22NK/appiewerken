@@ -42,7 +42,12 @@ export default function tijdslotRoutes(prisma: any, app: Express) {
           id: req.params.id,
         },
         include: {
-          shifts: true,
+          shifts: {
+            include: {
+              winkel: true,
+              tijdslot: true,
+            },
+          },
         },
       });
       console.log("tijdslot", tijdslot);

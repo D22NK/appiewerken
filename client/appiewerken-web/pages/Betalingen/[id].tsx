@@ -12,7 +12,7 @@ import {
 } from "@heroicons/react/outline";
 import axios from "axios";
 import BetalingHeader from "../../components/BetalingHeader";
-
+import ShiftList from "../../components/shiftList";
 export default function WinkelDetails() {
   const router = useRouter();
   const [betaling, setBetaling] = useState<any>([]);
@@ -124,23 +124,7 @@ export default function WinkelDetails() {
             ):
           </h1>
           <div className="flex flex-col p-2">
-            <Link href="/Shifts">
-              <div className="w-[100%] bg-slate-300 rounded-md p-2 h-16 mb-2 hover:bg-slate-400">
-                Shift
-              </div>
-            </Link>
-
-            <Link href="/Shifts">
-              <div className="w-[100%] bg-slate-300 rounded-md p-2 h-16 mb-2 hover:bg-slate-400">
-                Shift
-              </div>
-            </Link>
-
-            <Link href="/Shifts">
-              <div className="w-[100%] bg-slate-300 rounded-md p-2 h-16 mb-2 hover:bg-slate-400">
-                Shift
-              </div>
-            </Link>
+            <ShiftList shifts={betaling.betaalPeriode?.shifts} />
           </div>
         </div>
       </div>

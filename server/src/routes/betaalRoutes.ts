@@ -47,7 +47,12 @@ export default function betaalRoutes(prisma: any, app: Express) {
           id: req.params.id,
         },
         include: {
-          shifts: true,
+          shifts: {
+            include: {
+              winkel: true,
+              tijdslot: true,
+            },
+          },
         },
       });
       console.log("periode", periode);
@@ -109,7 +114,12 @@ export default function betaalRoutes(prisma: any, app: Express) {
         include: {
           betaalPeriode: {
             include: {
-              shifts: true,
+              shifts: {
+                include: {
+                  winkel: true,
+                  tijdslot: true,
+                },
+              },
             },
           },
         },

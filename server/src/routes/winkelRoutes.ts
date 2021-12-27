@@ -17,7 +17,12 @@ export default function winkelRoutes(prisma: any, app: Express) {
         id: req.params.id,
       },
       include: {
-        shifts: true,
+        shifts: {
+          include: {
+            winkel: true,
+            tijdslot: true,
+          },
+        },
       },
     });
     console.log("winkel", winkel);

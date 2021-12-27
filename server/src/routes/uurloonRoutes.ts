@@ -40,7 +40,12 @@ export default function uurloonRoutes(prisma: any, app: Express) {
           id: req.params.id,
         },
         include: {
-          shifts: true,
+          shifts: {
+            include: {
+              winkel: true,
+              tijdslot: true,
+            },
+          },
         },
       });
       console.log("uurloon", uurloon);

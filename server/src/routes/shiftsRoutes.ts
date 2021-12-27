@@ -1,9 +1,8 @@
 import { Express, Request, Response } from "express";
-
+import notify from "../utils/notify";
 export default function shiftsRoutes(prisma: any, app: Express) {
   app.post("/shifts", async (req: Request, res: Response) => {
     try {
-      console.log(req.body);
       const shift = await prisma.shifts.create({
         data: {
           datum: req.body.datum + "T00:00:00.000Z",
@@ -18,8 +17,16 @@ export default function shiftsRoutes(prisma: any, app: Express) {
           feestdag: req.body.feestdag,
           betaalperiodeId: req.body.betaalperiodeId,
         },
+        include: {
+          tijdslot: true,
+        },
       });
       console.log(shift);
+      notify(
+        `1 nieuwe shift voor Daan op ${req.body.datum} van ${
+          shift.tijdslot.slot.split("-")[0]
+        } tot ${shift.tijdslot.slot.split("-")[1]} `
+      );
       res.sendStatus(200);
     } catch (error) {
       console.log(error);
@@ -96,6 +103,27 @@ export default function shiftsRoutes(prisma: any, app: Express) {
       });
       console.log("shifts", shifts);
       res.json(shifts);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
+
+  app.get("/shift/:id", async (req: Request, res: Response) => {
+    try {
+      const shift = await prisma.shifts.findUnique({
+        where: {
+          id: req.params.id,
+        },
+        include: {
+          winkel: true,
+          tijdslot: true,
+          betaalperiode: true,
+          uurloon: true,
+        },
+      });
+      console.log("shift", shift);
+      res.json(shift);
     } catch (error) {
       console.log(error);
       res.sendStatus(500);

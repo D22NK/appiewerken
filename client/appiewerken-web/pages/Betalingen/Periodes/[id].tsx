@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import dateformatter from "../../../functions/dateformatter";
-
+import ShiftList from "../../../components/shiftList";
 import MainLayout from "../../../components/layouts/Main";
 import {
   TrashIcon,
@@ -59,7 +59,7 @@ export default function PeriodeDetails() {
       <div className="flex flex-col lg:flex-row ">
         <div
           key={periode.id}
-          className="flex flex-col  items-center m-2 p-4 bg-slate-100  w-[100%] lg:w-max rounded-md  h-min"
+          className="flex flex-col  items-center my-2 md:m-2 p-4 bg-slate-100  w-[100%] lg:w-max rounded-md  h-min"
         >
           {/* <div className="flex  flex-1 flex-row w-[100%] mb-2 border-b-2 border-b-slate-200 pb-2 ">
             <button
@@ -106,28 +106,12 @@ export default function PeriodeDetails() {
           </div>
         </div>
 
-        <div className="flex-1 m-2 p-4 bg-slate-100 w-[100%] rounded-md ">
+        <div className="flex-1 my-2 md:m-2 p-4 bg-slate-100 w-[100%] rounded-md ">
           <h1 className="text-xl font-bold text-sky-500">
             Shifts ({periode.shifts && periode.shifts.length}):
           </h1>
           <div className="flex flex-col p-2">
-            <Link href="/Shifts">
-              <div className="w-[100%] bg-slate-300 rounded-md p-2 h-16 mb-2 hover:bg-slate-400">
-                Shift
-              </div>
-            </Link>
-
-            <Link href="/Shifts">
-              <div className="w-[100%] bg-slate-300 rounded-md p-2 h-16 mb-2 hover:bg-slate-400">
-                Shift
-              </div>
-            </Link>
-
-            <Link href="/Shifts">
-              <div className="w-[100%] bg-slate-300 rounded-md p-2 h-16 mb-2 hover:bg-slate-400">
-                Shift
-              </div>
-            </Link>
+            <ShiftList shifts={periode.shifts} />
           </div>
         </div>
       </div>

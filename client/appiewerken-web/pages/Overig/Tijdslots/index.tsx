@@ -29,7 +29,7 @@ export default function Tijdslots() {
         return (
           <>
             <Link key={tijdslot.id} href={"/Overig/Tijdslots/" + tijdslot.id}>
-              <div className="cursor-pointer flex flex-row ml-2 mt-4 bg-slate-100  sm:w-[100%] xl:w-[75%] rounded-md hover:bg-transparent border-slate-200 border-2 hover:border-slate-200">
+              <div className="cursor-pointer flex flex-row md:ml-2 mt-4 bg-slate-100  sm:w-[100%] xl:w-[75%] rounded-md hover:bg-transparent border-slate-200 border-2 hover:border-sky-400">
                 <div className="flex justify-center bg-sky-500 p-4 rounded-md bg-100 bg-opacity-25">
                   <ClockIcon className=" w-6 text-sky-700" />
                 </div>
