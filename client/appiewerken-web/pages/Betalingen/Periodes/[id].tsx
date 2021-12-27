@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import dateformatter from "../../../functions/dateformatter";
 
 import MainLayout from "../../../components/layouts/Main";
 import {
@@ -82,10 +83,12 @@ export default function PeriodeDetails() {
             <h2 className="text-sky-700 font-bold  flex-1">{periode.slug}</h2>
             <p className="text-slate-400">
               {periode.startDatum &&
-                periode.startDatum.replace("T00:00:00.000Z", "")}{" "}
+                dateformatter(
+                  periode.startDatum.replace("T00:00:00.000Z", "")
+                )}{" "}
               tot{" "}
               {periode.eindDatum &&
-                periode.eindDatum.replace("T00:00:00.000Z", "")}
+                dateformatter(periode.eindDatum.replace("T00:00:00.000Z", ""))}
             </p>
 
             <div className="flex flex-row">

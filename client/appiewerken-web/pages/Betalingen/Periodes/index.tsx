@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import dateformatter from "../../../functions/dateformatter";
 
 import MainLayout from "../../../components/layouts/Main";
 import axios from "axios";
@@ -7,6 +8,7 @@ import {
   CurrencyEuroIcon,
   ChartPieIcon,
   CalendarIcon,
+  BriefcaseIcon,
 } from "@heroicons/react/outline";
 import BetalingsHeader from "../../../components/BetalingHeader";
 export default function Periodes() {
@@ -34,38 +36,37 @@ export default function Periodes() {
           <p>Geen periodes gevonden!</p>
         </div>
       )}
-      {periodes.reverse().map((periode: any) => {
+      {periodes.map((periode: any) => {
         return (
-          <Link key={periode.id} href={"/Betalingen/Periodes/" + periode.id}>
-            <div className="cursor-pointer flex flex-row ml-2 mt-4 bg-slate-100  sm:w-[100%] xl:w-[75%] rounded-md hover:bg-slate-200">
-              <div className="bg-sky-500 p-4 rounded-md bg-100 bg-opacity-25">
-                <CalendarIcon className=" w-6 text-sky-700" />
+          <>
+            <Link key={periode.id} href={"/Betalingen/Periodes/" + periode.id}>
+              <div className="cursor-pointer flex flex-row ml-2 mt-4 bg-slate-100  sm:w-[100%] xl:w-[75%] rounded-md hover:bg-transparent border-slate-200 border-2 hover:border-slate-200">
+                <div className="flex justify-center bg-sky-500 p-4 rounded-md bg-100 bg-opacity-25">
+                  <CurrencyEuroIcon className=" w-6 text-sky-700" />
+                </div>
+                <div className="flex flex-col md:flex-row w-full ml-4 md:mr-4 p-2 md:items-center md:ml-0">
+                  <h2 className="text-sky-700 font-bold md:ml-6 flex flex-row">
+                    {dateformatter(periode.startDatum)} tot{" "}
+                    {dateformatter(periode.eindDatum)}
+                    {periode.persoonlijkeBonus && (
+                      <CurrencyEuroIcon className=" w-4 text-orange-500" />
+                    )}
+                    {periode.winstuitkering && (
+                      <ChartPieIcon className=" w-4 text-orange-500" />
+                    )}
+                  </h2>
+                  <p className="text-slate-400 flex-1 flex flex-row md:ml-2 md:items-center">
+                    <BriefcaseIcon className="w-4 mr-2 md:mr-0" /> Shifts:{" "}
+                    {periode.shifts && periode.shifts.length}
+                  </p>
+
+                  <p className="text-slate-400 flex flex-row items-center md:items-center">
+                    {periode.slug}
+                  </p>
+                </div>
               </div>
-              <div className="flex items-center w-full mr-4">
-                <h2 className="text-sky-700 font-bold ml-6">
-                  {periode.startDatum &&
-                    periode.startDatum.replace("T00:00:00.000Z", "")}{" "}
-                  tot{" "}
-                  {periode.eindDatum &&
-                    periode.eindDatum.replace("T00:00:00.000Z", "")}
-                </h2>
-                <p className="text-slate-400 flex-1 ml-2">
-                  Shifts: {periode.shifts && periode.shifts.length}
-                </p>
-                <p className="text-slate-400">{periode.slug}</p>
-                {periode.persoonlijkeBonus && (
-                  <div className="bg-transparent p-4 rounded-md bg-100 bg-opacity-25">
-                    <CurrencyEuroIcon className=" w-6 text-orange-500" />
-                  </div>
-                )}
-                {periode.winstuitkering && (
-                  <div className="bg-transparent p-4 rounded-md bg-100 bg-opacity-25">
-                    <ChartPieIcon className=" w-6 text-orange-500" />
-                  </div>
-                )}
-              </div>
-            </div>
-          </Link>
+            </Link>
+          </>
         );
       })}
     </MainLayout>

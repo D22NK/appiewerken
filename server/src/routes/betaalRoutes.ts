@@ -26,6 +26,11 @@ export default function betaalRoutes(prisma: any, app: Express) {
         include: {
           shifts: true,
         },
+        orderBy: [
+          {
+            startDatum: "desc",
+          },
+        ],
       });
       console.log("periodes", periodes);
       res.json(periodes);

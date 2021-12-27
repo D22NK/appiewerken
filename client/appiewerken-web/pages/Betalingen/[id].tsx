@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-
+import dateformatter from "../../functions/dateformatter";
 import MainLayout from "../../components/layouts/Main";
 import {
   OfficeBuildingIcon,
@@ -87,22 +87,15 @@ export default function WinkelDetails() {
             </h2>
             <p className="text-slate-400">
               {betaling.ontvangstdatum &&
-                betaling.ontvangstdatum.replace("T00:00:00.000Z", "")}
+                dateformatter(betaling.ontvangstdatum)}
             </p>
             {betaling.betaalPeriode && (
               <>
                 <p className="font-bold text-sky-500">Betaalperiode: </p>
                 <p className="text-slate-400">{betaling.betaalPeriode.slug}</p>
                 <p className="text-slate-400">
-                  {betaling.betaalPeriode.startDatum.replace(
-                    "T00:00:00.000Z",
-                    ""
-                  )}{" "}
-                  tot{" "}
-                  {betaling.betaalPeriode.eindDatum.replace(
-                    "T00:00:00.000Z",
-                    ""
-                  )}
+                  {dateformatter(betaling.betaalPeriode.startDatum)} tot{" "}
+                  {dateformatter(betaling.betaalPeriode.eindDatum)}
                 </p>
 
                 <div className="flex flex-row">
