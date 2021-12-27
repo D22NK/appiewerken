@@ -22,6 +22,11 @@ export default function winkelRoutes(prisma: any, app: Express) {
             winkel: true,
             tijdslot: true,
           },
+          orderBy: [
+            {
+              datum: "desc",
+            },
+          ],
         },
       },
     });

@@ -47,6 +47,11 @@ export default function tijdslotRoutes(prisma: any, app: Express) {
               winkel: true,
               tijdslot: true,
             },
+            orderBy: [
+              {
+                datum: "desc",
+              },
+            ],
           },
         },
       });

@@ -52,6 +52,11 @@ export default function betaalRoutes(prisma: any, app: Express) {
               winkel: true,
               tijdslot: true,
             },
+            orderBy: [
+              {
+                datum: "desc",
+              },
+            ],
           },
         },
       });
@@ -119,6 +124,11 @@ export default function betaalRoutes(prisma: any, app: Express) {
                   winkel: true,
                   tijdslot: true,
                 },
+                orderBy: [
+                  {
+                    datum: "desc",
+                  },
+                ],
               },
             },
           },
