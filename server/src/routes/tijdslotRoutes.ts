@@ -30,6 +30,9 @@ export default function tijdslotRoutes(prisma: any, app: Express) {
           {
             begin: "asc",
           },
+          {
+            eind: "asc",
+          },
         ],
       });
       console.log("periodes", tijdslots);
