@@ -29,7 +29,7 @@ model Shifts {
   betaalperiodeId String
   werknemer       String         @default("Daan")
   createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  updatedAt       DateTime       @default(now()) @updatedAt
 }
 
 model Betalingen {
@@ -39,7 +39,7 @@ model Betalingen {
   bedrag          Float
   ontvangstdatum  DateTime
   createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  updatedAt       DateTime       @default(now()) @updatedAt
 }
 
 model Betaalperiodes {
@@ -52,7 +52,7 @@ model Betaalperiodes {
   shifts            Shifts[]
   betaling          Betalingen?
   createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
+  updatedAt         DateTime    @default(now()) @updatedAt
 }
 
 model Uurlonen {
@@ -61,7 +61,7 @@ model Uurlonen {
   leeftijd  Int
   shifts    Shifts[]
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Winkels {
@@ -70,7 +70,8 @@ model Winkels {
   adres     String
   shifts    Shifts[]
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
+
 }
 
 model Tijdslots {
@@ -81,7 +82,7 @@ model Tijdslots {
   uren      Float
   shifts    Shifts[]
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 enum Dag {
