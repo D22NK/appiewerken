@@ -14,12 +14,12 @@ webpush.setVapidDetails(
 
 const pushSubscription = {
   endpoint:
-    "https://wns2-db5p.notify.windows.com/w/?token=BQYAAAAIbbP9KNDBvlU4DZEPCx23A29NvRyDpK94rfyDWn5XUWd6LWyVT%2fFEsPVDiOSBXbxIJaAij732TI3sCO4mMnjJTpyCQmEtDO7aMOYZVj1Izy%2bxXghNT2tbRsFze%2bdg%2f28bgsyewCEJRpmFd5OND7Lasim8z6c%2fZn38SLl%2bFSeu7tSQpzTxh8lGptN85VaibP3D1aS3Pgge6Lie6IXtACr7yD%2bqpx1S2YDARZVFoo6IGvDBKwx5fydALQIZ2FB13GN9mhYg0GpNzVBAc%2fq4BQ8mHUxOXKYcu9KSXafnqMWpXWiA4Fg%2fLcPyasGhA2IxqwwZFkJiSJ1yXnirjrd0irMS",
+    "https://fcm.googleapis.com/fcm/send/faC9BJ6Cq1g:APA91bEHATrU67eXnbVLTDZtymIR4VwQnEUSedFO48a9tDuDVZ7J1jmcj0m037vp_5FKB-p871rgnJEKIU4EC53SpTM6zPOdi74b82r7wllwnYO-eW2366kCAiH31r5XBWMUzIWxDYqh",
   expirationTime: null,
   keys: {
     p256dh:
-      "BIsbrGmo6SDywR_1S3iGAb2uv3nA2slCLtyQb0zkxyK5GstZZ0hzD6Zh2bSbIX5P-k7nf7lDCb6BZEjT2L3f6zI",
-    auth: "nBKu4MM1gM81pCb7eYMWXQ",
+      "BF7YhCgKb87ZC8Gryzt3V6fLFm-OadJeS8YQofZVlVPDQkXkjz7YsgtanAFO7M2Fxqf_BRB3vNctuBGG0cdud7w",
+    auth: "AiDScDE8CjkEgOX_8ahQhQ",
   },
 };
 
