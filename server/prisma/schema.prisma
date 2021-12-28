@@ -28,6 +28,8 @@ model Shifts {
   betaalperiode   Betaalperiodes @relation(fields: [betaalperiodeId], references: [id])
   betaalperiodeId String
   werknemer       String         @default("Daan")
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
 }
 
 model Betalingen {
@@ -36,6 +38,8 @@ model Betalingen {
   betaalPeriodeId String         @unique
   bedrag          Float
   ontvangstdatum  DateTime
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
 }
 
 model Betaalperiodes {
@@ -47,29 +51,37 @@ model Betaalperiodes {
   slug              String      @unique
   shifts            Shifts[]
   betaling          Betalingen?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
 }
 
 model Uurlonen {
-  id       String   @id @unique @default(uuid())
-  loon     Float
-  leeftijd Int
-  shifts   Shifts[]
+  id        String   @id @unique @default(uuid())
+  loon      Float
+  leeftijd  Int
+  shifts    Shifts[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Winkels {
-  id       String   @id @unique @default(uuid())
-  winkelNr String   @unique
-  adres    String
-  shifts   Shifts[]
+  id        String   @id @unique @default(uuid())
+  winkelNr  String   @unique
+  adres     String
+  shifts    Shifts[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Tijdslots {
-  id     String   @id @unique @default(uuid())
-  slot   String   @unique
-  begin  String
-  eind   String
-  uren   Float
-  shifts Shifts[]
+  id        String   @id @unique @default(uuid())
+  slot      String   @unique
+  begin     String
+  eind      String
+  uren      Float
+  shifts    Shifts[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Dag {
