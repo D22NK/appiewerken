@@ -26,6 +26,11 @@ export default function tijdslotRoutes(prisma: any, app: Express) {
         include: {
           shifts: true,
         },
+        orderBy: [
+          {
+            begin: "asc",
+          },
+        ],
       });
       console.log("periodes", tijdslots);
       res.json(tijdslots);
