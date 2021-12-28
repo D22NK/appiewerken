@@ -16,7 +16,7 @@ export default function Betalingen() {
   //   let winkels: any = [];
   async function getPeriodes() {
     try {
-      const res = await axios.get("http://192.168.68.100:1213/betalingen");
+      const res = await axios.get("https://ahwapi.d22nk.nl/betalingen");
       setBetalingen(res.data);
     } catch (error) {
       console.error(error);

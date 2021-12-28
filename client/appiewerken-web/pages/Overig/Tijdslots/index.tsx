@@ -10,7 +10,7 @@ export default function Tijdslots() {
   //   let winkels: any = [];
   async function getTijdslots() {
     try {
-      const res = await axios.get("http://192.168.68.100:1213/tijdslots");
+      const res = await axios.get("https://ahwapi.d22nk.nl/tijdslots");
       //   winkels = res.data;
       setTijdslots(res.data);
     } catch (error) {

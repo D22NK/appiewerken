@@ -18,9 +18,7 @@ export default function OnvoltooideShifts() {
   //   let winkels: any = [];
   async function getShifts() {
     try {
-      const res = await axios.get(
-        "http://192.168.68.100:1213/shifts/onvoltooid"
-      );
+      const res = await axios.get("https://ahwapi.d22nk.nl/shifts/onvoltooid");
       //   winkels = res.data;
       setShifts(res.data);
     } catch (error) {

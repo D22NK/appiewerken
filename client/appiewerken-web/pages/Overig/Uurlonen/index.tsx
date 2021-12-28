@@ -10,7 +10,7 @@ export default function Uurlonen() {
   //   let winkels: any = [];
   async function getUurlonen() {
     try {
-      const res = await axios.get("http://192.168.68.100:1213/uurlonen");
+      const res = await axios.get("https://ahwapi.d22nk.nl/uurlonen");
       //   winkels = res.data;
       setUurlonen(res.data);
     } catch (error) {

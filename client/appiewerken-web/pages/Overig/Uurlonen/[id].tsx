@@ -19,7 +19,7 @@ export default function UurloonDetails() {
       const { id } = await router.query;
       console.log("id: ", router.query.id);
       if (id) {
-        const res = await axios.get(`http://192.168.68.100:1213/uurloon/${id}`);
+        const res = await axios.get(`https://ahwapi.d22nk.nl/uurloon/${id}`);
         setUurloon(res.data);
       }
     } catch (error) {
@@ -35,7 +35,7 @@ export default function UurloonDetails() {
   //       console.log(answer);
   //       if (!answer) return;
   //       const { id } = await router.query;
-  //       const res = await axios.delete(`http://192.168.68.100:1213/uurloon/${id}`);
+  //       const res = await axios.delete(`https://ahwapi.d22nk.nl/uurloon/${id}`);
   //       if (res.status === 200) {
   //         alert("winkel verwijderd");
 

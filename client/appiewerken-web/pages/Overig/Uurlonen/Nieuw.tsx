@@ -13,7 +13,7 @@ export default function NieuwUurloon() {
     setBericht("");
     console.log(uurloon, leeftijd);
     axios
-      .post("http://192.168.68.100:1213/uurlonen", {
+      .post("https://ahwapi.d22nk.nl/uurlonen", {
         leeftijd: leeftijd,
         uurloon: uurloon,
       })

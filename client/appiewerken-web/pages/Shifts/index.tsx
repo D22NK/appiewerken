@@ -18,7 +18,7 @@ export default function Shifts() {
   //   let winkels: any = [];
   async function getShifts() {
     try {
-      const res = await axios.get("http://192.168.68.100:1213/shifts");
+      const res = await axios.get("https://ahwapi.d22nk.nl/shifts");
       //   winkels = res.data;
       setShifts(res.data);
     } catch (error) {

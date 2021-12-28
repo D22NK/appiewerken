@@ -14,7 +14,7 @@ export default function Winkels() {
   //   let winkels: any = [];
   async function getWinkels() {
     try {
-      const res = await axios.get("http://192.168.68.100:1213/Winkels");
+      const res = await axios.get("https://ahwapi.d22nk.nl/Winkels");
       //   winkels = res.data;
       setWinkels(res.data);
     } catch (error) {

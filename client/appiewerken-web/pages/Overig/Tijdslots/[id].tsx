@@ -24,9 +24,7 @@ export default function TijdslotDetails() {
       const { id } = await router.query;
       console.log("id: ", router.query.id);
       if (id) {
-        const res = await axios.get(
-          `http://192.168.68.100:1213/tijdslot/${id}`
-        );
+        const res = await axios.get(`https://ahwapi.d22nk.nl/tijdslot/${id}`);
         setTijdslot(res.data);
       }
     } catch (error) {

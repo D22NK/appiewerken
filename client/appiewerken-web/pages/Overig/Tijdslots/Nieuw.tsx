@@ -16,7 +16,7 @@ export default function NieuwTijdslot() {
     setBericht("");
     console.log(uren);
     axios
-      .post("http://192.168.68.100:1213/tijdslots", {
+      .post("https://ahwapi.d22nk.nl/tijdslots", {
         begin: begin,
         eind: eind,
         uren: uren,

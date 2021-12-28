@@ -13,7 +13,7 @@ export default function NieuweWinkel() {
     setBericht("");
 
     axios
-      .post("http://192.168.68.100:1213/Winkels", {
+      .post("https://ahwapi.d22nk.nl/Winkels", {
         winkelnummer: winkelnummer,
         adres: adres,
       })

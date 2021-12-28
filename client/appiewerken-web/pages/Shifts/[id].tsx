@@ -29,7 +29,7 @@ export default function ShiftDetails() {
       const { id } = await router.query;
       console.log("id: ", router.query.id);
       if (id) {
-        const res = await axios.get(`http://192.168.68.100:1213/shift/${id}`);
+        const res = await axios.get(`https://ahwapi.d22nk.nl/shift/${id}`);
         setShift(res.data);
       }
     } catch (error) {

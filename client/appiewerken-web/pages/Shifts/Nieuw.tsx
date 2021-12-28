@@ -24,7 +24,7 @@ export default function NieuweShift() {
 
   async function getFields() {
     try {
-      const res = await axios.get("http://192.168.68.100:1213/shiftfields");
+      const res = await axios.get("https://ahwapi.d22nk.nl/shiftfields");
       console.log(res.data);
       setFields(res.data);
     } catch (error) {
@@ -52,7 +52,7 @@ export default function NieuweShift() {
       betaalperiodeId: betaalperiode,
     });
     axios
-      .post("http://192.168.68.100:1213/shifts", {
+      .post("https://ahwapi.d22nk.nl/shifts", {
         datum: datum,
         jaarWeek: jaarweek,
         dag: dag,
