@@ -144,7 +144,7 @@ export default function betaalRoutes(prisma: any, app: Express) {
 
   app.get("/totaal", async (req: Request, res: Response) => {
     try {
-      const totaal = await prisma.betalingen.findMany({
+      const totaal = await prisma.betalingen.aggregate({
         _sum: {
           bedrag: true,
         },
