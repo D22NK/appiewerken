@@ -37,16 +37,6 @@ export default function tijdslotRoutes(prisma: any, app: Express) {
       });
       console.log("tijdslots", tijdslots);
 
-      tijdslots.sort((a: any, b: any) => {
-        if (a.slot < b.slot) {
-          return -1;
-        }
-        if (a.slot > b.slot) {
-          return 1;
-        }
-        return 0;
-      });
-
       res.json(tijdslots);
     } catch (error) {
       console.log(error);
