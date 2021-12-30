@@ -9,8 +9,8 @@ export default function Stats() {
   async function getWinkels() {
     try {
       const res = await axios.get("https://ahwapi.d22nk.nl/totaal");
-      console.log(res.data[0]._sum);
-      setTotaal(res.data[0]._sum);
+      console.log(res.data._sum);
+      setTotaal(res.data._sum.bedrag);
     } catch (error) {
       console.error(error);
     }

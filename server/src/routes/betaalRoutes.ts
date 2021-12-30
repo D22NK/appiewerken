@@ -141,19 +141,4 @@ export default function betaalRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
-
-  app.get("/totaal", async (req: Request, res: Response) => {
-    try {
-      const totaal = await prisma.betalingen.aggregate({
-        _sum: {
-          bedrag: true,
-        },
-      });
-      console.log("totaal", totaal);
-      res.json(totaal);
-    } catch (error) {
-      console.log(error);
-      res.sendStatus(500);
-    }
-  });
 }
