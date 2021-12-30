@@ -1,4 +1,5 @@
 import { Express, Request, Response } from "express";
+import { P } from "pino";
 
 export default function statRoutes(prisma: any, app: Express) {
   app.get("/totaal", async (req: Request, res: Response) => {
@@ -67,6 +68,22 @@ export default function statRoutes(prisma: any, app: Express) {
         ]);
 
       res.json({ totaal, totaal2020, totaal2021, totaal2022 });
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
+
+  app.get("/dagstats", async (req: Request, res: Response) => {
+    try {
+      const dagen = await prisma.shifts.groupBy({
+        by: ["dag"],
+        _count: {
+          dag: true,
+        },
+      });
+      console.log("dagen", dagen);
+      res.json(dagen);
     } catch (error) {
       console.log(error);
       res.sendStatus(500);
