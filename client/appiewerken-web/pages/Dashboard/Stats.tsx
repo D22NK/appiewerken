@@ -26,7 +26,7 @@ export default function Stats() {
 
   async function getDagstats() {
     try {
-      const res = await axios.get("http://192.168.68.100:1213/dagstats");
+      const res = await axios.get("https://ahwapi.d22nk.nl/dagstats");
       setDagstats(res.data);
     } catch (error) {
       console.error(error);
