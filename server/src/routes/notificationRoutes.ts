@@ -25,4 +25,13 @@ export default function notificationRoutes(prisma: any, app: Express) {
 
     res.json(subs);
   });
+
+  app.get("/test-all", async (req: Request, res: Response) => {
+    const subs = await prisma.notificationSubscribers.findMany();
+
+    subs.foreach((sub: any) => {
+      notify("Test", "Dit is een test melding", sub);
+    });
+    res.json(subs);
+  });
 }
