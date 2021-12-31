@@ -25,7 +25,7 @@ export default function shiftsRoutes(prisma: any, app: Express) {
 
       res.sendStatus(200);
 
-      if (req.body.voltooid) {
+      if (!req.body.voltooid) {
         const subs = await prisma.notificationSubscribers.findMany();
         subs.forEach((sub: any) => {
           notify(
