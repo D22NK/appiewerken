@@ -10,7 +10,6 @@ import statRoutes from "./statRoutes";
 import notificationRoutes from "./notificationRoutes";
 
 const prisma = new PrismaClient();
-
 function routes(app: Express) {
   app.options("*", (req: Request, res: Response) => {
     res.sendStatus(200);
