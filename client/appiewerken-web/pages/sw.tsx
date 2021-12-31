@@ -34,7 +34,7 @@ export default function sw() {
     <>
       <button onClick={() => subscribe()}>SUB</button>
       {sub}
-      {bericht}
+      <p>Bericht: {bericht} </p>
     </>
   );
 }
