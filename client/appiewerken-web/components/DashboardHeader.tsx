@@ -8,7 +8,7 @@ export default function DashboardHeader({ page }: any) {
           Dashboard &middot; {page}
         </h1>
       </div>
-      <div className="flex flex-row bg-slate-100 rounded-md p-2 items-center">
+      <div className=" flex flex-row bg-slate-100 rounded-md p-2 items-center">
         <Link href="/Dashboard">
           <div
             className={` cursor-pointer font-semibold mx-2 hover:bg-sky-600 rounded-md px-2 py-0 hover:text-white ${
@@ -18,7 +18,7 @@ export default function DashboardHeader({ page }: any) {
             Index
           </div>
         </Link>
-        <Link href="/Dashboard/Stats">
+        {/* <Link href="/Dashboard/Stats">
           <div
             className={` cursor-pointer font-semibold mx-2 hover:bg-sky-600 rounded-md px-2 py-0 hover:text-white ${
               page === "Statistieken" ? "text-white bg-sky-700" : "text-sky-700"
@@ -26,7 +26,7 @@ export default function DashboardHeader({ page }: any) {
           >
             Statistieken
           </div>
-        </Link>
+        </Link> */}
       </div>
     </>
   );

@@ -18,7 +18,7 @@ export default function Navigation() {
           </button>
 
           <div className="flex mx-8 place-self-center">
-            <Link href="/Dashboard">
+            <Link href="/">
               <img src="/ah.png" alt="" className="h-8" />
             </Link>
           </div>

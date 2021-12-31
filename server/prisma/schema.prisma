@@ -84,6 +84,12 @@ model Tijdslots {
   updatedAt DateTime @updatedAt
 }
 
+model NotificationSubscribers {
+  id     String @id @unique @default(uuid())
+  sub    Json
+  device String
+}
+
 enum Dag {
   MAANDAG
   DINSDAG

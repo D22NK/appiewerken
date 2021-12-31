@@ -7,6 +7,7 @@ import tijdslotRoutes from "./tijdslotRoutes";
 import shiftsRoutes from "./shiftsRoutes";
 import utilRoutes from "./utilRoutes";
 import statRoutes from "./statRoutes";
+import notificationRoutes from "./notificationRoutes";
 
 const prisma = new PrismaClient();
 
@@ -26,6 +27,7 @@ function routes(app: Express) {
   shiftsRoutes(prisma, app);
   utilRoutes(prisma, app);
   statRoutes(prisma, app);
+  notificationRoutes(prisma, app);
   app.use("*", (req: Request, res: Response) => {
     res.sendStatus(404);
   });
