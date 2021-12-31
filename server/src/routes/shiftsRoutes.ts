@@ -22,23 +22,21 @@ export default function shiftsRoutes(prisma: any, app: Express) {
         },
       });
       console.log(shift);
-      notify(
-        "Shifts",
-        `1 nieuwe shift voor Daan op ${req.body.datum} van ${
-          shift.tijdslot.slot.split("-")[0]
-        } tot ${shift.tijdslot.slot.split("-")[1]} `,
-        {
-          endpoint:
-            "https://fcm.googleapis.com/fcm/send/faC9BJ6Cq1g:APA91bEHATrU67eXnbVLTDZtymIR4VwQnEUSedFO48a9tDuDVZ7J1jmcj0m037vp_5FKB-p871rgnJEKIU4EC53SpTM6zPOdi74b82r7wllwnYO-eW2366kCAiH31r5XBWMUzIWxDYqh",
-          expirationTime: null,
-          keys: {
-            p256dh:
-              "BF7YhCgKb87ZC8Gryzt3V6fLFm-OadJeS8YQofZVlVPDQkXkjz7YsgtanAFO7M2Fxqf_BRB3vNctuBGG0cdud7w",
-            auth: "AiDScDE8CjkEgOX_8ahQhQ",
-          },
-        }
-      );
+
       res.sendStatus(200);
+
+      if (req.body.voltooid) {
+        const subs = await prisma.notificationSubscribers.findMany();
+        subs.forEach((sub: any) => {
+          notify(
+            "Shifts",
+            `1 nieuwe shift voor Daan op ${req.body.datum} van ${
+              shift.tijdslot.slot.split("-")[0]
+            } tot ${shift.tijdslot.slot.split("-")[1]} `,
+            JSON.parse(sub.sub)
+          );
+        });
+      }
     } catch (error) {
       console.log(error);
       res.sendStatus(500);

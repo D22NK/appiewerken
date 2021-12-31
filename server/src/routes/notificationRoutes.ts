@@ -27,10 +27,6 @@ export default function notificationRoutes(prisma: any, app: Express) {
 
   app.get("/test-all", async (req: Request, res: Response) => {
     const subs = await prisma.notificationSubscribers.findMany();
-    console.log(subs);
-    // [...subs.children].forEach((sub: any) => {
-    //   notify("Test", "Dit is een test melding", sub);
-    // });
 
     subs.forEach((sub: any) => {
       notify("Test", "Dit is een test melding", JSON.parse(sub.sub));
