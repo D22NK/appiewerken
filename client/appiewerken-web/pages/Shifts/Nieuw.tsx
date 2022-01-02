@@ -6,6 +6,8 @@ import axios from "axios";
 import Shift from "../../components/OverigHeader";
 import ShiftHeader from "../../components/ShiftHeader";
 import dateformatter from "../../functions/dateformatter";
+import getYear from "../../functions/getYear";
+import getWeekNumber from "../../functions/getWeekNumber";
 export default function NieuweShift() {
   const [fields, setFields] = useState<any>([]);
   const [datum, setDatum] = useState<String>();
@@ -35,6 +37,7 @@ export default function NieuweShift() {
 
   useEffect(() => {
     getFields();
+    setJaarweek(getYear() + "-" + getWeekNumber());
   }, []);
 
   function createShift() {
@@ -82,6 +85,17 @@ export default function NieuweShift() {
         console.log(error);
       });
   }
+
+  function tijdslotChange(e: any) {
+    const index = fields.tijdslots.findIndex(
+      (t: any) => t.id == e.target.value
+    );
+    console.log(fields.tijdslots[index].uren);
+    setUrengewerkt(fields.tijdslots[index].uren);
+    setUrenbetaald(fields.tijdslots[index].uren);
+
+    setTijdslot(e.target.value);
+  }
   return (
     <>
       <MainLayout parentPage="Shifts">
@@ -112,6 +126,7 @@ export default function NieuweShift() {
             type="text"
             name="jaarweek"
             onChange={(e) => setJaarweek(e.target.value)}
+            value={jaarweek}
           />
 
           <label className="mb-4 font-semibold text-sky-500" htmlFor="dag">
@@ -153,7 +168,7 @@ export default function NieuweShift() {
             <select
               className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
               name="tijdslot"
-              onChange={(e) => setTijdslot(e.target.value)}
+              onChange={(e) => tijdslotChange(e)}
             >
               <option selected disabled>
                 Kies tijdslot
@@ -278,6 +293,7 @@ export default function NieuweShift() {
             className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
             type="number"
             name="gewerkt"
+            value={urengewerkt}
             onChange={(e) => setUrengewerkt(parseFloat(e.target.value))}
           />
 
@@ -288,6 +304,7 @@ export default function NieuweShift() {
             className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
             type="number"
             name="betaald"
+            value={urenbetaald}
             onChange={(e) => setUrenbetaald(parseFloat(e.target.value))}
           />
 

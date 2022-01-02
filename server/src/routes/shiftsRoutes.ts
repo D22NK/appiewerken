@@ -97,7 +97,7 @@ export default function shiftsRoutes(prisma: any, app: Express) {
       const shifts = await prisma.shifts.findMany({
         orderBy: [
           {
-            datum: "desc",
+            datum: "asc",
           },
         ],
         include: {
