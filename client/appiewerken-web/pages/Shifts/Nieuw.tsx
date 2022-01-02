@@ -11,14 +11,14 @@ import getWeekNumber from "../../functions/getWeekNumber";
 export default function NieuweShift() {
   const [fields, setFields] = useState<any>([]);
   const [datum, setDatum] = useState<String>();
-  const [jaarweek, setJaarweek] = useState<String>();
+  const [jaarweek, setJaarweek] = useState<string>();
   const [dag, setDag] = useState<String>();
   const [tijdslot, setTijdslot] = useState<String>();
   const [winkel, setWinkel] = useState<String>();
   const [uurloon, setUurloon] = useState<String>();
   const [betaalperiode, setBetaalperiode] = useState<String>();
-  const [urengewerkt, setUrengewerkt] = useState<Number>();
-  const [urenbetaald, setUrenbetaald] = useState<Number>();
+  const [urengewerkt, setUrengewerkt] = useState<number>();
+  const [urenbetaald, setUrenbetaald] = useState<number>();
   const [voltooid, setVoltooid] = useState(false);
   const [feestdag, setFeestdag] = useState(false);
   const [bericht, setBericht] = useState<String>("");
