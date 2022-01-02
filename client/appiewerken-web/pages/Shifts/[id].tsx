@@ -43,7 +43,7 @@ export default function ShiftDetails() {
     const { id } = await router.query;
     if (id) {
       axios
-        .post("https://ahwapi.d22nk.nl/voltooid-shift", {
+        .post("https://ahwapi.d22nk.nl/voltooi-shift", {
           id: id,
         })
         .then(function (response) {
@@ -64,9 +64,39 @@ export default function ShiftDetails() {
     }
   }
 
+  async function onvoltooiShift() {
+    const { id } = await router.query;
+    if (id) {
+      axios
+        .post("https://ahwapi.d22nk.nl/onvoltooi-shift", {
+          id: id,
+        })
+        .then(function (response) {
+          if (response.status === 200) {
+            setBericht("Shift onvoltooid");
+
+            setTimeout(() => {
+              router.reload();
+            }, 1000);
+          } else if (response.status === 500) {
+            setBericht("Er ging iets mis");
+          }
+        })
+        .catch(function (error) {
+          setBericht("Er ging iets mis");
+          console.log(error);
+        });
+    }
+  }
+
   return (
     <MainLayout parentPage="Shifts">
       <ShiftHeader page="Shift Informatie" />
+      {bericht !== "" && (
+        <div className="w-[100%] bg-slate-300 rounded-md p-2  mb-2 hover:bg-slate-400">
+          <p>{bericht}</p>
+        </div>
+      )}
       <div className="w-[100%] flex flex-col items-center">
         <div className="flex flex-col  items-center justify-center my-2  p-4 bg-slate-300 w-[100%] md:w-[75%]  rounded-md  ">
           <div className="bg-sky-500 p-4  rounded-md bg-100 bg-opacity-25 w-min">
@@ -77,7 +107,13 @@ export default function ShiftDetails() {
               {shift.dag && dagformatter(shift.dag)} &middot;{" "}
               {shift.datum && dateformatter(shift.datum)}
               {shift.voltooid && (
-                <BadgeCheckIcon className="ml-4 w-4 text-violet-500" />
+                <button
+                  onClick={() => {
+                    onvoltooiShift();
+                  }}
+                >
+                  <BadgeCheckIcon className="ml-4 w-4 text-slate-100" />
+                </button>
               )}
               {!shift.voltooid && (
                 <button
