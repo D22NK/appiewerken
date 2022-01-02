@@ -36,10 +36,6 @@ export default function notify(title: any, body: any, sub: any, shiftid: any) {
       title: title,
       body: body,
       shiftid: shiftid,
-      actions: [
-        { action: "shift", title: "Bekijk" },
-        { action: "shifts", title: "Alle Shifts" },
-      ],
     })
   );
 }

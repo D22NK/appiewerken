@@ -3,8 +3,11 @@ self.addEventListener("push", function onPush(event) {
     self.registration.showNotification(JSON.parse(event.data.text()).title, {
       body: JSON.parse(event.data.text()).body,
       title: JSON.parse(event.data.text()).title,
-      icon: "https://static.ah.nl/ah-static/images/logo-ah.png",
-      actions: event.data.actions,
+      icon: "https://ahw.d22nk.nl/ah.png",
+      actions: [
+        { action: "shift", title: "Bekijk" },
+        { action: "shifts", title: "Alle Shifts" },
+      ],
     })
   );
 });
