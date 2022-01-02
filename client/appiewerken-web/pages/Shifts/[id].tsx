@@ -13,6 +13,7 @@ import {
   ClockIcon,
   LocationMarkerIcon,
   CurrencyEuroIcon,
+  SparklesIcon,
 } from "@heroicons/react/outline";
 import axios from "axios";
 import dateformatter from "../../functions/dateformatter";
@@ -106,13 +107,15 @@ export default function ShiftDetails() {
             <h2 className="text-sky-700 font-bold  flex-1 flex flex-row">
               {shift.dag && dagformatter(shift.dag)} &middot;{" "}
               {shift.datum && dateformatter(shift.datum)}
+            </h2>
+            <div className="flex flex-row">
               {shift.voltooid && (
                 <button
                   onClick={() => {
                     onvoltooiShift();
                   }}
                 >
-                  <BadgeCheckIcon className="ml-4 w-4 text-slate-100" />
+                  <BadgeCheckIcon className="ml-4 w-4 text-violet-400" />
                 </button>
               )}
               {!shift.voltooid && (
@@ -124,7 +127,10 @@ export default function ShiftDetails() {
                   <BadgeCheckIcon className="ml-4 w-4 text-slate-100" />
                 </button>
               )}
-            </h2>
+              {shift.feestdag && (
+                <SparklesIcon className="ml-4 w-4 text-amber-400" />
+              )}
+            </div>
             <p className="text-slate-400">{shift.tijdslot?.slot}</p>
           </div>
         </div>

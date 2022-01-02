@@ -8,6 +8,7 @@ import {
   OfficeBuildingIcon,
   ClockIcon,
   BadgeCheckIcon,
+  SparklesIcon,
 } from "@heroicons/react/outline";
 import ShiftHeader from "../../components/ShiftHeader";
 import dateformatter from "../../functions/dateformatter";
@@ -47,6 +48,9 @@ export default function Shifts() {
                     {dateformatter(shift.datum)}
                     {shift.voltooid && (
                       <BadgeCheckIcon className="ml-4 w-4 text-violet-500" />
+                    )}
+                    {shift.feestdag && (
+                      <SparklesIcon className="ml-4 w-4 text-amber-400" />
                     )}
                   </h2>
                   <p className="text-slate-400 flex-1 flex flex-row md:ml-2 md:items-center">
