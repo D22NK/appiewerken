@@ -20,6 +20,8 @@ import dagformatter from "../../functions/dagformatter";
 export default function ShiftDetails() {
   const router = useRouter();
   const [shift, setShift] = useState<any>([]);
+  const [bericht, setBericht] = useState<String>("");
+
   useEffect(() => {
     getShift();
   }, [router]);
@@ -37,6 +39,31 @@ export default function ShiftDetails() {
     }
   }
 
+  async function voltooiShift() {
+    const { id } = await router.query;
+    if (id) {
+      axios
+        .post("https://ahwapi.d22nk.nl/voltooid-shift", {
+          id: id,
+        })
+        .then(function (response) {
+          if (response.status === 200) {
+            setBericht("Shift voltooid");
+
+            setTimeout(() => {
+              router.reload();
+            }, 1000);
+          } else if (response.status === 500) {
+            setBericht("Er ging iets mis");
+          }
+        })
+        .catch(function (error) {
+          setBericht("Er ging iets mis");
+          console.log(error);
+        });
+    }
+  }
+
   return (
     <MainLayout parentPage="Shifts">
       <ShiftHeader page="Shift Informatie" />
@@ -51,6 +78,15 @@ export default function ShiftDetails() {
               {shift.datum && dateformatter(shift.datum)}
               {shift.voltooid && (
                 <BadgeCheckIcon className="ml-4 w-4 text-violet-500" />
+              )}
+              {!shift.voltooid && (
+                <button
+                  onClick={() => {
+                    voltooiShift();
+                  }}
+                >
+                  <BadgeCheckIcon className="ml-4 w-4 text-slate-100" />
+                </button>
               )}
             </h2>
             <p className="text-slate-400">{shift.tijdslot?.slot}</p>

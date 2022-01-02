@@ -138,4 +138,24 @@ export default function shiftsRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
+
+  app.post("/voltooi-shift", async (req: Request, res: Response) => {
+    try {
+      const shift = await prisma.shifts.update({
+        where: {
+          id: req.body.id,
+        },
+        data: {
+          voltooid: true,
+        },
+      });
+
+      if (shift) {
+        res.sendStatus(200);
+      }
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
 }
