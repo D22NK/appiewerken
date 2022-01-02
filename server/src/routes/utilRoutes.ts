@@ -5,9 +5,24 @@ export default function utilRoutes(prisma: any, app: Express) {
     try {
       const [tijdslots, uurlonen, betaalperiodes, winkels] =
         await prisma.$transaction([
-          prisma.tijdslots.findMany(),
+          prisma.tijdslots.findMany({
+            orderBy: [
+              {
+                begin: "asc",
+              },
+              {
+                eind: "asc",
+              },
+            ],
+          }),
           prisma.uurlonen.findMany(),
-          prisma.betaalperiodes.findMany(),
+          prisma.betaalperiodes.findMany({
+            orderBy: [
+              {
+                slug: "desc",
+              },
+            ],
+          }),
           prisma.winkels.findMany(),
         ]);
       res.json({

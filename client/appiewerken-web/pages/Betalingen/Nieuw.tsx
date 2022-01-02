@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import MainLayout from "../../components/layouts/Main";
 import axios from "axios";
 import BetalingHeader from "../../components/BetalingHeader";
+import dateformatter from "../../functions/dateformatter";
 export default function NieuweWinkel() {
   const [ontvangstdatum, setOntvangstdatum] = useState<String>();
   const [bedrag, setBedrag] = useState<Number>();
@@ -37,10 +38,10 @@ export default function NieuweWinkel() {
       })
       .then(function (response) {
         if (response.status === 200) {
-          setBericht("Periode toegevoegd");
+          setBericht("Betaling toegevoegd");
 
           setTimeout(() => {
-            router.push("/Betalingen/Periodes");
+            router.push("/Betalingen");
           }, 1000);
         } else if (response.status === 500) {
           setBericht("Er ging iets mis");
@@ -95,9 +96,8 @@ export default function NieuweWinkel() {
               {periodes.map((periode: any) => {
                 return (
                   <option key={periode.id} value={periode.id}>
-                    {periode.startDatum.replace("T00:00:00.000Z", "")} tot{" "}
-                    {periode.eindDatum.replace("T00:00:00.000Z", "")} (
-                    {periode.slug})
+                    {dateformatter(periode.startDatum)} tot{" "}
+                    {dateformatter(periode.eindDatum)} ({periode.slug})
                   </option>
                 );
               })}
