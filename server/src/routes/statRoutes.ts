@@ -57,7 +57,7 @@ export default function statRoutes(prisma: any, app: Express) {
             where: {
               ontvangstdatum: {
                 gt: "2022-01-01T00:00:00.000Z",
-                lt: "2023-12-12T00:00:00.000Z",
+                lt: "2023-12-31T00:00:00.000Z",
               },
             },
 

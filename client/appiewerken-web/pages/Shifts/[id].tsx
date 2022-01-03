@@ -115,7 +115,7 @@ export default function ShiftDetails() {
                     onvoltooiShift();
                   }}
                 >
-                  <BadgeCheckIcon className="ml-4 w-4 text-violet-400" />
+                  <BadgeCheckIcon className="w-4 text-violet-400" />
                 </button>
               )}
               {!shift.voltooid && (
@@ -124,7 +124,7 @@ export default function ShiftDetails() {
                     voltooiShift();
                   }}
                 >
-                  <BadgeCheckIcon className="ml-4 w-4 text-slate-100" />
+                  <BadgeCheckIcon className="w-4 text-slate-100" />
                 </button>
               )}
               {shift.feestdag && (
