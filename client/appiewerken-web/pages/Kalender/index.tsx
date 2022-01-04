@@ -47,31 +47,32 @@ export default function Kalender() {
   }
 
   function formatWeek() {
-    const maandag =
-      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "MAANDAG")] ||
-      "---";
-    const dinsdag =
-      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "DINSDAG")] ||
-      "---";
+    const maandag = weekshifts[
+      weekshifts?.findIndex((d: any) => d.dag == "MAANDAG")
+    ] || { string: "-Maandag-" };
+    const dinsdag = weekshifts[
+      weekshifts?.findIndex((d: any) => d.dag == "DINSDAG")
+    ] || { string: "-Dinsdag-" };
 
-    const woensdag =
-      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "WOENSDAG")] ||
-      "---";
+    const woensdag = weekshifts[
+      weekshifts?.findIndex((d: any) => d.dag == "WOENSDAG")
+    ] || { string: "-Woensdag-" };
 
-    const donderdag =
-      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "DONDERDAG")]
-        ?.dag || "---";
+    const donderdag = weekshifts[
+      weekshifts?.findIndex((d: any) => d.dag == "DONDERDAG")
+    ] || { string: "-Donderdag-" };
 
-    const vrijdag =
-      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "VRIJDAG")] ||
-      "---";
+    const vrijdag = weekshifts[
+      weekshifts?.findIndex((d: any) => d.dag == "VRIJDAG")
+    ] || { string: "-Vrijdag-" };
 
-    const zaterdag =
-      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "ZATERDAG")] ||
-      "---";
+    const zaterdag = weekshifts[
+      weekshifts?.findIndex((d: any) => d.dag == "ZATERDAG")
+    ] || { string: "-Zaterdag-" };
 
-    const zondag =
-      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "ZONDAG")] || "---";
+    const zondag = weekshifts[
+      weekshifts?.findIndex((d: any) => d.dag == "ZONDAG")
+    ] || { string: "-Zondag-" };
 
     setFormattedWeek({
       maandag,
@@ -151,59 +152,62 @@ export default function Kalender() {
             </button>
           )}
         </div>
-        <div>
-          {weekshifts.map((shift: any) => {
-            return (
-              <div key={shift.id}>
-                <div className="flex flex-col md:flex-row">
-                  <h2 className="text-sky-700 font-bold md:ml-6 flex flex-row flex-1">
-                    {dagformatter(shift.dag)} &middot;{" "}
-                    {dateformatter(shift.datum)}
-                    {shift.feestdag && (
-                      <SparklesIcon className="ml-4 w-4 text-amber-400" />
-                    )}
-                  </h2>
-                  <div className="flex flex-row">
-                    {shift.voltooid && (
-                      <BadgeCheckIcon className="md:ml-4 w-4 text-violet-500" />
-                    )}
-                    {shift.voltooid && (
-                      <p className="text-slate-400 ml-2">
-                        {daysBetween(shift.datum)} dagen geleden
-                      </p>
-                    )}
-                    {!shift.voltooid && (
-                      <p className="text-slate-400  md:ml-2">
-                        over {daysBetween(shift.datum)} dagen
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7">
-          <div className="flex flex-col bg-sky-500 m-2 items-center justify-center">
-            <h2 className="text-sky-700 font-bold flex flex-row">
-              {formattedWeek?.dinsdag.dag &&
-                dagformatter(formattedWeek?.dinsdag.dag)}
-            </h2>
-            <h3>
-              {formattedWeek?.dinsdag.datum &&
-                dateformatter(formattedWeek.dinsdag.datum)}
-            </h3>
-            <div>
-              {formattedWeek?.dinsdag.feestdag && (
-                <SparklesIcon className="ml-4 w-4 text-amber-400" />
-              )}
+          {formattedWeek &&
+            Object.keys(formattedWeek).map((key: any) => {
+              return (
+                <>
+                  {!formattedWeek[key].string ? (
+                    <div
+                      className={
+                        "flex flex-col m-2 items-center justify-center rounded-xl p-2 " +
+                        (formattedWeek[key]?.voltooid
+                          ? " bg-green-400 text-green-900"
+                          : " bg-yellow-300 text-yellow-600")
+                      }
+                    >
+                      <h2 className="text-sky-700 font-bold flex flex-row">
+                        {formattedWeek[key]?.dag &&
+                          dagformatter(formattedWeek[key]?.dag)}
+                      </h2>
+                      {formattedWeek[key]?.voltooid && (
+                        <p className="text-sky-800">
+                          {daysBetween(formattedWeek[key]?.datum)} dagen geleden
+                        </p>
+                      )}
+                      {!formattedWeek[key]?.voltooid && (
+                        <p className="text-sky-800 ">
+                          over{" "}
+                          {formattedWeek[key]?.datum &&
+                            daysBetween(formattedWeek[key]?.datum)}{" "}
+                          dagen
+                        </p>
+                      )}
+                      <h3>
+                        {formattedWeek[key]?.datum &&
+                          dateformatter(formattedWeek[key]?.datum)}
+                      </h3>
+                      <h3>AH{formattedWeek[key]?.winkel?.winkelNr}</h3>
+                      <h3>{formattedWeek[key]?.tijdslot?.slot}</h3>
+                      <div className="flex flex-row">
+                        {formattedWeek[key]?.feestdag && (
+                          <SparklesIcon className="ml-4 w-4 text-amber-400" />
+                        )}
 
-              {formattedWeek?.dinsdag.voltooid && (
-                <BadgeCheckIcon className="md:ml-4 w-4 text-violet-500" />
-              )}
-            </div>
-          </div>
+                        {formattedWeek[key]?.voltooid && (
+                          <BadgeCheckIcon className="md:ml-4 w-4 text-violet-500" />
+                        )}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col m-2 items-center justify-center rounded-xl p-2 bg-sky-200 font-mono text-sky-500">
+                      {formattedWeek[key].string}
+                    </div>
+                  )}
+                </>
+              );
+            })}
         </div>
       </div>
     </MainLayout>
