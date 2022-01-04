@@ -6,8 +6,15 @@ import { useRouter } from "next/router";
 import dateformatter from "../../functions/dateformatter";
 import dagformatter from "../../functions/dagformatter";
 import daysBetween from "../../functions/daysBetween";
+import Link from "next/link";
 
-import { BadgeCheckIcon, SparklesIcon } from "@heroicons/react/outline";
+import {
+  BadgeCheckIcon,
+  SparklesIcon,
+  ArrowCircleLeftIcon,
+  ArrowCircleRightIcon,
+  ArrowNarrowLeftIcon,
+} from "@heroicons/react/outline";
 export default function Kalender() {
   const router = useRouter();
 
@@ -130,27 +137,28 @@ export default function Kalender() {
             <p>{bericht}</p>
           </div>
         )}
-        <div>
+        <div className="flex flex-row">
           <button
-            className="bg-sky-500 hover:border-sky-600 border-2 border-sky-500 hover:bg-transparent hover:text-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md"
+            className="flex flex-row flex-1 items-center bg-sky-500 hover:border-sky-600 border-2 border-sky-500 hover:bg-transparent hover:text-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md"
             onClick={() => previousWeek()}
           >
-            Vorige week
+            <ArrowCircleLeftIcon className="w-4 mr-2" /> Vorige week
           </button>
-
-          <button
-            className="ml-4 bg-sky-500 hover:border-sky-600 border-2 border-sky-500 hover:bg-transparent hover:text-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md"
-            onClick={() => nextWeek()}
-          >
-            Volgende week
-          </button>
-
           {jaarWeekGen(0).jaar + "-" + jaarWeekGen(0).week !==
             jaarweek.jaar + "-" + jaarweek.week && (
-            <button className="ml-4 font-semibold" onClick={() => resetWeek()}>
+            <button
+              className="ml-4 bg-slate-200 flex-1 font-bold text-xs py-1 px-2 rounded-md hover:bg-transparent border-slate-200 border-2"
+              onClick={() => resetWeek()}
+            >
               Reset week
             </button>
           )}
+          <button
+            className=" flex flex-row flex-1 items-center justify-end ml-4 bg-sky-500 hover:border-sky-600 border-2 border-sky-500 hover:bg-transparent hover:text-sky-600 text-white font-bold text-xs py-1 px-2 rounded-md"
+            onClick={() => nextWeek()}
+          >
+            Volgende week <ArrowCircleRightIcon className="w-4 ml-2" />
+          </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7">
@@ -159,47 +167,53 @@ export default function Kalender() {
               return (
                 <>
                   {!formattedWeek[key].string ? (
-                    <div
-                      className={
-                        "flex flex-col m-2 items-center justify-center rounded-xl p-2 " +
-                        (formattedWeek[key]?.voltooid
-                          ? " bg-green-400 text-green-900"
-                          : " bg-yellow-300 text-yellow-600")
-                      }
+                    <Link
+                      key={formattedWeek[key]?.id}
+                      href={"/Shifts/" + formattedWeek[key]?.id}
                     >
-                      <h2 className="text-sky-700 font-bold flex flex-row">
-                        {formattedWeek[key]?.dag &&
-                          dagformatter(formattedWeek[key]?.dag)}
-                      </h2>
-                      {formattedWeek[key]?.voltooid && (
-                        <p className="text-sky-800">
-                          {daysBetween(formattedWeek[key]?.datum)} dagen geleden
-                        </p>
-                      )}
-                      {!formattedWeek[key]?.voltooid && (
-                        <p className="text-sky-800 ">
-                          over{" "}
-                          {formattedWeek[key]?.datum &&
-                            daysBetween(formattedWeek[key]?.datum)}{" "}
-                          dagen
-                        </p>
-                      )}
-                      <h3>
-                        {formattedWeek[key]?.datum &&
-                          dateformatter(formattedWeek[key]?.datum)}
-                      </h3>
-                      <h3>AH{formattedWeek[key]?.winkel?.winkelNr}</h3>
-                      <h3>{formattedWeek[key]?.tijdslot?.slot}</h3>
-                      <div className="flex flex-row">
-                        {formattedWeek[key]?.feestdag && (
-                          <SparklesIcon className="ml-4 w-4 text-amber-400" />
-                        )}
-
+                      <div
+                        className={
+                          "flex flex-col m-2 items-center justify-center rounded-xl p-2 cursor-pointer " +
+                          (formattedWeek[key]?.voltooid
+                            ? " bg-green-400 text-green-900"
+                            : " bg-yellow-300 text-yellow-600")
+                        }
+                      >
+                        <h2 className="text-sky-700 font-bold flex flex-row">
+                          {formattedWeek[key]?.dag &&
+                            dagformatter(formattedWeek[key]?.dag)}
+                        </h2>
                         {formattedWeek[key]?.voltooid && (
-                          <BadgeCheckIcon className="md:ml-4 w-4 text-violet-500" />
+                          <p className="text-sky-800">
+                            {daysBetween(formattedWeek[key]?.datum)} dagen
+                            geleden
+                          </p>
                         )}
+                        {!formattedWeek[key]?.voltooid && (
+                          <p className="text-sky-800 ">
+                            over{" "}
+                            {formattedWeek[key]?.datum &&
+                              daysBetween(formattedWeek[key]?.datum)}{" "}
+                            dagen
+                          </p>
+                        )}
+                        <h3>
+                          {formattedWeek[key]?.datum &&
+                            dateformatter(formattedWeek[key]?.datum)}
+                        </h3>
+                        <h3>AH{formattedWeek[key]?.winkel?.winkelNr}</h3>
+                        <h3>{formattedWeek[key]?.tijdslot?.slot}</h3>
+                        <div className="flex flex-row">
+                          {formattedWeek[key]?.feestdag && (
+                            <SparklesIcon className="ml-4 w-4 text-amber-400" />
+                          )}
+
+                          {formattedWeek[key]?.voltooid && (
+                            <BadgeCheckIcon className="md:ml-4 w-4 text-violet-500" />
+                          )}
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   ) : (
                     <div className="flex flex-col m-2 items-center justify-center rounded-xl p-2 bg-sky-200 font-mono text-sky-500">
                       {formattedWeek[key].string}
