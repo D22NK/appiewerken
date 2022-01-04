@@ -12,6 +12,12 @@ export default function kalenderRoutes(prisma: any, app: Express) {
             datum: "asc",
           },
         ],
+        include: {
+          winkel: true,
+          tijdslot: true,
+          uurloon: true,
+          betaalperiode: true,
+        },
       });
       console.log(shifts);
       res.json(shifts);

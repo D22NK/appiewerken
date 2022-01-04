@@ -14,21 +14,29 @@ export default function Kalender() {
   const [offset, setOffset] = useState(0);
   const [jaarweek, setJaarweek] = useState(jaarWeekGen(offset));
   const [weekshifts, setWeekshifts] = useState<any>([]);
+  const [formattedWeek, setFormattedWeek] = useState<any>();
+
   const [bericht, setBericht] = useState<String>("");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     getWeekShifts(jaarweek.jaar + "-" + jaarweek.week);
   }, [router]);
 
+  useEffect(() => {
+    formatWeek();
+  }, [weekshifts]);
+
   async function getWeekShifts(params: any) {
     try {
       setLoading(true);
+      setBericht("");
       const res = await axios.get(`https://ahwapi.d22nk.nl/kalender/${params}`);
       if (res.data.length < 1) {
         setBericht("Er zijn voor deze week geen shifts gevonden");
         setWeekshifts([]);
       } else {
         setWeekshifts(res.data);
+        // formatWeek();
       }
       setLoading(false);
     } catch (error) {
@@ -36,6 +44,44 @@ export default function Kalender() {
       setBericht("Er ging iets mis met het ophalen van deze week...");
       console.error(error);
     }
+  }
+
+  function formatWeek() {
+    const maandag =
+      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "MAANDAG")] ||
+      "---";
+    const dinsdag =
+      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "DINSDAG")] ||
+      "---";
+
+    const woensdag =
+      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "WOENSDAG")] ||
+      "---";
+
+    const donderdag =
+      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "DONDERDAG")]
+        ?.dag || "---";
+
+    const vrijdag =
+      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "VRIJDAG")] ||
+      "---";
+
+    const zaterdag =
+      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "ZATERDAG")] ||
+      "---";
+
+    const zondag =
+      weekshifts[weekshifts?.findIndex((d: any) => d.dag == "ZONDAG")] || "---";
+
+    setFormattedWeek({
+      maandag,
+      dinsdag,
+      woensdag,
+      donderdag,
+      vrijdag,
+      zaterdag,
+      zondag,
+    });
   }
 
   function nextWeek() {
@@ -136,6 +182,28 @@ export default function Kalender() {
               </div>
             );
           })}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7">
+          <div className="flex flex-col bg-sky-500 m-2 items-center justify-center">
+            <h2 className="text-sky-700 font-bold flex flex-row">
+              {formattedWeek?.dinsdag.dag &&
+                dagformatter(formattedWeek?.dinsdag.dag)}
+            </h2>
+            <h3>
+              {formattedWeek?.dinsdag.datum &&
+                dateformatter(formattedWeek.dinsdag.datum)}
+            </h3>
+            <div>
+              {formattedWeek?.dinsdag.feestdag && (
+                <SparklesIcon className="ml-4 w-4 text-amber-400" />
+              )}
+
+              {formattedWeek?.dinsdag.voltooid && (
+                <BadgeCheckIcon className="md:ml-4 w-4 text-violet-500" />
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </MainLayout>
