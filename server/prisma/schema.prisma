@@ -78,17 +78,18 @@ model Tijdslots {
   slot        String   @unique
   begin       String
   eind        String
-  urenGewerkt Float?
-  urenBetaald Float?
+  urenGewerkt Float
+  urenBetaald Float
   shifts      Shifts[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
 model NotificationSubscribers {
-  id     String @id @unique @default(uuid())
-  sub    Json
-  device String
+  id       String @id @unique @default(uuid())
+  sub      Json
+  device   String
+  username String
 }
 
 enum Dag {
