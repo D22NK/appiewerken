@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import useConfirm from "../../../components/ConfirmDialog/useConfirm";
 
 import MainLayout from "../../../components/layouts/Main";
 import OverigHeader from "../../../components/OverigHeader";
@@ -13,6 +14,8 @@ import {
 import axios from "axios";
 import ShiftList from "../../../components/shiftList";
 export default function TijdslotDetails() {
+  const { confirm } = useConfirm();
+  const [bericht, setBericht] = useState<any>("");
   const router = useRouter();
   const [tijdslot, setTijdslot] = useState<any>([]);
   useEffect(() => {
@@ -33,6 +36,26 @@ export default function TijdslotDetails() {
       }
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async function deleteTijdslot() {
+    const isConfirmed = await confirm(
+      "Tijdslot verwijderen",
+      "Weet je zeker dat je dit tijdslot wil verwijderen? \n Als je dit tijdslot verwijdert is hij voor altijd weg en niet meer terug te halen."
+    );
+
+    if (isConfirmed) {
+      const { id } = await router.query;
+      const res = await axios.delete(`https://ahwapi.d22nk.nl/tijdslot/${id}`);
+      if (res.status === 200) {
+        setBericht("Tijdslot verwijderd.");
+        router.push("/Overig/Tijdslots");
+      } else {
+        setBericht("Er ging iets mis.");
+      }
+    } else {
+      return;
     }
   }
 

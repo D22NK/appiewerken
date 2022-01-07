@@ -71,4 +71,19 @@ export default function tijdslotRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
+
+  app.delete("/tijdslot/:id", async (req: Request, res: Response) => {
+    try {
+      const tijdslot = await prisma.tijdslots.delete({
+        where: {
+          id: req.params.id,
+        },
+      });
+      console.log(tijdslot);
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
 }

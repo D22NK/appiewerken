@@ -60,4 +60,19 @@ export default function uurloonRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
+
+  app.delete("/uurloon/:id", async (req: Request, res: Response) => {
+    try {
+      const uurloon = await prisma.uurlonen.delete({
+        where: {
+          id: req.params.id,
+        },
+      });
+      console.log(uurloon);
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
 }
