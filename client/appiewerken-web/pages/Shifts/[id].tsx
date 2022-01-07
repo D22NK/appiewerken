@@ -47,8 +47,8 @@ export default function ShiftDetails() {
 
   async function deleteShift() {
     const isConfirmed = await confirm(
-      "Tijdslot verwijderen",
-      "Weet je zeker dat je dit tijdslot wil verwijderen? \n Als je dit tijdslot verwijdert is hij voor altijd weg en niet meer terug te halen."
+      "Shift verwijderen",
+      "Weet je zeker dat je deze shift wil verwijderen? \n Als je deze shift verwijdert is hij voor altijd weg en niet meer terug te halen."
     );
 
     if (isConfirmed) {

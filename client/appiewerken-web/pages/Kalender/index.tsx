@@ -175,8 +175,8 @@ export default function Kalender() {
                         className={
                           "flex flex-col m-2 items-center justify-center rounded-xl p-2 cursor-pointer " +
                           (formattedWeek[key]?.voltooid
-                            ? " bg-green-400 text-green-900"
-                            : " bg-yellow-300 text-yellow-600")
+                            ? " bg-green-400 text-green-900 hover:bg-green-300"
+                            : " bg-yellow-300 text-yellow-600 hover:bg-yellow-200")
                         }
                       >
                         <h2 className="text-sky-700 font-bold flex flex-row">
@@ -215,9 +215,11 @@ export default function Kalender() {
                       </div>
                     </Link>
                   ) : (
-                    <div className="flex flex-col m-2 items-center justify-center rounded-xl p-2 bg-sky-200 font-mono text-sky-500">
-                      {formattedWeek[key].string}
-                    </div>
+                    <Link href="/Shifts/Nieuw">
+                      <div className="flex flex-col m-2 items-center justify-center rounded-xl p-2 bg-sky-200 font-mono text-sky-500 hover:bg-sky-300">
+                        {formattedWeek[key].string}
+                      </div>
+                    </Link>
                   )}
                 </>
               );

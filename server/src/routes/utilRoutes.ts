@@ -15,7 +15,13 @@ export default function utilRoutes(prisma: any, app: Express) {
               },
             ],
           }),
-          prisma.uurlonen.findMany(),
+          prisma.uurlonen.findMany({
+            orderBy: [
+              {
+                loon: "asc",
+              },
+            ],
+          }),
           prisma.betaalperiodes.findMany({
             orderBy: [
               {

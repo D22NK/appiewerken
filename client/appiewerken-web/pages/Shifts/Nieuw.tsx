@@ -3,22 +3,22 @@ import { useRouter } from "next/router";
 
 import MainLayout from "../../components/layouts/Main";
 import axios from "axios";
-import Shift from "../../components/OverigHeader";
 import ShiftHeader from "../../components/ShiftHeader";
 import dateformatter from "../../functions/dateformatter";
 import getYear from "../../functions/getYear";
 import getWeekNumber from "../../functions/getWeekNumber";
+import dagformatter from "../../functions/dagformatter";
 export default function NieuweShift() {
   const [fields, setFields] = useState<any>([]);
   const [datum, setDatum] = useState<String>();
   const [jaarweek, setJaarweek] = useState<string>();
-  const [dag, setDag] = useState<String>();
+  const [dag, setDag] = useState<string>();
   const [tijdslot, setTijdslot] = useState<String>();
   const [winkel, setWinkel] = useState<String>();
   const [uurloon, setUurloon] = useState<String>();
   const [betaalperiode, setBetaalperiode] = useState<String>();
-  const [urengewerkt, setUrengewerkt] = useState<number>();
-  const [urenbetaald, setUrenbetaald] = useState<number>();
+  const [urengewerkt, setUrengewerkt] = useState<number>(0);
+  const [urenbetaald, setUrenbetaald] = useState<number>(0);
   const [voltooid, setVoltooid] = useState(false);
   const [feestdag, setFeestdag] = useState(false);
   const [bericht, setBericht] = useState<String>("");
@@ -96,6 +96,15 @@ export default function NieuweShift() {
 
     setTijdslot(e.target.value);
   }
+
+  function dagChange(e: any) {
+    if (e.target.value === "ZONDAG") {
+      const dubbeleuren = urengewerkt * 2;
+      setUrenbetaald(dubbeleuren);
+    } else {
+      setUrenbetaald(urengewerkt);
+    }
+  }
   return (
     <>
       <MainLayout parentPage="Shifts">
@@ -128,39 +137,6 @@ export default function NieuweShift() {
             onChange={(e) => setJaarweek(e.target.value)}
             value={jaarweek}
           />
-
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="dag">
-            Dag:
-          </label>
-          <div className="relative inline-block w-full text-gray-700 mb-4">
-            <select
-              className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
-              name="dag"
-              onChange={(e) => setDag(e.target.value)}
-            >
-              <option selected disabled>
-                Kies dag
-              </option>
-
-              <option value="MAANDAG">Maandag</option>
-              <option value="DINSDAG">Dinsdag</option>
-              <option value="WOENSDAG">Woensdag</option>
-              <option value="DONDERDAG">Donderdag</option>
-              <option value="VRIJDAG">Vrijdag</option>
-              <option value="ZATERDAG">Zaterdag</option>
-              <option value="ZONDAG">Zondag</option>
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                <path
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                ></path>
-              </svg>
-            </div>
-          </div>
-
           <label className="mb-4 font-semibold text-sky-500" htmlFor="tijdslot">
             Tijdslot:
           </label>
@@ -180,6 +156,37 @@ export default function NieuweShift() {
                   </option>
                 );
               })}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+              <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                <path
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <label className="mb-4 font-semibold text-sky-500" htmlFor="dag">
+            Dag:
+          </label>
+          <div className="relative inline-block w-full text-gray-700 mb-4">
+            <select
+              className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
+              name="dag"
+              onChange={(e) => dagChange(e)}
+            >
+              <option selected disabled>
+                Kies dag
+              </option>
+
+              <option value="MAANDAG">Maandag</option>
+              <option value="DINSDAG">Dinsdag</option>
+              <option value="WOENSDAG">Woensdag</option>
+              <option value="DONDERDAG">Donderdag</option>
+              <option value="VRIJDAG">Vrijdag</option>
+              <option value="ZATERDAG">Zaterdag</option>
+              <option value="ZONDAG">Zondag</option>
             </select>
             <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
               <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
@@ -235,9 +242,17 @@ export default function NieuweShift() {
               <option selected disabled>
                 Kies uurloon
               </option>
-              {fields.uurlonen?.map((uurloon: any) => {
+              {fields.uurlonen?.map((uurloon: any, index: any) => {
+                let selected = false;
+                if (index + 1 == fields.uurlonen.length) {
+                  selected = true;
+                }
                 return (
-                  <option key={uurloon.id} value={uurloon.id}>
+                  <option
+                    selected={selected}
+                    key={uurloon.id}
+                    value={uurloon.id}
+                  >
                     {uurloon.loon}
                   </option>
                 );
