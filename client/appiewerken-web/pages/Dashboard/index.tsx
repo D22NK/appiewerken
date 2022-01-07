@@ -125,6 +125,7 @@ export default function Dashboard() {
   return (
     <MainLayout parentPage="Dashboard">
       <DashboardHeader page="Index" />
+
       <div className="flex w-[100%] flex-col md:flex-row">
         <div className="w-[100%] flex h-max flex-col bg-slate-100 my-4 rounded-md p-4 md:w-[40%] mr-2">
           <h1 className="text-xl font-semibold text-sky-500">Betalingen:</h1>

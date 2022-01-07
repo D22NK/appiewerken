@@ -27,7 +27,11 @@ export default function PeriodeDetails() {
       console.log("id: ", router.query.id);
       if (id) {
         const res = await axios.get(`https://ahwapi.d22nk.nl/periode/${id}`);
-        setPeriode(res.data);
+        if (!res.data) {
+          router.push("/Overig/Winkels");
+        } else {
+          setPeriode(res.data);
+        }
       }
     } catch (error) {
       console.error(error);

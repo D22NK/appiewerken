@@ -26,8 +26,11 @@ export default function WinkelDetails() {
       console.log("id: ", router.query.id);
       if (id) {
         const res = await axios.get(`https://ahwapi.d22nk.nl/betaling/${id}`);
-        console.log(res.data.betaalPeriode.slug);
-        setBetaling(res.data);
+        if (!res.data) {
+          router.push("/Overig/Winkels");
+        } else {
+          setBetaling(res.data);
+        }
       }
     } catch (error) {
       console.error(error);

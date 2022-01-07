@@ -33,7 +33,11 @@ export default function ShiftDetails() {
       console.log("id: ", router.query.id);
       if (id) {
         const res = await axios.get(`https://ahwapi.d22nk.nl/shift/${id}`);
-        setShift(res.data);
+        if (!res.data) {
+          router.push("/Overig/Winkels");
+        } else {
+          setShift(res.data);
+        }
       }
     } catch (error) {
       console.error(error);

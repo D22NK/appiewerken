@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-
+import useConfirm from "../../../components/ConfirmDialog/useConfirm";
 import MainLayout from "../../../components/layouts/Main";
 import OverigHeader from "../../../components/OverigHeader";
 import {
@@ -17,8 +17,11 @@ import dateformatter from "../../../functions/dateformatter";
 import dagformatter from "../../../functions/dagformatter";
 import ShiftList from "../../../components/shiftList";
 export default function WinkelDetails() {
+  const { confirm } = useConfirm();
   const router = useRouter();
   const [winkel, setWinkel] = useState<any>([]);
+  const [bericht, setBericht] = useState<any>("");
+
   useEffect(() => {
     getWinkel();
   }, [router]);
@@ -29,7 +32,11 @@ export default function WinkelDetails() {
       console.log("id: ", router.query.id);
       if (id) {
         const res = await axios.get(`https://ahwapi.d22nk.nl/winkel/${id}`);
-        setWinkel(res.data);
+        if (!res.data) {
+          router.push("/Overig/Winkels");
+        } else {
+          setWinkel(res.data);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -37,22 +44,23 @@ export default function WinkelDetails() {
   }
 
   async function deleteWinkel() {
-    try {
-      const answer = await confirm(
-        "Weet je zeker dat je deze winkel wilt verwijderen?"
-      );
-      console.log(answer);
-      if (!answer) return;
+    const isConfirmed = await confirm(
+      "Winkel verwijderen",
+      "Weet je zeker dat je deze winkel wil verwijderen? \n Als je deze winkel verwijdert is hij voor altijd weg en niet meer terug te halen."
+    );
+
+    if (isConfirmed) {
       const { id } = await router.query;
       const res = await axios.delete(`https://ahwapi.d22nk.nl/winkel/${id}`);
       if (res.status === 200) {
-        alert("winkel verwijderd");
-
+        setBericht("Winkel verwijderd.");
         router.push("/Overig/Winkels");
       } else {
-        alert("er ging iets fout");
+        setBericht("Er ging iets mis.");
       }
-    } catch (error) {}
+    } else {
+      return;
+    }
   }
 
   return (

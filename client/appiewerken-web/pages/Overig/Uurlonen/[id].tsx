@@ -20,7 +20,11 @@ export default function UurloonDetails() {
       console.log("id: ", router.query.id);
       if (id) {
         const res = await axios.get(`https://ahwapi.d22nk.nl/uurloon/${id}`);
-        setUurloon(res.data);
+        if (!res.data) {
+          router.push("/Overig/Winkels");
+        } else {
+          setUurloon(res.data);
+        }
       }
     } catch (error) {
       console.error(error);
