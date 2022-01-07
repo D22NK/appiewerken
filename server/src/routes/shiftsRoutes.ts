@@ -178,4 +178,19 @@ export default function shiftsRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
+
+  app.delete("/shift/:id", async (req: Request, res: Response) => {
+    try {
+      const shift = await prisma.shifts.delete({
+        where: {
+          id: req.params.id,
+        },
+      });
+      console.log(shift);
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
 }

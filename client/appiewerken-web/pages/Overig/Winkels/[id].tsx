@@ -67,6 +67,11 @@ export default function WinkelDetails() {
     <MainLayout parentPage="Overig">
       <OverigHeader page="Winkel Informatie" />
       <div className="flex flex-col lg:flex-row ">
+        {bericht !== "" && (
+          <div className="w-[100%] bg-slate-300 rounded-md p-2  mb-2 hover:bg-slate-400">
+            <p>{bericht}</p>
+          </div>
+        )}
         <div
           key={winkel.id}
           className="flex flex-col  items-center my-2 md:m-2 p-4 bg-slate-100  w-[100%] lg:w-max rounded-md  h-min"

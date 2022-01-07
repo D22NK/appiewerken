@@ -141,4 +141,34 @@ export default function betaalRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
+
+  app.delete("/betaling/:id", async (req: Request, res: Response) => {
+    try {
+      const betaling = await prisma.betalingen.delete({
+        where: {
+          id: req.params.id,
+        },
+      });
+      console.log(betaling);
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
+
+  app.delete("/periode/:id", async (req: Request, res: Response) => {
+    try {
+      const periode = await prisma.betaalperiodes.delete({
+        where: {
+          id: req.params.id,
+        },
+      });
+      console.log(periode);
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
 }
