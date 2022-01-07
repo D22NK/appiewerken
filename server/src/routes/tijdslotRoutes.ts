@@ -9,7 +9,8 @@ export default function tijdslotRoutes(prisma: any, app: Express) {
           slot: req.body.slot,
           begin: req.body.begin,
           eind: req.body.eind,
-          uren: parseFloat(req.body.uren),
+          urenGewerkt: parseFloat(req.body.urenGewerkt),
+          urenBetaald: parseFloat(req.body.urenBetaald),
         },
       });
       console.log(tijdslot);

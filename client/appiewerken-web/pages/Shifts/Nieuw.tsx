@@ -42,19 +42,7 @@ export default function NieuweShift() {
 
   function createShift() {
     setBericht("");
-    console.log({
-      datum: datum,
-      jaarWeek: jaarweek,
-      dag: dag,
-      tijdslotId: tijdslot,
-      urenGewerkt: urengewerkt,
-      urenBetaald: urenbetaald,
-      voltooid: voltooid,
-      winkelId: winkel,
-      uurloonId: uurloon,
-      feestdag: feestdag,
-      betaalperiodeId: betaalperiode,
-    });
+
     axios
       .post("https://ahwapi.d22nk.nl/shifts", {
         datum: datum,
@@ -90,9 +78,8 @@ export default function NieuweShift() {
     const index = fields.tijdslots.findIndex(
       (t: any) => t.id == e.target.value
     );
-    console.log(fields.tijdslots[index].uren);
-    setUrengewerkt(fields.tijdslots[index].uren);
-    setUrenbetaald(fields.tijdslots[index].uren);
+    setUrengewerkt(fields.tijdslots[index].urenGewerkt);
+    setUrenbetaald(fields.tijdslots[index].urenBetaald);
 
     setTijdslot(e.target.value);
   }

@@ -7,19 +7,20 @@ import OverigHeader from "../../../components/OverigHeader";
 export default function NieuwTijdslot() {
   const [begin, setBegin] = useState<String>("");
   const [eind, setEind] = useState<String>("");
-  const [uren, setUren] = useState<Number>();
+  const [urenGewerkt, setUrengewerkt] = useState<Number>();
+  const [urenBetaald, setUrenbetaald] = useState<Number>();
 
   const [bericht, setBericht] = useState<String>("");
 
   const router = useRouter();
   function createTijdslot() {
     setBericht("");
-    console.log(uren);
     axios
       .post("https://ahwapi.d22nk.nl/tijdslots", {
         begin: begin,
         eind: eind,
-        uren: uren,
+        urenGewerkt: urenGewerkt,
+        urenBetaald: urenBetaald,
         slot: begin + "-" + eind,
       })
       .then(function (response) {
@@ -68,13 +69,23 @@ export default function NieuwTijdslot() {
             onChange={(e) => setEind(e.target.value)}
           />
           <label className="mb-4 font-semibold text-sky-500" htmlFor="uren">
-            Uren:
+            Urengewerkt:
           </label>
           <input
             className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
             type="number"
-            name="uren"
-            onChange={(e) => setUren(parseFloat(e.target.value))}
+            name="urengewerkt"
+            onChange={(e) => setUrengewerkt(parseFloat(e.target.value))}
+          />
+
+          <label className="mb-4 font-semibold text-sky-500" htmlFor="uren">
+            Urenbetaald:
+          </label>
+          <input
+            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+            type="number"
+            name="urenbetaald"
+            onChange={(e) => setUrenbetaald(parseFloat(e.target.value))}
           />
 
           <div className="flex  flex-1 flex-row-reverse">
