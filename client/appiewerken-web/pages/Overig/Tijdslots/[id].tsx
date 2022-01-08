@@ -92,7 +92,12 @@ export default function TijdslotDetails() {
           </div>
           <div className="flex flex-col items-center w-full ">
             <h2 className="text-sky-700 font-bold  flex-1">{tijdslot.slot}</h2>
-            <p className="text-slate-400">uren: {tijdslot.uren}</p>
+            <p className="text-slate-400">
+              Uren gewerkt: {tijdslot.urenGewerkt}
+            </p>
+            <p className="text-slate-400">
+              Uren Betaald (zonder toeslagen): {tijdslot.urenBetaald}
+            </p>
           </div>
         </div>
 

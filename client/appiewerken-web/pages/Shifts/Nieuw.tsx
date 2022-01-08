@@ -92,6 +92,36 @@ export default function NieuweShift() {
       setUrenbetaald(urengewerkt);
     }
   }
+
+  function datumChange(e: any) {
+    setDatum(e.target.value);
+    const dag = new Date(e.target.value).getDay();
+
+    switch (dag) {
+      case 1:
+        setDag("MAANDAG");
+        break;
+      case 2:
+        setDag("DINSDAG");
+        break;
+      case 3:
+        setDag("WOENSDAG");
+        break;
+      case 4:
+        setDag("DONDERDAG");
+        break;
+      case 5:
+        setDag("VRIJDAG");
+        break;
+
+      case 6:
+        setDag("ZATERDAG");
+        break;
+      case 7:
+        setDag("ZONDAG");
+        break;
+    }
+  }
   return (
     <>
       <MainLayout parentPage="Shifts">
@@ -111,7 +141,7 @@ export default function NieuweShift() {
             className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
             type="date"
             name="datum"
-            onChange={(e) => setDatum(e.target.value)}
+            onChange={(e) => datumChange(e)}
           />
 
           <label className="mb-4 font-semibold text-sky-500" htmlFor="jaarweek">
@@ -163,10 +193,15 @@ export default function NieuweShift() {
               name="dag"
               onChange={(e) => dagChange(e)}
             >
-              <option selected disabled>
-                Kies dag
-              </option>
-
+              {dag ? (
+                <option selected value={dag}>
+                  {dagformatter(dag)}
+                </option>
+              ) : (
+                <option selected disabled>
+                  Kies dag
+                </option>
+              )}
               <option value="MAANDAG">Maandag</option>
               <option value="DINSDAG">Dinsdag</option>
               <option value="WOENSDAG">Woensdag</option>

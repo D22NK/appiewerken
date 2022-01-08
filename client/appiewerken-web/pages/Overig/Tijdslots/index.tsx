@@ -44,7 +44,7 @@ export default function Tijdslots() {
 
                   <p className="text-slate-400 flex flex-row items-center md:items-center">
                     <ClockIcon className="h-4 mr-2 md:mr-0 md:h-4" />
-                    {tijdslot.uren}
+                    {tijdslot.urenGewerkt}
                   </p>
                 </div>
               </div>
