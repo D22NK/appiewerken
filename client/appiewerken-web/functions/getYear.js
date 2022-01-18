@@ -1,3 +1,7 @@
-export default function getYear() {
-  return new Date().getFullYear();
+export default function getYear(date) {
+  if (date) {
+    return new Date(date).getFullYear();
+  } else {
+    return new Date().getFullYear();
+  }
 }

@@ -2,11 +2,16 @@ import getWeeknumber from "./getWeekNumber";
 import getYear from "./getYear";
 
 export default function jaarWeekGen(offset) {
-  Date.prototype.getJaarWeek = function () {
-    var d = new Date(
-      Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()) +
-        604800000 * offset
-    );
+  Date.prototype.getJaarWeek = function (date) {
+    let d;
+    if (date) {
+      d = new Date(Date.UTC(date) + 604800000 * offset);
+    } else {
+      d = new Date(
+        Date.UTC(this.getFullYear(), this.getMonth(), this.getDate()) +
+          604800000 * offset
+      );
+    }
 
     var dayNum = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - dayNum);

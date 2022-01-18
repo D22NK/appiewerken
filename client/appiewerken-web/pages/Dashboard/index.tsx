@@ -39,6 +39,10 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (dagstats) {
+      // const dagen = ["MAANDAG", "DINSDAG", "WOENSDAG", "DONDERDAG", "VRIJDAG", "ZATERDAG", "ZONDAG"];
+      // dagen.forEach((dag)=>{
+
+      // })
       const maandag =
         dagstats[dagstats?.findIndex((d: any) => d.dag == "MAANDAG")]?._count
           .dag || 0;

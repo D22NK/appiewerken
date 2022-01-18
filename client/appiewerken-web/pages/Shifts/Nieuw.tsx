@@ -19,7 +19,7 @@ export default function NieuweShift() {
   const [betaalperiode, setBetaalperiode] = useState<String>();
   const [urengewerkt, setUrengewerkt] = useState<number>(0);
   const [urenbetaald, setUrenbetaald] = useState<number>(0);
-  const [voltooid, setVoltooid] = useState(false);
+  const [voltooid, setVoltooid] = useState(true);
   const [feestdag, setFeestdag] = useState(false);
   const [bericht, setBericht] = useState<String>("");
 
@@ -96,6 +96,12 @@ export default function NieuweShift() {
   function datumChange(e: any) {
     setDatum(e.target.value);
     const dag = new Date(e.target.value).getDay();
+
+    setJaarweek(
+      getYear(new Date(e.target.value)) +
+        "-" +
+        getWeekNumber(new Date(e.target.value))
+    );
 
     switch (dag) {
       case 1:
@@ -230,10 +236,15 @@ export default function NieuweShift() {
               name="winkel"
               onChange={(e) => setWinkel(e.target.value)}
             >
-              <option selected disabled>
-                Kies winkel
-              </option>
+              <option disabled>Kies winkel</option>
               {fields.winkels?.map((winkel: any) => {
+                if (winkel.winkelNr === "1213") {
+                  return (
+                    <option selected key={winkel.id} value={winkel.id}>
+                      {winkel.winkelNr}
+                    </option>
+                  );
+                }
                 return (
                   <option key={winkel.id} value={winkel.id}>
                     {winkel.winkelNr}

@@ -1,8 +1,16 @@
-export default function getWeeknumber() {
+export default function getWeeknumber(date) {
   Date.prototype.getWeekNumber = function () {
-    var d = new Date(
-      Date.UTC(this.getFullYear(), this.getMonth(), this.getDate())
-    );
+    let d;
+    if (date) {
+      d = new Date(
+        Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+      );
+    } else {
+      d = new Date(
+        Date.UTC(this.getFullYear(), this.getMonth(), this.getDate())
+      );
+    }
+
     var dayNum = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - dayNum);
     var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
