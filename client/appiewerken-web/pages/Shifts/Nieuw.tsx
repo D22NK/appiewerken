@@ -242,6 +242,7 @@ export default function NieuweShift() {
               <option disabled>Kies winkel</option>
               {fields.winkels?.map((winkel: any) => {
                 if (winkel.winkelNr === "1213") {
+                  setWinkel(winkel.id);
                   return (
                     <option selected key={winkel.id} value={winkel.id}>
                       {winkel.winkelNr}
@@ -282,6 +283,7 @@ export default function NieuweShift() {
                 let selected = false;
                 if (index + 1 == fields.uurlonen.length) {
                   selected = true;
+                  setUurloon(uurloon.id);
                 }
                 return (
                   <option
