@@ -14,8 +14,12 @@ export default function NieuweShift() {
   const [jaarweek, setJaarweek] = useState<string>();
   const [dag, setDag] = useState<string>();
   const [tijdslot, setTijdslot] = useState<String>();
-  const [winkel, setWinkel] = useState<String>();
-  const [uurloon, setUurloon] = useState<String>();
+  const [winkel, setWinkel] = useState<String>(
+    "7cf9ab85-fe4e-47a8-bafe-ff34d86ae0a7"
+  );
+  const [uurloon, setUurloon] = useState<String>(
+    "935d7659-b59a-4988-98c6-c9d117f45233"
+  );
   const [betaalperiode, setBetaalperiode] = useState<String>();
   const [urengewerkt, setUrengewerkt] = useState<number>(0);
   const [urenbetaald, setUrenbetaald] = useState<number>(0);
@@ -242,7 +246,6 @@ export default function NieuweShift() {
               <option disabled>Kies winkel</option>
               {fields.winkels?.map((winkel: any) => {
                 if (winkel.winkelNr === "1213") {
-                  setWinkel(winkel.id);
                   return (
                     <option selected key={winkel.id} value={winkel.id}>
                       {winkel.winkelNr}
@@ -283,7 +286,6 @@ export default function NieuweShift() {
                 let selected = false;
                 if (index + 1 == fields.uurlonen.length) {
                   selected = true;
-                  setUurloon(uurloon.id);
                 }
                 return (
                   <option
