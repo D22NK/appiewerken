@@ -9,6 +9,7 @@ import {
   ClockIcon,
   BadgeCheckIcon,
   SparklesIcon,
+  MinusCircleIcon,
 } from "@heroicons/react/outline";
 import ShiftHeader from "../../components/ShiftHeader";
 import dateformatter from "../../functions/dateformatter";
@@ -52,6 +53,9 @@ export default function Shifts() {
                       )}
                     </h2>
                     <div className="flex flex-row">
+                      {shift.voltooid && (
+                        <MinusCircleIcon className="md:ml-4 w-4 text-red-500" />
+                      )}
                       {shift.voltooid && (
                         <BadgeCheckIcon className="md:ml-4 w-4 text-violet-500" />
                       )}

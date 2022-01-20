@@ -21,6 +21,8 @@ export default function NieuweShift() {
   const [urenbetaald, setUrenbetaald] = useState<number>(0);
   const [voltooid, setVoltooid] = useState(true);
   const [feestdag, setFeestdag] = useState(false);
+  const [ziek, setZiek] = useState(false);
+
   const [bericht, setBericht] = useState<String>("");
 
   const router = useRouter();
@@ -56,6 +58,7 @@ export default function NieuweShift() {
         uurloonId: uurloon,
         feestdag: feestdag,
         betaalperiodeId: betaalperiode,
+        ziek: ziek,
       })
       .then(function (response) {
         if (response.status === 200) {
@@ -380,6 +383,18 @@ export default function NieuweShift() {
                 }}
               />
               <span className="ml-2">Feestdag</span>
+            </label>
+
+            <label className="inline-flex items-center">
+              <input
+                type="checkbox"
+                className="form-checkbox"
+                checked={ziek}
+                onChange={() => {
+                  setZiek(!ziek);
+                }}
+              />
+              <span className="ml-2">Ziek</span>
             </label>
           </div>
 
