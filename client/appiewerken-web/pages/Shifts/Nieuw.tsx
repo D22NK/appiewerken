@@ -43,13 +43,17 @@ export default function NieuweShift() {
   }
 
   useEffect(() => {
-    getFields();
-    setJaarweek(getYear() + "-" + getWeekNumber());
-    console.log(fields.betaalperiodes);
-    if (fields.betaalperiodes) {
-      console.log(fields.betaalperiodes[0].id);
-      setBetaalperiode(fields.betaalperiodes[0].id);
+    async function main() {
+      await getFields();
+      setJaarweek(getYear() + "-" + getWeekNumber());
+      if (fields.betaalperiodes) {
+        console.log("DDDDD", fields.betaalperiodes[0].id);
+        setBetaalperiode(fields.betaalperiodes[0].id);
+      } else {
+        console.log("FFFFFFFFFFFF");
+      }
     }
+    main();
   }, []);
 
   function createShift() {
