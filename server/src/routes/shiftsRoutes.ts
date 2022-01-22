@@ -17,6 +17,7 @@ export default function shiftsRoutes(prisma: any, app: Express) {
           feestdag: req.body.feestdag,
           betaalperiodeId: req.body.betaalperiodeId,
           ziek: req.body.ziek,
+          bcd: req.body.bcd,
         },
         include: {
           tijdslot: true,

@@ -26,6 +26,7 @@ export default function NieuweShift() {
   const [voltooid, setVoltooid] = useState(true);
   const [feestdag, setFeestdag] = useState(false);
   const [ziek, setZiek] = useState(false);
+  const [bcd, setBcd] = useState(false);
 
   const [bericht, setBericht] = useState<String>("");
 
@@ -67,6 +68,7 @@ export default function NieuweShift() {
         feestdag: feestdag,
         betaalperiodeId: betaalperiode,
         ziek: ziek,
+        bcd: bcd,
       })
       .then(function (response) {
         if (response.status === 200) {
@@ -137,6 +139,25 @@ export default function NieuweShift() {
       case 7:
         setDag("ZONDAG");
         break;
+    }
+  }
+
+  function changeZiek() {
+    if (bcd) {
+      setZiek(!ziek);
+    } else {
+      setZiek(!ziek);
+
+      setBcd(!bcd);
+    }
+  }
+
+  function changeBCD() {
+    if (ziek) {
+      setZiek(false);
+      setBcd(!bcd);
+    } else {
+      setBcd(!bcd);
     }
   }
 
@@ -407,10 +428,22 @@ export default function NieuweShift() {
                 className="form-checkbox"
                 checked={ziek}
                 onChange={() => {
-                  setZiek(!ziek);
+                  changeZiek();
                 }}
               />
               <span className="ml-2">Ziek</span>
+            </label>
+
+            <label className="inline-flex items-center">
+              <input
+                type="checkbox"
+                className="form-checkbox"
+                checked={bcd}
+                onChange={() => {
+                  changeBCD();
+                }}
+              />
+              <span className="ml-2">BCD</span>
             </label>
           </div>
 
