@@ -20,7 +20,7 @@ export default function NieuweShift() {
   const [uurloon, setUurloon] = useState<String>(
     "935d7659-b59a-4988-98c6-c9d117f45233"
   );
-  const [betaalperiode, setBetaalperiode] = useState<String>();
+  const [betaalperiode, setBetaalperiode] = useState<String>("");
   const [urengewerkt, setUrengewerkt] = useState<number>(0);
   const [urenbetaald, setUrenbetaald] = useState<number>(0);
   const [voltooid, setVoltooid] = useState(true);
@@ -44,6 +44,10 @@ export default function NieuweShift() {
   useEffect(() => {
     getFields();
     setJaarweek(getYear() + "-" + getWeekNumber());
+    console.log(fields.betaalperiodes);
+    if (fields.betaalperiodes) {
+      setBetaalperiode(fields.betaalperiodes[0].id);
+    }
   }, []);
 
   function createShift() {
@@ -135,6 +139,7 @@ export default function NieuweShift() {
         break;
     }
   }
+
   return (
     <>
       <MainLayout parentPage="Shifts">
@@ -151,7 +156,7 @@ export default function NieuweShift() {
             Datum:
           </label>
           <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border border-sky-700 rounded-lg focus:shadow-outline"
             type="date"
             name="datum"
             onChange={(e) => datumChange(e)}
@@ -172,7 +177,7 @@ export default function NieuweShift() {
           </label>
           <div className="relative inline-block w-full text-gray-700 mb-4">
             <select
-              className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
+              className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border border-sky-700 rounded-lg appearance-none focus:shadow-outline"
               name="tijdslot"
               onChange={(e) => tijdslotChange(e)}
             >

@@ -53,7 +53,7 @@ export default function Shifts() {
                       )}
                     </h2>
                     <div className="flex flex-row">
-                      {shift.voltooid && (
+                      {shift.ziek && (
                         <MinusCircleIcon className="md:ml-4 w-4 text-red-500" />
                       )}
                       {shift.voltooid && (
