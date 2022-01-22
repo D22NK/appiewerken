@@ -283,16 +283,15 @@ export default function NieuweShift() {
                 Kies uurloon
               </option>
               {fields.uurlonen?.map((uurloon: any, index: any) => {
-                let selected = false;
-                if (index + 1 == fields.uurlonen.length) {
-                  selected = true;
+                if (uurloon.loon == 6.41) {
+                  return (
+                    <option key={uurloon.id} value={uurloon.id} selected>
+                      {uurloon.loon}
+                    </option>
+                  );
                 }
                 return (
-                  <option
-                    selected={selected}
-                    key={uurloon.id}
-                    value={uurloon.id}
-                  >
+                  <option key={uurloon.id} value={uurloon.id}>
                     {uurloon.loon}
                   </option>
                 );
@@ -321,7 +320,15 @@ export default function NieuweShift() {
               <option selected disabled>
                 Kies betaalperiode
               </option>
-              {fields.betaalperiodes?.map((periode: any) => {
+              {fields.betaalperiodes?.map((periode: any, index: number) => {
+                if (index === 0) {
+                  return (
+                    <option selected key={periode.id} value={periode.id}>
+                      {dateformatter(periode.startDatum)} tot{" "}
+                      {dateformatter(periode.eindDatum)} ({periode.slug})
+                    </option>
+                  );
+                }
                 return (
                   <option key={periode.id} value={periode.id}>
                     {dateformatter(periode.startDatum)} tot{" "}

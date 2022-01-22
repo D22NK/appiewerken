@@ -25,7 +25,7 @@ export default function utilRoutes(prisma: any, app: Express) {
           prisma.betaalperiodes.findMany({
             orderBy: [
               {
-                slug: "desc",
+                startDatum: "desc",
               },
             ],
           }),
