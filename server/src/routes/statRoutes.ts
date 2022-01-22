@@ -31,7 +31,7 @@ export default function statRoutes(prisma: any, app: Express) {
             where: {
               ontvangstdatum: {
                 gt: "2020-01-01T00:00:00.000Z",
-                lt: "2020-12-12T00:00:00.000Z",
+                lt: "2020-12-31T00:00:00.000Z",
               },
             },
 
@@ -44,7 +44,7 @@ export default function statRoutes(prisma: any, app: Express) {
             where: {
               ontvangstdatum: {
                 gt: "2021-01-01T00:00:00.000Z",
-                lt: "2022-12-12T00:00:00.000Z",
+                lt: "2021-12-31T00:00:00.000Z",
               },
             },
 
@@ -57,7 +57,7 @@ export default function statRoutes(prisma: any, app: Express) {
             where: {
               ontvangstdatum: {
                 gt: "2022-01-01T00:00:00.000Z",
-                lt: "2023-12-31T00:00:00.000Z",
+                lt: "2022-12-31T00:00:00.000Z",
               },
             },
 
@@ -94,16 +94,30 @@ export default function statRoutes(prisma: any, app: Express) {
     try {
       const [totaal, totaal2020, totaal2021, totaal2022] =
         await prisma.$transaction([
-          prisma.shifts.aggregate({
+          prisma.shifts.count(),
+          prisma.shifts.count({
             where: {
               datum: {
                 gt: "2020-01-01T00:00:00.000Z",
+                lt: "2020-12-31T00:00:00.000Z",
+              },
+            },
+          }),
+          prisma.shifts.count({
+            where: {
+              datum: {
+                gt: "2021-01-01T00:00:00.000Z",
                 lt: "2021-12-31T00:00:00.000Z",
               },
             },
+          }),
 
-            _count: {
-              id: true,
+          prisma.shifts.count({
+            where: {
+              datum: {
+                gt: "2022-01-01T00:00:00.000Z",
+                lt: "2022-12-31T00:00:00.000Z",
+              },
             },
           }),
         ]);
