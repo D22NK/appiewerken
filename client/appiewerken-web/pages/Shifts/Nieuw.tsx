@@ -20,7 +20,7 @@ export default function NieuweShift() {
   const [uurloon, setUurloon] = useState<String>(
     "935d7659-b59a-4988-98c6-c9d117f45233"
   );
-  const [betaalperiode, setBetaalperiode] = useState<String>("");
+  const [betaalperiode, setBetaalperiode] = useState<String>();
   const [urengewerkt, setUrengewerkt] = useState<number>(0);
   const [urenbetaald, setUrenbetaald] = useState<number>(0);
   const [voltooid, setVoltooid] = useState(true);
@@ -47,6 +47,7 @@ export default function NieuweShift() {
     setJaarweek(getYear() + "-" + getWeekNumber());
     console.log(fields.betaalperiodes);
     if (fields.betaalperiodes) {
+      console.log(fields.betaalperiodes[0].id);
       setBetaalperiode(fields.betaalperiodes[0].id);
     }
   }, []);

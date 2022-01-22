@@ -110,7 +110,12 @@ export default function statRoutes(prisma: any, app: Express) {
     try {
       const [totaal, totaal2020, totaal2021, totaal2022] =
         await prisma.$transaction([
-          prisma.shifts.count(),
+          prisma.shifts.count({
+            where: {
+              ziek: false,
+              bcd: false,
+            },
+          }),
           prisma.shifts.count({
             where: {
               ziek: false,
