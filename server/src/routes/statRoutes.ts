@@ -89,4 +89,29 @@ export default function statRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
+
+  app.get("/shiftstats", async (req: Request, res: Response) => {
+    try {
+      const [totaal, totaal2020, totaal2021, totaal2022] =
+        await prisma.$transaction([
+          prisma.shifts.aggregate({
+            where: {
+              datum: {
+                gt: "2020-01-01T00:00:00.000Z",
+                lt: "2021-12-31T00:00:00.000Z",
+              },
+            },
+
+            _count: {
+              id: true,
+            },
+          }),
+        ]);
+
+      res.json({ totaal, totaal2020, totaal2021, totaal2022 });
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
 }
