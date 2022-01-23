@@ -12,7 +12,7 @@ import {
   ClockIcon,
 } from "@heroicons/react/outline";
 import axios from "axios";
-import ShiftList from "../../../components/shiftList";
+import ShiftList from "../../../components/Shifts/ShiftList";
 export default function TijdslotDetails() {
   const { confirm } = useConfirm();
   const [bericht, setBericht] = useState<any>("");

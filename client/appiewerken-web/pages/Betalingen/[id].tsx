@@ -14,7 +14,8 @@ import {
 } from "@heroicons/react/outline";
 import axios from "axios";
 import BetalingHeader from "../../components/BetalingHeader";
-import ShiftList from "../../components/shiftList";
+import ShiftList from "../../components/Shifts/ShiftList";
+
 export default function WinkelDetails() {
   const router = useRouter();
   const [betaling, setBetaling] = useState<any>([]);

@@ -8,7 +8,7 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className=" z-100">
+      <nav className="sticky top-0 z-50 ">
         <div className="p-2 bg-sky-500 w-screen md:flex flex-row items-center grid grid-cols-3">
           <button
             className="block md:hidden rounded-md hover:bg-sky-600 justify-self-start "

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import dateformatter from "../../../functions/dateformatter";
-import ShiftList from "../../../components/shiftList";
+import ShiftList from "../../../components/Shifts/ShiftList";
 import MainLayout from "../../../components/layouts/Main";
 import {
   TrashIcon,

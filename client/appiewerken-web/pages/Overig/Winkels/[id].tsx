@@ -15,7 +15,7 @@ import {
 import axios from "axios";
 import dateformatter from "../../../functions/dateformatter";
 import dagformatter from "../../../functions/dagformatter";
-import ShiftList from "../../../components/shiftList";
+import ShiftList from "../../../components/Shifts/ShiftList";
 export default function WinkelDetails() {
   const { confirm } = useConfirm();
   const router = useRouter();

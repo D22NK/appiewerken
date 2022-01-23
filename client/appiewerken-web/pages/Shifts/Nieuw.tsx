@@ -113,6 +113,7 @@ export default function NieuweShift() {
 
   function datumChange(e: any) {
     setDatum(e.target.value);
+    console.log("DDDDDDDDDD", e.target.value);
     const dag = new Date(e.target.value).getDay();
 
     setJaarweek(
@@ -122,6 +123,9 @@ export default function NieuweShift() {
     );
 
     switch (dag) {
+      case 0:
+        setDag("ZONDAG");
+        break;
       case 1:
         setDag("MAANDAG");
         break;
@@ -137,12 +141,8 @@ export default function NieuweShift() {
       case 5:
         setDag("VRIJDAG");
         break;
-
       case 6:
         setDag("ZATERDAG");
-        break;
-      case 7:
-        setDag("ZONDAG");
         break;
     }
   }
