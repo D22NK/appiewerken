@@ -32,7 +32,7 @@ export default function ShiftCard({ shift, className }: any) {
                 )}
               </h2>
               <div className="flex flex-row">
-                {shift.ziek && (
+                {(shift.ziek || shift.bcd) && (
                   <MinusCircleIcon className="md:ml-4 w-4 text-red-500" />
                 )}
                 {shift.voltooid && (

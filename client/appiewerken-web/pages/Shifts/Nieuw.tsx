@@ -37,6 +37,7 @@ export default function NieuweShift() {
       const res = await axios.get("https://ahwapi.d22nk.nl/shiftfields");
       console.log(res.data);
       setFields(res.data);
+      setBetaalperiode(res.data.betaalperiodes[0].id);
     } catch (error) {
       console.error(error);
     }
@@ -46,12 +47,6 @@ export default function NieuweShift() {
     async function main() {
       await getFields();
       setJaarweek(getYear() + "-" + getWeekNumber());
-      if (fields.betaalperiodes) {
-        console.log("DDDDD", fields.betaalperiodes[0].id);
-        setBetaalperiode(fields.betaalperiodes[0].id);
-      } else {
-        console.log("FFFFFFFFFFFF");
-      }
     }
     main();
   }, []);
