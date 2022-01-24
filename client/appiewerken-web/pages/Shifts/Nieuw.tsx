@@ -143,22 +143,22 @@ export default function NieuweShift() {
   }
 
   function changeZiek() {
-    if (bcd) {
-      setZiek(!ziek);
-    } else {
-      setZiek(!ziek);
+    // if (bcd) {
+    //   setZiek(!ziek);
+    // } else {
+    setZiek(!ziek);
 
-      setBcd(!bcd);
-    }
+    //   setBcd(!bcd);
+    // }
   }
 
   function changeBCD() {
-    if (ziek) {
-      setZiek(false);
-      setBcd(!bcd);
-    } else {
-      setBcd(!bcd);
-    }
+    // if (ziek) {
+    //   setZiek(false);
+    //   setBcd(!bcd);
+    // } else {
+    setBcd(!bcd);
+    // }
   }
 
   return (

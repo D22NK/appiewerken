@@ -148,27 +148,45 @@ export default function ShiftDetails() {
               {shift.dag && dagformatter(shift.dag)} &middot;{" "}
               {shift.datum && dateformatter(shift.datum)}
             </h2>
-            <div className="flex flex-row">
+            <div className="flex flex-row mb-2">
+              {shift.ziek && (
+                <span className="flex items-center justify-center px-2 py-1 mx-2 text-xs font-bold leading-none text-red-100 bg-rose-700 bg-opacity-25 rounded-full">
+                  <h3 className="bg-opacity-100 text-rose-700">Ziek</h3>
+                </span>
+              )}
+
+              {shift.bcd && (
+                <span className="flex items-center justify-center px-2 py-1 mx-2 text-xs font-bold leading-none text-red-100 bg-rose-700 bg-opacity-25 rounded-full">
+                  <h3 className="bg-opacity-100 text-rose-700">Bcd</h3>
+                </span>
+              )}
+            </div>
+
+            <div className="flex flex-row justify-centeer">
               {shift.voltooid && (
                 <button
+                  className="flex items-center justify-center px-2 py-1 mr-2 md:mx-2 text-xs font-bold leading-none text-red-100 bg-violet-700 bg-opacity-25 rounded-full"
                   onClick={() => {
                     onvoltooiShift();
                   }}
                 >
-                  <BadgeCheckIcon className="w-4 text-violet-400" />
+                  <BadgeCheckIcon className=" w-4 text-violet-500" />
                 </button>
               )}
               {!shift.voltooid && (
                 <button
+                  className="flex items-center justify-center px-2 py-1 mr-2 md:mx-2 text-xs font-bold leading-none text-red-100 bg-slate-700 bg-opacity-25 rounded-full"
                   onClick={() => {
                     voltooiShift();
                   }}
                 >
-                  <BadgeCheckIcon className="w-4 text-slate-100" />
+                  <BadgeCheckIcon className=" w-4 text-slate-500" />
                 </button>
               )}
               {shift.feestdag && (
-                <SparklesIcon className="ml-4 w-4 text-amber-400" />
+                <span className="flex items-center justify-center px-2 py-1 mr-2 md:mx-2 text-xs font-bold leading-none text-red-100 bg-amber-400 bg-opacity-25 rounded-full">
+                  <SparklesIcon className=" w-4 text-amber-400" />
+                </span>
               )}
             </div>
             <p className="text-slate-400">{shift.tijdslot?.slot}</p>
