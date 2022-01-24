@@ -26,8 +26,6 @@ export default function statRoutes(prisma: any, app: Express) {
       const [totaal, totaal2020, totaal2021, totaal2022] =
         await prisma.$transaction([
           prisma.betalingen.aggregate({
-            ziek: false,
-            bcd: false,
             _sum: {
               bedrag: true,
             },
@@ -35,8 +33,6 @@ export default function statRoutes(prisma: any, app: Express) {
 
           prisma.betalingen.aggregate({
             where: {
-              ziek: false,
-              bcd: false,
               ontvangstdatum: {
                 gt: "2020-01-01T00:00:00.000Z",
                 lt: "2020-12-31T00:00:00.000Z",
@@ -50,8 +46,6 @@ export default function statRoutes(prisma: any, app: Express) {
 
           prisma.betalingen.aggregate({
             where: {
-              ziek: false,
-              bcd: false,
               ontvangstdatum: {
                 gt: "2021-01-01T00:00:00.000Z",
                 lt: "2021-12-31T00:00:00.000Z",
@@ -65,8 +59,6 @@ export default function statRoutes(prisma: any, app: Express) {
 
           prisma.betalingen.aggregate({
             where: {
-              ziek: false,
-              bcd: false,
               ontvangstdatum: {
                 gt: "2022-01-01T00:00:00.000Z",
                 lt: "2022-12-31T00:00:00.000Z",
