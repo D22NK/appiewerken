@@ -9,7 +9,8 @@ export default function NieuweWinkel() {
   const [bericht, setBericht] = useState("");
   const [adres, setAdres] = useState<String>();
   const router = useRouter();
-  function createWinkel() {
+  function createWinkel(e: any) {
+    e.preventDefault();
     setBericht("");
 
     axios
@@ -44,38 +45,41 @@ export default function NieuweWinkel() {
               <p>{bericht}</p>
             </div>
           )}
-          <label
-            className="mb-4 font-semibold text-sky-500"
-            htmlFor="winkelnummer"
-          >
-            Winkelnummer:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="text"
-            name="winkelnummer"
-            placeholder="xxxx"
-            onChange={(e) => setWinkelnummer(e.target.value)}
-          />
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="adres">
-            Adres:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="text"
-            name="adres"
-            placeholder="Melkweg 1, De Maan"
-            onChange={(e) => setAdres(e.target.value)}
-          />
-
-          <div className="flex  flex-1 flex-row-reverse">
-            <button
-              onClick={() => createWinkel()}
-              className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs px-2 py-2  rounded-md w-[50%]"
+          <form onSubmit={(e) => createWinkel(e)}>
+            <label
+              className="mb-4 font-semibold text-sky-500"
+              htmlFor="winkelnummer"
             >
-              Aanmaken
-            </button>
-          </div>
+              Winkelnummer:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="text"
+              name="winkelnummer"
+              placeholder="xxxx"
+              onChange={(e) => setWinkelnummer(e.target.value)}
+            />
+            <label className="mb-4 font-semibold text-sky-500" htmlFor="adres">
+              Adres:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="text"
+              name="adres"
+              placeholder="Melkweg 1, De Maan"
+              onChange={(e) => setAdres(e.target.value)}
+            />
+
+            <div className="flex  flex-1 flex-row-reverse">
+              <input
+                type="submit"
+                className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs px-2 py-2 rounded-md w-[50%] active:scale-90"
+                value="Aanmaken"
+              />
+            </div>
+          </form>
         </div>
       </MainLayout>
     </>
