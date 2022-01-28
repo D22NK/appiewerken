@@ -13,7 +13,8 @@ export default function NieuwTijdslot() {
   const [bericht, setBericht] = useState<String>("");
 
   const router = useRouter();
-  function createTijdslot() {
+  function createTijdslot(e: any) {
+    e.preventDefault();
     setBericht("");
     axios
       .post("https://ahwapi.d22nk.nl/tijdslots", {
@@ -50,52 +51,57 @@ export default function NieuwTijdslot() {
               <p>{bericht}</p>
             </div>
           )}
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="begin">
-            Begin:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="text"
-            name="begin"
-            onChange={(e) => setBegin(e.target.value)}
-          />
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="eind">
-            Eind:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="text"
-            name="eind"
-            onChange={(e) => setEind(e.target.value)}
-          />
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="uren">
-            Urengewerkt:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="number"
-            name="urengewerkt"
-            onChange={(e) => setUrengewerkt(parseFloat(e.target.value))}
-          />
+          <form onSubmit={(e) => createTijdslot(e)}>
+            <label className="mb-4 font-semibold text-sky-500" htmlFor="begin">
+              Begin:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="text"
+              name="begin"
+              onChange={(e) => setBegin(e.target.value)}
+            />
+            <label className="mb-4 font-semibold text-sky-500" htmlFor="eind">
+              Eind:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="text"
+              name="eind"
+              onChange={(e) => setEind(e.target.value)}
+            />
+            <label className="mb-4 font-semibold text-sky-500" htmlFor="uren">
+              Urengewerkt:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="number"
+              name="urengewerkt"
+              onChange={(e) => setUrengewerkt(parseFloat(e.target.value))}
+            />
 
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="uren">
-            Urenbetaald:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="number"
-            name="urenbetaald"
-            onChange={(e) => setUrenbetaald(parseFloat(e.target.value))}
-          />
+            <label className="mb-4 font-semibold text-sky-500" htmlFor="uren">
+              Urenbetaald:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="number"
+              name="urenbetaald"
+              onChange={(e) => setUrenbetaald(parseFloat(e.target.value))}
+            />
 
-          <div className="flex  flex-1 flex-row-reverse">
-            <button
-              onClick={() => createTijdslot()}
-              className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs px-2 py-2  rounded-md w-[50%]"
-            >
-              Aanmaken
-            </button>
-          </div>
+            <div className="flex  flex-1 flex-row-reverse">
+              <input
+                type="submit"
+                className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs px-2 py-2 rounded-md w-[50%] active:scale-90"
+                value="Aanmaken"
+              />
+            </div>
+          </form>
         </div>
       </MainLayout>
     </>

@@ -51,7 +51,8 @@ export default function NieuweShift() {
     main();
   }, []);
 
-  function createShift() {
+  function createShift(e: any) {
+    e.preventDefault();
     setBericht("");
 
     axios
@@ -172,289 +173,318 @@ export default function NieuweShift() {
               <p>{bericht}</p>
             </div>
           )}
+          <form onSubmit={(e) => createShift(e)}>
+            <label className="mb-4 font-semibold text-sky-500" htmlFor="datum">
+              Datum:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border border-sky-700 rounded-lg focus:shadow-outline"
+              type="date"
+              name="datum"
+              onChange={(e) => datumChange(e)}
+            />
 
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="datum">
-            Datum:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border border-sky-700 rounded-lg focus:shadow-outline"
-            type="date"
-            name="datum"
-            onChange={(e) => datumChange(e)}
-          />
-
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="jaarweek">
-            Jaar-week:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="text"
-            name="jaarweek"
-            onChange={(e) => setJaarweek(e.target.value)}
-            value={jaarweek}
-          />
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="tijdslot">
-            Tijdslot:
-          </label>
-          <div className="relative inline-block w-full text-gray-700 mb-4">
-            <select
-              className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border border-sky-700 rounded-lg appearance-none focus:shadow-outline"
-              name="tijdslot"
-              onChange={(e) => tijdslotChange(e)}
+            <label
+              className="mb-4 font-semibold text-sky-500"
+              htmlFor="jaarweek"
             >
-              <option selected disabled>
-                Kies tijdslot
-              </option>
-              {fields.tijdslots?.map((tijdslot: any) => {
-                return (
-                  <option key={tijdslot.id} value={tijdslot.id}>
-                    {tijdslot.slot}
-                  </option>
-                );
-              })}
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                <path
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                ></path>
-              </svg>
-            </div>
-          </div>
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="dag">
-            Dag:
-          </label>
-          <div className="relative inline-block w-full text-gray-700 mb-4">
-            <select
-              className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
-              name="dag"
-              onChange={(e) => dagChange(e)}
+              Jaar-week:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="text"
+              name="jaarweek"
+              onChange={(e) => setJaarweek(e.target.value)}
+              value={jaarweek}
+            />
+            <label
+              className="mb-4 font-semibold text-sky-500"
+              htmlFor="tijdslot"
             >
-              {dag ? (
-                <option selected value={dag}>
-                  {dagformatter(dag)}
+              Tijdslot:
+            </label>
+            <div className="relative inline-block w-full text-gray-700 mb-4">
+              <select
+                required
+                className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border border-sky-700 rounded-lg appearance-none focus:shadow-outline"
+                name="tijdslot"
+                onChange={(e) => tijdslotChange(e)}
+              >
+                <option selected disabled value="">
+                  Kies tijdslot
                 </option>
-              ) : (
-                <option selected disabled>
-                  Kies dag
-                </option>
-              )}
-              <option value="MAANDAG">Maandag</option>
-              <option value="DINSDAG">Dinsdag</option>
-              <option value="WOENSDAG">Woensdag</option>
-              <option value="DONDERDAG">Donderdag</option>
-              <option value="VRIJDAG">Vrijdag</option>
-              <option value="ZATERDAG">Zaterdag</option>
-              <option value="ZONDAG">Zondag</option>
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                <path
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                ></path>
-              </svg>
-            </div>
-          </div>
-
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="winkel">
-            Winkel:
-          </label>
-          <div className="relative inline-block w-full text-gray-700 mb-4">
-            <select
-              className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
-              name="winkel"
-              onChange={(e) => setWinkel(e.target.value)}
-            >
-              <option disabled>Kies winkel</option>
-              {fields.winkels?.map((winkel: any) => {
-                if (winkel.winkelNr === "1213") {
+                {fields.tijdslots?.map((tijdslot: any) => {
                   return (
-                    <option selected key={winkel.id} value={winkel.id}>
+                    <option key={tijdslot.id} value={tijdslot.id}>
+                      {tijdslot.slot}
+                    </option>
+                  );
+                })}
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                  <path
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <label className="mb-4 font-semibold text-sky-500" htmlFor="dag">
+              Dag:
+            </label>
+            <div className="relative inline-block w-full text-gray-700 mb-4">
+              <select
+                required
+                className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
+                name="dag"
+                onChange={(e) => dagChange(e)}
+              >
+                {dag ? (
+                  <option selected value={dag}>
+                    {dagformatter(dag)}
+                  </option>
+                ) : (
+                  <option selected disabled value="">
+                    Kies dag
+                  </option>
+                )}
+                <option value="MAANDAG">Maandag</option>
+                <option value="DINSDAG">Dinsdag</option>
+                <option value="WOENSDAG">Woensdag</option>
+                <option value="DONDERDAG">Donderdag</option>
+                <option value="VRIJDAG">Vrijdag</option>
+                <option value="ZATERDAG">Zaterdag</option>
+                <option value="ZONDAG">Zondag</option>
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                  <path
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+
+            <label className="mb-4 font-semibold text-sky-500" htmlFor="winkel">
+              Winkel:
+            </label>
+            <div className="relative inline-block w-full text-gray-700 mb-4">
+              <select
+                required
+                className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
+                name="winkel"
+                onChange={(e) => setWinkel(e.target.value)}
+              >
+                <option selected disabled value="">
+                  Kies winkel
+                </option>
+                {fields.winkels?.map((winkel: any) => {
+                  if (winkel.winkelNr === "1213") {
+                    return (
+                      <option selected key={winkel.id} value={winkel.id}>
+                        {winkel.winkelNr}
+                      </option>
+                    );
+                  }
+                  return (
+                    <option key={winkel.id} value={winkel.id}>
                       {winkel.winkelNr}
                     </option>
                   );
-                }
-                return (
-                  <option key={winkel.id} value={winkel.id}>
-                    {winkel.winkelNr}
-                  </option>
-                );
-              })}
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                <path
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                ></path>
-              </svg>
+                })}
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                  <path
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
             </div>
-          </div>
 
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="uurloon">
-            Uurloon:
-          </label>
-          <div className="relative inline-block w-full text-gray-700 mb-4">
-            <select
-              className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
-              name="uurloon"
-              onChange={(e) => setUurloon(e.target.value)}
+            <label
+              className="mb-4 font-semibold text-sky-500"
+              htmlFor="uurloon"
             >
-              <option selected disabled>
-                Kies uurloon
-              </option>
-              {fields.uurlonen?.map((uurloon: any, index: any) => {
-                if (uurloon.loon == 6.41) {
+              Uurloon:
+            </label>
+            <div className="relative inline-block w-full text-gray-700 mb-4">
+              <select
+                required
+                className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
+                name="uurloon"
+                onChange={(e) => setUurloon(e.target.value)}
+              >
+                <option selected disabled value="">
+                  Kies uurloon
+                </option>
+                {fields.uurlonen?.map((uurloon: any, index: any) => {
+                  if (uurloon.loon == 6.41) {
+                    return (
+                      <option key={uurloon.id} value={uurloon.id} selected>
+                        {uurloon.loon}
+                      </option>
+                    );
+                  }
                   return (
-                    <option key={uurloon.id} value={uurloon.id} selected>
+                    <option key={uurloon.id} value={uurloon.id}>
                       {uurloon.loon}
                     </option>
                   );
-                }
-                return (
-                  <option key={uurloon.id} value={uurloon.id}>
-                    {uurloon.loon}
-                  </option>
-                );
-              })}
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                <path
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                ></path>
-              </svg>
+                })}
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                  <path
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
             </div>
-          </div>
 
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="periode">
-            Betaalperiode:
-          </label>
-          <div className="relative inline-block w-full text-gray-700 mb-4">
-            <select
-              className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
-              name="periode"
-              onChange={(e) => setBetaalperiode(e.target.value)}
+            <label
+              className="mb-4 font-semibold text-sky-500"
+              htmlFor="periode"
             >
-              <option selected disabled>
-                Kies betaalperiode
-              </option>
-              {fields.betaalperiodes?.map((periode: any, index: number) => {
-                if (index === 0) {
+              Betaalperiode:
+            </label>
+            <div className="relative inline-block w-full text-gray-700 mb-4">
+              <select
+                required
+                className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
+                name="periode"
+                onChange={(e) => setBetaalperiode(e.target.value)}
+              >
+                <option selected disabled value="">
+                  Kies betaalperiode
+                </option>
+                {fields.betaalperiodes?.map((periode: any, index: number) => {
+                  if (index === 0) {
+                    return (
+                      <option selected key={periode.id} value={periode.id}>
+                        {dateformatter(periode.startDatum)} tot{" "}
+                        {dateformatter(periode.eindDatum)} ({periode.slug})
+                      </option>
+                    );
+                  }
                   return (
-                    <option selected key={periode.id} value={periode.id}>
+                    <option key={periode.id} value={periode.id}>
                       {dateformatter(periode.startDatum)} tot{" "}
                       {dateformatter(periode.eindDatum)} ({periode.slug})
                     </option>
                   );
-                }
-                return (
-                  <option key={periode.id} value={periode.id}>
-                    {dateformatter(periode.startDatum)} tot{" "}
-                    {dateformatter(periode.eindDatum)} ({periode.slug})
-                  </option>
-                );
-              })}
-            </select>
-            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                <path
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                ></path>
-              </svg>
+                })}
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                  <path
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                    fill-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
             </div>
-          </div>
 
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="gewerkt">
-            Uren gewerkt:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="number"
-            name="gewerkt"
-            value={urengewerkt}
-            onChange={(e) => setUrengewerkt(parseFloat(e.target.value))}
-          />
-
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="betaald">
-            Uren betaald:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="number"
-            name="betaald"
-            value={urenbetaald}
-            onChange={(e) => setUrenbetaald(parseFloat(e.target.value))}
-          />
-
-          <div className="flex flex-col">
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                checked={voltooid}
-                onChange={() => {
-                  setVoltooid(!voltooid);
-                }}
-              />
-              <span className="ml-2">Voltooid</span>
-            </label>
-
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                checked={feestdag}
-                onChange={() => {
-                  console.log(!feestdag);
-                  setFeestdag(!feestdag);
-                }}
-              />
-              <span className="ml-2">Feestdag</span>
-            </label>
-
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                checked={ziek}
-                onChange={() => {
-                  changeZiek();
-                }}
-              />
-              <span className="ml-2">Ziek</span>
-            </label>
-
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                checked={bcd}
-                onChange={() => {
-                  changeBCD();
-                }}
-              />
-              <span className="ml-2">BCD</span>
-            </label>
-          </div>
-
-          <div className="flex  flex-1 flex-row-reverse">
-            <button
-              onClick={() => createShift()}
-              className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs px-2 py-2  rounded-md w-[50%]"
+            <label
+              className="mb-4 font-semibold text-sky-500"
+              htmlFor="gewerkt"
             >
-              Aanmaken
-            </button>
-          </div>
+              Uren gewerkt:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="number"
+              name="gewerkt"
+              value={urengewerkt}
+              onChange={(e) => setUrengewerkt(parseFloat(e.target.value))}
+            />
+
+            <label
+              className="mb-4 font-semibold text-sky-500"
+              htmlFor="betaald"
+            >
+              Uren betaald:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="number"
+              name="betaald"
+              value={urenbetaald}
+              onChange={(e) => setUrenbetaald(parseFloat(e.target.value))}
+            />
+
+            <div className="flex flex-col">
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  checked={voltooid}
+                  onChange={() => {
+                    setVoltooid(!voltooid);
+                  }}
+                />
+                <span className="ml-2">Voltooid</span>
+              </label>
+
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  checked={feestdag}
+                  onChange={() => {
+                    console.log(!feestdag);
+                    setFeestdag(!feestdag);
+                  }}
+                />
+                <span className="ml-2">Feestdag</span>
+              </label>
+
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  checked={ziek}
+                  onChange={() => {
+                    changeZiek();
+                  }}
+                />
+                <span className="ml-2">Ziek</span>
+              </label>
+
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  checked={bcd}
+                  onChange={() => {
+                    changeBCD();
+                  }}
+                />
+                <span className="ml-2">BCD</span>
+              </label>
+            </div>
+
+            <div className="flex  flex-1 flex-row-reverse">
+              <input
+                type="submit"
+                className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs px-2 py-2 rounded-md w-[50%] active:scale-90"
+                value="Aanmaken"
+              />
+            </div>
+          </form>
         </div>
       </MainLayout>
     </>

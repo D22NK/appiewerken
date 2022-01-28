@@ -9,7 +9,8 @@ export default function NieuwUurloon() {
   const [uurloon, setUurloon] = useState<Number>();
   const [bericht, setBericht] = useState("");
   const router = useRouter();
-  function createUurloon() {
+  function createUurloon(e: any) {
+    e.preventDefault();
     setBericht("");
     console.log(uurloon, leeftijd);
     axios
@@ -44,34 +45,43 @@ export default function NieuwUurloon() {
               <p>{bericht}</p>
             </div>
           )}
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="uurloon">
-            Uurloon:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="number"
-            name="uurloon"
-            onChange={(e) => setUurloon(parseFloat(e.target.value))}
-          />
-
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="leeftijd">
-            Leeftijd:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="number"
-            name="leeftijd"
-            onChange={(e) => setLeeftijd(parseInt(e.target.value))}
-          />
-
-          <div className="flex  flex-1 flex-row-reverse">
-            <button
-              onClick={() => createUurloon()}
-              className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs px-2 py-2  rounded-md w-[50%]"
+          <form onSubmit={(e) => createUurloon(e)}>
+            <label
+              className="mb-4 font-semibold text-sky-500"
+              htmlFor="uurloon"
             >
-              Aanmaken
-            </button>
-          </div>
+              Uurloon:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="number"
+              name="uurloon"
+              onChange={(e) => setUurloon(parseFloat(e.target.value))}
+            />
+
+            <label
+              className="mb-4 font-semibold text-sky-500"
+              htmlFor="leeftijd"
+            >
+              Leeftijd:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="number"
+              name="leeftijd"
+              onChange={(e) => setLeeftijd(parseInt(e.target.value))}
+            />
+
+            <div className="flex  flex-1 flex-row-reverse">
+              <input
+                type="submit"
+                className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs px-2 py-2 rounded-md w-[50%] active:scale-90"
+                value="Aanmaken"
+              />
+            </div>
+          </form>
         </div>
       </MainLayout>
     </>

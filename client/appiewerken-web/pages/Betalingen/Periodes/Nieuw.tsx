@@ -14,7 +14,8 @@ export default function NieuweWinkel() {
   const [bericht, setBericht] = useState("");
   const router = useRouter();
 
-  function createPeriode() {
+  function createPeriode(e:any) {
+    e.preventDefault()
     setBericht("");
 
     axios
@@ -52,74 +53,79 @@ export default function NieuweWinkel() {
               <p>{bericht}</p>
             </div>
           )}
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="start">
-            Startdatum:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="date"
-            name="start"
-            // placeholder="xxxx"
-            onChange={(e) => setStartdatum(e.target.value)}
-          />
-
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="eind">
-            Einddatum:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="date"
-            name="eind"
-            // placeholder="xxxx"
-            onChange={(e) => setEinddatum(e.target.value)}
-          />
-
-          <label className="mb-4 font-semibold text-sky-500" htmlFor="slug">
-            Kenmerk:
-          </label>
-          <input
-            className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
-            type="text"
-            name="slug"
-            // placeholder="xxxx"
-            onChange={(e) => setSlug(e.target.value)}
-          />
-
-          <div className="flex flex-col">
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                checked={persoonlijkebonus}
-                onChange={() => {
-                  setPersoonlijkebonus(!persoonlijkebonus);
-                }}
-              />
-              <span className="ml-2">Persoonlijkebonus</span>
+          <form
+            onSubmit={(e) => {
+              createPeriode(e);
+            }}
+          >
+            <label className="mb-4 font-semibold text-sky-500" htmlFor="start">
+              Startdatum:
             </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="date"
+              name="start"
+              onChange={(e) => setStartdatum(e.target.value)}
+            />
 
-            <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                className="form-checkbox"
-                checked={winstuitkering}
-                onChange={() => {
-                  console.log(!winstuitkering);
-                  setWinstuitkering(!winstuitkering);
-                }}
-              />
-              <span className="ml-2">Winstuitkering</span>
+            <label className="mb-4 font-semibold text-sky-500" htmlFor="eind">
+              Einddatum:
             </label>
-          </div>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="date"
+              name="eind"
+              onChange={(e) => setEinddatum(e.target.value)}
+            />
 
-          <div className="flex  flex-1 flex-row-reverse">
-            <button
-              onClick={() => createPeriode()}
-              className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs px-2 py-2  rounded-md w-[50%]"
-            >
-              Aanmaken
-            </button>
-          </div>
+            <label className="mb-4 font-semibold text-sky-500" htmlFor="slug">
+              Kenmerk:
+            </label>
+            <input
+              required
+              className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
+              type="text"
+              name="slug"
+              onChange={(e) => setSlug(e.target.value)}
+            />
+
+            <div className="flex flex-col">
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  checked={persoonlijkebonus}
+                  onChange={() => {
+                    setPersoonlijkebonus(!persoonlijkebonus);
+                  }}
+                />
+                <span className="ml-2">Persoonlijkebonus</span>
+              </label>
+
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  className="form-checkbox"
+                  checked={winstuitkering}
+                  onChange={() => {
+                    console.log(!winstuitkering);
+                    setWinstuitkering(!winstuitkering);
+                  }}
+                />
+                <span className="ml-2">Winstuitkering</span>
+              </label>
+            </div>
+
+            <div className="flex  flex-1 flex-row-reverse">
+              <input
+                type="submit"
+                className="bg-sky-500 hover:bg-sky-600 text-white font-bold text-xs px-2 py-2 rounded-md w-[50%] active:scale-90"
+                value="Aanmaken"
+              />
+            </div>
+          </form>
         </div>
       </MainLayout>
     </>
