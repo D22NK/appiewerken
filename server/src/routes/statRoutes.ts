@@ -35,7 +35,7 @@ export default function statRoutes(prisma: any, app: Express) {
             where: {
               ontvangstdatum: {
                 gt: "2020-01-01T00:00:00.000Z",
-                lt: "2020-12-31T00:00:00.000Z",
+                lt: "2020-12-31T00:01:00.000Z",
               },
             },
 
@@ -48,7 +48,7 @@ export default function statRoutes(prisma: any, app: Express) {
             where: {
               ontvangstdatum: {
                 gt: "2021-01-01T00:00:00.000Z",
-                lt: "2021-12-31T00:00:00.000Z",
+                lt: "2021-12-31T00:01:00.000Z",
               },
             },
 
@@ -61,7 +61,7 @@ export default function statRoutes(prisma: any, app: Express) {
             where: {
               ontvangstdatum: {
                 gt: "2022-01-01T00:00:00.000Z",
-                lt: "2022-12-31T00:00:00.000Z",
+                lt: "2022-12-31T00:01:00.000Z",
               },
             },
 
@@ -114,7 +114,7 @@ export default function statRoutes(prisma: any, app: Express) {
               bcd: false,
               datum: {
                 gt: "2020-01-01T00:00:00.000Z",
-                lt: "2020-12-31T00:00:00.000Z",
+                lt: "2020-12-31T00:01:00.000Z",
               },
             },
           }),
@@ -124,7 +124,7 @@ export default function statRoutes(prisma: any, app: Express) {
               bcd: false,
               datum: {
                 gt: "2021-01-01T00:00:00.000Z",
-                lt: "2021-12-31T00:00:00.000Z",
+                lt: "2021-12-31T00:01:00.000Z",
               },
             },
           }),
@@ -135,7 +135,7 @@ export default function statRoutes(prisma: any, app: Express) {
               bcd: false,
               datum: {
                 gt: "2022-01-01T00:00:00.000Z",
-                lt: "2022-12-31T00:00:00.000Z",
+                lt: "2022-12-31T00:01:00.000Z",
               },
             },
           }),
