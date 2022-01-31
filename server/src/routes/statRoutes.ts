@@ -1,5 +1,4 @@
 import { Express, Request, Response } from "express";
-import { P } from "pino";
 
 export default function statRoutes(prisma: any, app: Express) {
   app.get("/totaal", async (req: Request, res: Response) => {

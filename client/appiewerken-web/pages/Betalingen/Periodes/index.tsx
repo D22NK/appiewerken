@@ -9,6 +9,7 @@ import {
   ChartPieIcon,
   CalendarIcon,
   BriefcaseIcon,
+  BadgeCheckIcon,
 } from "@heroicons/react/outline";
 import BetalingsHeader from "../../../components/BetalingHeader";
 export default function Periodes() {
@@ -53,6 +54,11 @@ export default function Periodes() {
                     )}
                     {periode.winstuitkering && (
                       <ChartPieIcon className=" w-4 text-orange-500" />
+                    )}
+                    {periode.betaling && (
+                      <span className="flex items-center justify-center px-2 py-1 mr-2 md:mx-2 text-xs font-bold leading-none  bg-green-700 bg-opacity-25 rounded-full">
+                        <BadgeCheckIcon className=" w-4 text-green-500" />
+                      </span>
                     )}
                   </h2>
                   <p className="text-slate-400 flex-1 flex flex-row md:ml-2 md:items-center">

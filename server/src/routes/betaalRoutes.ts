@@ -29,6 +29,7 @@ export default function betaalRoutes(prisma: any, app: Express) {
       const periodes = await prisma.betaalperiodes.findMany({
         include: {
           shifts: true,
+          betaling: true
         },
         orderBy: [
           {
@@ -55,6 +56,7 @@ export default function betaalRoutes(prisma: any, app: Express) {
           id: req.params.id,
         },
         include: {
+          betaling: true,
           shifts: {
             include: {
               winkel: true,
