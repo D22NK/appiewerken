@@ -7,7 +7,7 @@ import dateformatter from "../../functions/dateformatter";
 import dagformatter from "../../functions/dagformatter";
 import daysBetween from "../../functions/daysBetween";
 import Link from "next/link";
-
+import kalenderStyle from "../../functions/kalenderStyle";
 import {
   BadgeCheckIcon,
   SparklesIcon,
@@ -164,6 +164,12 @@ export default function Kalender() {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7">
           {formattedWeek &&
             Object.keys(formattedWeek).map((key: any) => {
+              const boxStyle = kalenderStyle(
+                formattedWeek[key].voltooid,
+                formattedWeek[key].bcd,
+                formattedWeek[key].ziek
+              );
+
               return (
                 <>
                   {!formattedWeek[key].string ? (
@@ -174,9 +180,18 @@ export default function Kalender() {
                       <div
                         className={
                           "flex flex-col m-2 items-center justify-center rounded-xl p-2 cursor-pointer " +
-                          (formattedWeek[key]?.voltooid
-                            ? " bg-green-400 text-green-900 hover:bg-green-300"
-                            : " bg-yellow-300 text-yellow-600 hover:bg-yellow-200")
+                          boxStyle
+                          // (formattedWeek[key]?.voltooid &&
+                          //   " bg-green-400 text-green-900 hover:bg-green-300")
+                          // (!formattedWeek[key]?.voltooid &&
+                          //   (!formattedWeek[key]?.ziek ||
+                          //     !formattedWeek[key]?.bcd) &&
+                          //   " bg-yellow-300 text-yellow-600 hover:bg-yellow-200")
+                          // (formattedWeek[key]?.bcd &&
+                          //   !formattedWeek[key]?.ziek &&
+                          //   " bg-orange-400 text-orange-900 hover:bg-orange-300") +
+                          // (formattedWeek[key]?.ziek &&
+                          //   " bg-red-400 text-red-900 hover:bg-red-300")
                         }
                       >
                         <h2 className="text-sky-700 font-bold flex flex-row">

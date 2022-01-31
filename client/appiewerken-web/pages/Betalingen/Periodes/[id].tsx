@@ -115,6 +115,9 @@ export default function PeriodeDetails() {
                 </div>
               )}
             </div>
+            <p className="text-slate-400">
+              Betaling: € {periode.betaling && periode.betaling.bedrag}
+            </p>
           </div>
         </div>
 

@@ -178,6 +178,7 @@ export default function NieuweShift() {
               Datum:
             </label>
             <input
+              autoFocus={true}
               required
               className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border border-sky-700 rounded-lg focus:shadow-outline"
               type="date"
