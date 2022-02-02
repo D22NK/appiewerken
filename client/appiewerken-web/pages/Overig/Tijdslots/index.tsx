@@ -5,16 +5,20 @@ import MainLayout from "../../../components/layouts/Main";
 import axios from "axios";
 import { ClockIcon, BriefcaseIcon } from "@heroicons/react/outline";
 import OverigHeader from "../../../components/OverigHeader";
+import Loader from "../../../components/Loader";
 export default function Tijdslots() {
   const [tijdslots, setTijdslots] = useState<any>([]);
-  //   let winkels: any = [];
+  const [loading, setLoading] = useState<boolean>(false);
+
   async function getTijdslots() {
+    setLoading(true);
     try {
       const res = await axios.get("https://ahwapi.d22nk.nl/tijdslots");
-      //   winkels = res.data;
       setTijdslots(res.data);
+      setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   }
 
@@ -25,6 +29,7 @@ export default function Tijdslots() {
   return (
     <MainLayout parentPage="Overig">
       <OverigHeader page="Tijdslots" />
+      {loading && <Loader />}
       {tijdslots.map((tijdslot: any) => {
         return (
           <>

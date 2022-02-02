@@ -5,16 +5,21 @@ import MainLayout from "../../../components/layouts/Main";
 import axios from "axios";
 import { CashIcon, BriefcaseIcon } from "@heroicons/react/outline";
 import OverigHeader from "../../../components/OverigHeader";
+import Loader from "../../../components/Loader";
 export default function Uurlonen() {
   const [uurlonen, setUurlonen] = useState<any>([]);
-  //   let winkels: any = [];
+  const [loading, setLoading] = useState<boolean>(false);
+
   async function getUurlonen() {
+    setLoading(true);
+
     try {
       const res = await axios.get("https://ahwapi.d22nk.nl/uurlonen");
-      //   winkels = res.data;
       setUurlonen(res.data);
+      setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   }
 
@@ -25,6 +30,7 @@ export default function Uurlonen() {
   return (
     <MainLayout parentPage="Overig">
       <OverigHeader page="Uurlonen" />
+      {loading && <Loader />}
       {uurlonen.map((uurloon: any) => {
         return (
           <>

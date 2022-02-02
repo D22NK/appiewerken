@@ -60,6 +60,16 @@ export default function PeriodeDetails() {
     }
   }
 
+  function periodeUren() {
+    let urengewerkt = 0,
+      urenbetaald = 0;
+    periode.shifts?.forEach((shift: any) => {
+      urengewerkt += shift.urenGewerkt;
+      urenbetaald += shift.urenBetaald;
+    });
+    return { urenbetaald, urengewerkt };
+  }
+
   return (
     <MainLayout parentPage="Betalingen">
       <BetalingHeader page="Periode Informatie" />
@@ -117,6 +127,12 @@ export default function PeriodeDetails() {
             </div>
             <p className="text-slate-400">
               Betaling: € {periode.betaling && periode.betaling.bedrag}
+            </p>
+            <p className="text-slate-400">
+              Uren gewerkt: {periodeUren().urengewerkt}
+            </p>
+            <p className="text-slate-400">
+              Uren gewerkt: {periodeUren().urenbetaald}
             </p>
           </div>
         </div>

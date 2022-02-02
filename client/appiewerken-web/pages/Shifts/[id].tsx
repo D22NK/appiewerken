@@ -190,6 +190,9 @@ export default function ShiftDetails() {
               )}
             </div>
             <p className="text-slate-400">{shift.tijdslot?.slot}</p>
+            <p className="text-slate-400">
+              € {(shift.urenBetaald * shift.uurloon?.loon).toFixed(2)}
+            </p>
           </div>
         </div>
 

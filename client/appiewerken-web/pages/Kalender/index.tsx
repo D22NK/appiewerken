@@ -15,6 +15,7 @@ import {
   ArrowCircleRightIcon,
   ArrowNarrowLeftIcon,
 } from "@heroicons/react/outline";
+import Loader from "../../components/Loader";
 export default function Kalender() {
   const router = useRouter();
 
@@ -131,7 +132,7 @@ export default function Kalender() {
         <h1 className="flex-1 text-2xl font-bold text-sky-500">
           Kalender &middot; {jaarweek.jaar + "-" + jaarweek.week}
         </h1>
-        {loading && <p>Laden.......</p>}
+        {loading && <Loader />}
         {bericht !== "" && (
           <div className="w-[100%] bg-slate-300 rounded-md p-2  mb-2 hover:bg-slate-400">
             <p>{bericht}</p>

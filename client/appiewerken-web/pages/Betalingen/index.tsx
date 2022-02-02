@@ -11,20 +11,25 @@ import {
 } from "@heroicons/react/outline";
 import BetalingsHeader from "../../components/BetalingHeader";
 import dateformatter from "../../functions/dateformatter";
+import Loader from "../../components/Loader";
 export default function Betalingen() {
   const [betalingen, setBetalingen] = useState<any>([]);
-  //   let winkels: any = [];
-  async function getPeriodes() {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  async function getBetalingen() {
+    setLoading(true);
     try {
       const res = await axios.get("https://ahwapi.d22nk.nl/betalingen");
       setBetalingen(res.data);
+      setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   }
 
   useEffect(() => {
-    getPeriodes();
+    getBetalingen();
   }, []);
 
   return (
@@ -35,6 +40,7 @@ export default function Betalingen() {
           <p>Geen betalingen gevonden!</p>
         </div>
       )}
+      {loading && <Loader />}
       {betalingen.map((betaling: any) => {
         return (
           <>

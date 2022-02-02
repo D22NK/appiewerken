@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-
 import MainLayout from "../../components/layouts/Main";
 import DashboardHeader from "../../components/DashboardHeader";
 import BetalingStats from "../../components/stats/BetalingStats";

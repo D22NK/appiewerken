@@ -119,6 +119,16 @@ export default function NieuweShift() {
     console.log("DDDDDDDDDD", e.target.value);
     const dag = new Date(e.target.value).getDay();
 
+    fields.betaalperiodes?.forEach((periode: any) => {
+      const van = new Date(periode.startDatum);
+      const tot = new Date(periode.eindDatum);
+      const checkdate = new Date(e.target.value);
+
+      if (checkdate > van && checkdate < tot) {
+        setBetaalperiode(periode.id);
+      }
+    });
+
     setJaarweek(
       getYear(new Date(e.target.value)) +
         "-" +
@@ -180,6 +190,7 @@ export default function NieuweShift() {
               <p>{bericht}</p>
             </div>
           )}
+
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -382,7 +393,14 @@ export default function NieuweShift() {
                   Kies betaalperiode
                 </option>
                 {fields.betaalperiodes?.map((periode: any, index: number) => {
-                  if (index === 0) {
+                  if (index === 0 && !betaalperiode) {
+                    return (
+                      <option selected key={periode.id} value={periode.id}>
+                        {dateformatter(periode.startDatum)} tot{" "}
+                        {dateformatter(periode.eindDatum)} ({periode.slug})
+                      </option>
+                    );
+                  } else if (betaalperiode === periode.id) {
                     return (
                       <option selected key={periode.id} value={periode.id}>
                         {dateformatter(periode.startDatum)} tot{" "}

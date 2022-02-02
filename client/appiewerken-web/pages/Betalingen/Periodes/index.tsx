@@ -12,16 +12,20 @@ import {
   BadgeCheckIcon,
 } from "@heroicons/react/outline";
 import BetalingsHeader from "../../../components/BetalingHeader";
+import Loader from "../../../components/Loader";
 export default function Periodes() {
   const [periodes, setPeriodes] = useState<any>([]);
-  //   let winkels: any = [];
+  const [loading, setLoading] = useState<boolean>(false);
+
   async function getPeriodes() {
+    setLoading(true);
     try {
       const res = await axios.get("https://ahwapi.d22nk.nl/periodes");
-      //   winkels = res.data;
       setPeriodes(res.data);
+      setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   }
 
@@ -37,6 +41,7 @@ export default function Periodes() {
           <p>Geen periodes gevonden!</p>
         </div>
       )}
+      {loading && <Loader />}
       {periodes.map((periode: any) => {
         return (
           <>

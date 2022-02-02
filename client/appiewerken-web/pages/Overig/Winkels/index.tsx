@@ -9,16 +9,21 @@ import {
   BriefcaseIcon,
 } from "@heroicons/react/outline";
 import OverigHeader from "../../../components/OverigHeader";
+import Loader from "../../../components/Loader";
 export default function Winkels() {
   const [winkels, setWinkels] = useState<any>([]);
-  //   let winkels: any = [];
+  const [loading, setLoading] = useState<boolean>(false);
+
   async function getWinkels() {
+    setLoading(true);
     try {
       const res = await axios.get("https://ahwapi.d22nk.nl/Winkels");
-      //   winkels = res.data;
+
       setWinkels(res.data);
+      setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   }
 
@@ -29,6 +34,7 @@ export default function Winkels() {
   return (
     <MainLayout parentPage="Overig">
       <OverigHeader page="Winkels" />
+      {loading && <Loader />}
       {winkels.map((winkel: any) => {
         return (
           <Link key={winkel.id} href={"/Overig/Winkels/" + winkel.id}>
