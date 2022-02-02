@@ -14,8 +14,15 @@ export default function NieuweWinkel() {
   const [bericht, setBericht] = useState("");
   const router = useRouter();
 
-  function createPeriode(e:any) {
-    e.preventDefault()
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Enter") {
+        createPeriode();
+      }
+    });
+  });
+
+  function createPeriode() {
     setBericht("");
 
     axios
@@ -55,7 +62,8 @@ export default function NieuweWinkel() {
           )}
           <form
             onSubmit={(e) => {
-              createPeriode(e);
+              e.preventDefault();
+              createPeriode();
             }}
           >
             <label className="mb-4 font-semibold text-sky-500" htmlFor="start">

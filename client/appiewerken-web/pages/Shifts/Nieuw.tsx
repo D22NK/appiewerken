@@ -32,6 +32,14 @@ export default function NieuweShift() {
 
   const router = useRouter();
 
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Enter") {
+        createShift();
+      }
+    });
+  });
+
   async function getFields() {
     try {
       const res = await axios.get("https://ahwapi.d22nk.nl/shiftfields");
@@ -51,8 +59,7 @@ export default function NieuweShift() {
     main();
   }, []);
 
-  function createShift(e: any) {
-    e.preventDefault();
+  function createShift(e?: any) {
     setBericht("");
 
     axios
@@ -173,7 +180,12 @@ export default function NieuweShift() {
               <p>{bericht}</p>
             </div>
           )}
-          <form onSubmit={(e) => createShift(e)}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              createShift(e);
+            }}
+          >
             <label className="mb-4 font-semibold text-sky-500" htmlFor="datum">
               Datum:
             </label>

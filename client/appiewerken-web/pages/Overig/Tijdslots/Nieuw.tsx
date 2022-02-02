@@ -13,8 +13,15 @@ export default function NieuwTijdslot() {
   const [bericht, setBericht] = useState<String>("");
 
   const router = useRouter();
-  function createTijdslot(e: any) {
-    e.preventDefault();
+
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Enter") {
+        createTijdslot();
+      }
+    });
+  });
+  function createTijdslot() {
     setBericht("");
     axios
       .post("https://ahwapi.d22nk.nl/tijdslots", {
@@ -51,7 +58,12 @@ export default function NieuwTijdslot() {
               <p>{bericht}</p>
             </div>
           )}
-          <form onSubmit={(e) => createTijdslot(e)}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              createTijdslot();
+            }}
+          >
             <label className="mb-4 font-semibold text-sky-500" htmlFor="begin">
               Begin:
             </label>

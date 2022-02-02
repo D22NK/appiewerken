@@ -9,8 +9,15 @@ export default function NieuweWinkel() {
   const [bericht, setBericht] = useState("");
   const [adres, setAdres] = useState<String>();
   const router = useRouter();
-  function createWinkel(e: any) {
-    e.preventDefault();
+
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Enter") {
+        createWinkel();
+      }
+    });
+  });
+  function createWinkel() {
     setBericht("");
 
     axios
@@ -45,7 +52,12 @@ export default function NieuweWinkel() {
               <p>{bericht}</p>
             </div>
           )}
-          <form onSubmit={(e) => createWinkel(e)}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              createWinkel();
+            }}
+          >
             <label
               className="mb-4 font-semibold text-sky-500"
               htmlFor="winkelnummer"

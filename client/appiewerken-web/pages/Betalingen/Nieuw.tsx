@@ -13,7 +13,15 @@ export default function NieuweWinkel() {
   const [bericht, setBericht] = useState("");
   const router = useRouter();
   const [periodes, setPeriodes] = useState<any>([]);
-  //   let winkels: any = [];
+
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Enter") {
+        createBetaling();
+      }
+    });
+  });
+
   async function getPeriodes() {
     try {
       const res = await axios.get("https://ahwapi.d22nk.nl/periodes");
@@ -26,8 +34,7 @@ export default function NieuweWinkel() {
   useEffect(() => {
     getPeriodes();
   }, []);
-  function createBetaling(e: any) {
-    e.preventDefault();
+  function createBetaling() {
     setBericht("");
 
     console.log("periode", periode);
@@ -64,7 +71,12 @@ export default function NieuweWinkel() {
               <p>{bericht}</p>
             </div>
           )}
-          <form onSubmit={(e) => createBetaling(e)}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              createBetaling();
+            }}
+          >
             <label className="mb-4 font-semibold text-sky-500" htmlFor="datum">
               Ontvangstdatum:
             </label>

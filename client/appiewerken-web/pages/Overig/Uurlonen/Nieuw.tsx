@@ -9,8 +9,15 @@ export default function NieuwUurloon() {
   const [uurloon, setUurloon] = useState<Number>();
   const [bericht, setBericht] = useState("");
   const router = useRouter();
-  function createUurloon(e: any) {
-    e.preventDefault();
+
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Enter") {
+        createUurloon();
+      }
+    });
+  });
+  function createUurloon() {
     setBericht("");
     console.log(uurloon, leeftijd);
     axios
@@ -45,7 +52,12 @@ export default function NieuwUurloon() {
               <p>{bericht}</p>
             </div>
           )}
-          <form onSubmit={(e) => createUurloon(e)}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              createUurloon();
+            }}
+          >
             <label
               className="mb-4 font-semibold text-sky-500"
               htmlFor="uurloon"
