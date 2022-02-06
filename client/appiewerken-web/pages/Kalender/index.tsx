@@ -182,17 +182,6 @@ export default function Kalender() {
                         className={
                           "flex flex-col m-2 items-center justify-center rounded-xl p-2 cursor-pointer " +
                           boxStyle
-                          // (formattedWeek[key]?.voltooid &&
-                          //   " bg-green-400 text-green-900 hover:bg-green-300")
-                          // (!formattedWeek[key]?.voltooid &&
-                          //   (!formattedWeek[key]?.ziek ||
-                          //     !formattedWeek[key]?.bcd) &&
-                          //   " bg-yellow-300 text-yellow-600 hover:bg-yellow-200")
-                          // (formattedWeek[key]?.bcd &&
-                          //   !formattedWeek[key]?.ziek &&
-                          //   " bg-orange-400 text-orange-900 hover:bg-orange-300") +
-                          // (formattedWeek[key]?.ziek &&
-                          //   " bg-red-400 text-red-900 hover:bg-red-300")
                         }
                       >
                         <h2 className="text-sky-700 font-bold flex flex-row">
