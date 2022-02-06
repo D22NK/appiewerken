@@ -27,18 +27,24 @@ export default function NieuweShift() {
   const [feestdag, setFeestdag] = useState(false);
   const [ziek, setZiek] = useState(false);
   const [bcd, setBcd] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const [bericht, setBericht] = useState<String>("");
 
   const router = useRouter();
 
   useEffect(() => {
-    document.addEventListener("keydown", (e) => {
-      if (e.code === "Enter") {
-        createShift();
-      }
-    });
-  });
+    console.log("EVENTTT");
+    document.addEventListener("keydown", keydownHandler);
+  }, []);
+
+  function keydownHandler(e) {
+    if (e.code === "Enter" && !submitting) {
+      document.removeEventListener("keydown", keydownHandler);
+      setSubmitting(true);
+      createShift();
+    }
+  }
 
   async function getFields() {
     try {
@@ -100,12 +106,17 @@ export default function NieuweShift() {
       (t: any) => t.id == e.target.value
     );
     setUrengewerkt(fields.tijdslots[index].urenGewerkt);
-    setUrenbetaald(fields.tijdslots[index].urenBetaald);
+    if (dag === "ZONDAG") {
+      setUrenbetaald(fields.tijdslots[index].urenBetaald * 2);
+    } else {
+      setUrenbetaald(fields.tijdslots[index].urenBetaald);
+    }
 
     setTijdslot(e.target.value);
   }
 
   function dagChange(e: any) {
+    setDag(e.target.value);
     if (e.target.value === "ZONDAG") {
       const dubbeleuren = urengewerkt * 2;
       setUrenbetaald(dubbeleuren);

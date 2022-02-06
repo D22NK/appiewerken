@@ -7,7 +7,7 @@ import dateformatter from "../../functions/dateformatter";
 import dagformatter from "../../functions/dagformatter";
 import daysBetween from "../../functions/daysBetween";
 import Link from "next/link";
-import kalenderStyle from "../../functions/kalenderStyle";
+// import kalenderStyle from "../../functions/kalenderStyle";
 import {
   BadgeCheckIcon,
   SparklesIcon,
@@ -23,6 +23,7 @@ export default function Kalender() {
   const [jaarweek, setJaarweek] = useState(jaarWeekGen(offset));
   const [weekshifts, setWeekshifts] = useState<any>([]);
   const [formattedWeek, setFormattedWeek] = useState<any>();
+  const [weekStats, setWeekStats] = useState<any>();
 
   const [bericht, setBericht] = useState<String>("");
   const [loading, setLoading] = useState(true);
@@ -32,6 +33,7 @@ export default function Kalender() {
 
   useEffect(() => {
     formatWeek();
+    calculateStats();
   }, [weekshifts]);
 
   async function getWeekShifts(params: any) {
@@ -44,7 +46,6 @@ export default function Kalender() {
         setWeekshifts([]);
       } else {
         setWeekshifts(res.data);
-        // formatWeek();
       }
       setLoading(false);
     } catch (error) {
@@ -126,12 +127,68 @@ export default function Kalender() {
     getWeekShifts(newJaarWeek.jaar + "-" + newJaarWeek.week);
   }
 
+  function kalenderStyle(voltooid: Boolean, bcd: Boolean, ziek: Boolean) {
+    let res;
+    if (bcd) {
+      if (!ziek) {
+        res = "bg-orange-400 text-orange-900 hover:bg-orange-300";
+      } else if (ziek) {
+        res = "bg-red-400 text-red-900 hover:bg-red-300";
+      }
+    } else if (voltooid && !bcd) {
+      res = "bg-green-400 text-green-900 hover:bg-green-300";
+    } else if (!voltooid) {
+      res = "bg-yellow-300 text-yellow-600 hover:bg-yellow-200";
+    }
+    return res;
+  }
+
+  function calculateStats() {
+    let ug = 0;
+    let ub = 0;
+    let ugv = 0;
+    let ubv = 0;
+    let bedrag = 0;
+    let bedragv = 0;
+    weekshifts.forEach((shift: any) => {
+      ug += shift.urenGewerkt;
+      ub += shift.urenBetaald;
+      bedrag = bedrag + shift.uurloon.loon * shift.urenBetaald;
+      if (shift.voltooid) {
+        ugv += shift.urenGewerkt;
+        ubv += shift.urenBetaald;
+        bedragv = bedragv + shift.uurloon.loon * shift.urenBetaald;
+      }
+    });
+    setWeekStats({ ug, ub, bedrag, ugv, ubv, bedragv });
+  }
+
   return (
     <MainLayout parentPage="Kalender">
       <div className="flex flex-col">
         <h1 className="flex-1 text-2xl font-bold text-sky-500">
           Kalender &middot; {jaarweek.jaar + "-" + jaarweek.week}
         </h1>
+        <div className="flex flex-col md:flex-row ">
+          <div className="flex flex-1 flex-col bg-slate-200 m-2 p-2 rounded-md">
+            <h2 className="font-semibold">
+              Uren gewerkt: {weekStats?.ug} (voltooid: {weekStats?.ugv})
+            </h2>
+          </div>
+
+          <div className="flex flex-1 flex-col bg-slate-200 m-2 p-2 rounded-md">
+            <h2 className="font-semibold">
+              Uren betaald: {weekStats?.ub} (voltooid: {weekStats?.ubv})
+            </h2>
+          </div>
+
+          <div className="flex flex-1 flex-col bg-slate-200 m-2 p-2 rounded-md">
+            <h2 className="font-semibold">
+              Verdiensten: {weekStats?.bedrag.toFixed(2)} (voltooid:{" "}
+              {weekStats?.bedragv.toFixed(2)})
+            </h2>
+          </div>
+        </div>
         {loading && <Loader />}
         {bericht !== "" && (
           <div className="w-[100%] bg-slate-300 rounded-md p-2  mb-2 hover:bg-slate-400">
@@ -165,69 +222,66 @@ export default function Kalender() {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7">
           {formattedWeek &&
             Object.keys(formattedWeek).map((key: any) => {
-              const boxStyle = kalenderStyle(
-                formattedWeek[key].voltooid,
-                formattedWeek[key].bcd,
-                formattedWeek[key].ziek
-              );
-
-              return (
-                <>
-                  {!formattedWeek[key].string ? (
-                    <Link
-                      key={formattedWeek[key]?.id}
-                      href={"/Shifts/" + formattedWeek[key]?.id}
+              if (formattedWeek[key].string) {
+                return (
+                  <Link href="/Shifts/Nieuw">
+                    <div className="flex flex-col m-2 items-center justify-center rounded-xl p-2 bg-sky-200 font-mono text-sky-500 hover:bg-sky-300">
+                      {formattedWeek[key].string}
+                    </div>
+                  </Link>
+                );
+              }
+              if (!formattedWeek[key].string) {
+                const boxStyle = kalenderStyle(
+                  formattedWeek[key].voltooid,
+                  formattedWeek[key].bcd,
+                  formattedWeek[key].ziek
+                );
+                console.log(boxStyle, formattedWeek[key].dag, jaarweek.week);
+                return (
+                  <Link
+                    key={formattedWeek[key]?.id}
+                    href={"/Shifts/" + formattedWeek[key]?.id}
+                  >
+                    <div
+                      className={`flex flex-col m-2 items-center justify-center rounded-xl p-2 cursor-pointer ${boxStyle} `}
                     >
-                      <div
-                        className={
-                          "flex flex-col m-2 items-center justify-center rounded-xl p-2 cursor-pointer " +
-                          boxStyle
-                        }
-                      >
-                        <h2 className="text-sky-700 font-bold flex flex-row">
-                          {formattedWeek[key]?.dag &&
-                            dagformatter(formattedWeek[key]?.dag)}
-                        </h2>
-                        {formattedWeek[key]?.voltooid && (
-                          <p className="text-sky-800">
-                            {daysBetween(formattedWeek[key]?.datum)} dagen
-                            geleden
-                          </p>
-                        )}
-                        {!formattedWeek[key]?.voltooid && (
-                          <p className="text-sky-800 ">
-                            over{" "}
-                            {formattedWeek[key]?.datum &&
-                              daysBetween(formattedWeek[key]?.datum)}{" "}
-                            dagen
-                          </p>
-                        )}
-                        <h3>
+                      <h2 className="text-sky-700 font-bold flex flex-row">
+                        {formattedWeek[key]?.dag &&
+                          dagformatter(formattedWeek[key]?.dag)}
+                      </h2>
+                      {formattedWeek[key]?.voltooid && (
+                        <p className="text-sky-800">
+                          {daysBetween(formattedWeek[key]?.datum)} dagen geleden
+                        </p>
+                      )}
+                      {!formattedWeek[key]?.voltooid && (
+                        <p className="text-sky-800 ">
+                          over{" "}
                           {formattedWeek[key]?.datum &&
-                            dateformatter(formattedWeek[key]?.datum)}
-                        </h3>
-                        <h3>AH{formattedWeek[key]?.winkel?.winkelNr}</h3>
-                        <h3>{formattedWeek[key]?.tijdslot?.slot}</h3>
-                        <div className="flex flex-row">
-                          {formattedWeek[key]?.feestdag && (
-                            <SparklesIcon className="ml-4 w-4 text-amber-400" />
-                          )}
+                            daysBetween(formattedWeek[key]?.datum)}{" "}
+                          dagen
+                        </p>
+                      )}
+                      <h3>
+                        {formattedWeek[key]?.datum &&
+                          dateformatter(formattedWeek[key]?.datum)}
+                      </h3>
+                      <h3>AH{formattedWeek[key]?.winkel?.winkelNr}</h3>
+                      <h3>{formattedWeek[key]?.tijdslot?.slot}</h3>
+                      <div className="flex flex-row">
+                        {formattedWeek[key]?.feestdag && (
+                          <SparklesIcon className="ml-4 w-4 text-amber-400" />
+                        )}
 
-                          {formattedWeek[key]?.voltooid && (
-                            <BadgeCheckIcon className="md:ml-4 w-4 text-violet-500" />
-                          )}
-                        </div>
+                        {formattedWeek[key]?.voltooid && (
+                          <BadgeCheckIcon className="md:ml-4 w-4 text-violet-500" />
+                        )}
                       </div>
-                    </Link>
-                  ) : (
-                    <Link href="/Shifts/Nieuw">
-                      <div className="flex flex-col m-2 items-center justify-center rounded-xl p-2 bg-sky-200 font-mono text-sky-500 hover:bg-sky-300">
-                        {formattedWeek[key].string}
-                      </div>
-                    </Link>
-                  )}
-                </>
-              );
+                    </div>
+                  </Link>
+                );
+              }
             })}
         </div>
       </div>
