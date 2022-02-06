@@ -38,7 +38,7 @@ export default function NieuweShift() {
     document.addEventListener("keydown", keydownHandler);
   }, []);
 
-  function keydownHandler(e) {
+  function keydownHandler(e: any) {
     if (e.code === "Enter" && !submitting) {
       document.removeEventListener("keydown", keydownHandler);
       setSubmitting(true);
