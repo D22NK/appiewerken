@@ -362,7 +362,7 @@ export default function NieuweShift() {
                   Kies uurloon
                 </option>
                 {fields.uurlonen?.map((uurloon: any, index: any) => {
-                  if (uurloon.loon == 6.41) {
+                  if (uurloon.loon == 7.03) {
                     return (
                       <option key={uurloon.id} value={uurloon.id} selected>
                         {uurloon.loon}
@@ -451,6 +451,7 @@ export default function NieuweShift() {
               name="gewerkt"
               value={urengewerkt}
               onChange={(e) => setUrengewerkt(parseFloat(e.target.value))}
+              step=".01"
             />
 
             <label
@@ -466,6 +467,7 @@ export default function NieuweShift() {
               name="betaald"
               value={urenbetaald}
               onChange={(e) => setUrenbetaald(parseFloat(e.target.value))}
+              step=".01"
             />
 
             <div className="flex flex-col">

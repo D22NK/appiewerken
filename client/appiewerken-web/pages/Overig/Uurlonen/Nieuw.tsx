@@ -70,6 +70,7 @@ export default function NieuwUurloon() {
               type="number"
               name="uurloon"
               onChange={(e) => setUurloon(parseFloat(e.target.value))}
+              step=".01"
             />
 
             <label

@@ -93,6 +93,7 @@ export default function NieuwTijdslot() {
               type="number"
               name="urengewerkt"
               onChange={(e) => setUrengewerkt(parseFloat(e.target.value))}
+              step=".01"
             />
 
             <label className="mb-4 font-semibold text-sky-500" htmlFor="uren">
@@ -104,6 +105,7 @@ export default function NieuwTijdslot() {
               type="number"
               name="urenbetaald"
               onChange={(e) => setUrenbetaald(parseFloat(e.target.value))}
+              step=".01"
             />
 
             <div className="flex  flex-1 flex-row-reverse">

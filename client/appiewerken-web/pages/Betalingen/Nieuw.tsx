@@ -96,6 +96,7 @@ export default function NieuweWinkel() {
               type="number"
               name="bedrag"
               onChange={(e) => setBedrag(parseFloat(e.target.value))}
+              step=".01"
             />
             <label
               className="mb-4 font-semibold text-sky-500"
