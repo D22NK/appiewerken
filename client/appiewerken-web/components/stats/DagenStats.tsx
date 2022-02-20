@@ -7,10 +7,12 @@ export default function DagenStats() {
   ChartJS.register(ArcElement, Tooltip, Legend);
   const [dagstats, setDagstats] = useState<any>();
   const [dagencount, setDagencount] = useState<any>();
-  const [statusFilter, setStatusFilter] = useState("alle");
+  const [statusFilter, setStatusFilter] = useState("onvoltooid");
   async function getDagstats() {
     try {
-      const res = await axios.get("https://ahwapi.d22nk.nl/dagstats");
+      const res = await axios.get("https://ahwapi.d22nk.nl/dagstats", {
+        params: { statusFilter },
+      });
       setDagstats(res.data);
     } catch (error) {
       console.error(error);
@@ -54,8 +56,6 @@ export default function DagenStats() {
         dagstats[dagstats?.findIndex((d: any) => d.dag == "ZONDAG")]?._count
           .dag || 0;
 
-      const totaal =
-        maandag + dinsdag + woensdag + donderdag + vrijdag + zaterdag + zondag;
       setDagencount({
         maandag,
         dinsdag,
@@ -64,7 +64,6 @@ export default function DagenStats() {
         vrijdag,
         zaterdag,
         zondag,
-        totaal,
       });
     }
   }, [dagstats]);
@@ -113,10 +112,6 @@ export default function DagenStats() {
       },
     ],
   };
-
-  function calculatePercentage(count: any) {
-    return ((count / dagencount?.totaal) * 100).toFixed(2);
-  }
   return (
     <div className="w-[100%] flex  flex-col bg-slate-100 mt-4 rounded-md p-4  mr-2 row-span-3">
       <h1 className="text-xl font-semibold text-sky-500">Gewerkte Dagen:</h1>
@@ -149,32 +144,25 @@ export default function DagenStats() {
       <Pie data={data} />
       <div className="grid grid-cols-2 mt-4">
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Maandag: {dagencount?.maandag} |{" "}
-          {calculatePercentage(dagencount?.maandag)}%
+          Maandag: {dagencount?.maandag}
         </p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Dinsdag: {dagencount?.dinsdag} |{" "}
-          {calculatePercentage(dagencount?.dinsdag)}%
+          Dinsdag: {dagencount?.dinsdag}
         </p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Woensdag: {dagencount?.woensdag} |{" "}
-          {calculatePercentage(dagencount?.woensdag)}%
+          Woensdag: {dagencount?.woensdag}
         </p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Donderdag: {dagencount?.donderdag} |{" "}
-          {calculatePercentage(dagencount?.donderdag)}%
+          Donderdag: {dagencount?.donderdag}
         </p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Vrijdag: {dagencount?.vrijdag} |{" "}
-          {calculatePercentage(dagencount?.vrijdag)}%
+          Vrijdag: {dagencount?.vrijdag}
         </p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Zaterdag: {dagencount?.zaterdag} |{" "}
-          {calculatePercentage(dagencount?.zaterdag)}%
+          Zaterdag: {dagencount?.zaterdag}
         </p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Zondag: {dagencount?.zondag} |{" "}
-          {calculatePercentage(dagencount?.zondag)}%
+          Zondag: {dagencount?.zondag}
         </p>
       </div>
     </div>
