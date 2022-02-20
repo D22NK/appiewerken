@@ -10,9 +10,9 @@ export default function DagenStats() {
   const [statusFilter, setStatusFilter] = useState("alle");
   async function getDagstats() {
     try {
-      const res = await axios.get("https://ahwapi.d22nk.nl/dagstats", {
-        params: { status: statusFilter },
-      });
+      const res = await axios.get(
+        `https://ahwapi.d22nk.nl/dagstats/${statusFilter}`
+      );
       setDagstats(res.data);
       console.log(data);
     } catch (error) {

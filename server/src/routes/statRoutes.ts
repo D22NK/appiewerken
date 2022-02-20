@@ -78,16 +78,26 @@ export default function statRoutes(prisma: any, app: Express) {
   });
 
   app.get("/dagstats/:status", async (req: Request, res: Response) => {
-    console.log(req.params);
-    let status;
-    if (req.params.status === "alle") {
-      return;
-    } else if (req.params.status === "voltooid") {
-      status = true;
-    } else if (req.params.status === "onvoltooid") {
-      status = false;
-    }
     try {
+      let status;
+      if (req.params.status === "alle") {
+        const dagen = await prisma.shifts.groupBy({
+          where: {
+            ziek: false,
+            bcd: false,
+          },
+          by: ["dag"],
+          _count: {
+            dag: true,
+          },
+        });
+        console.log("dagen", dagen);
+        return res.json(dagen);
+      } else if (req.params.status === "voltooid") {
+        status = true;
+      } else if (req.params.status === "onvoltooid") {
+        status = false;
+      }
       const dagen = await prisma.shifts.groupBy({
         where: {
           ziek: false,
