@@ -77,14 +77,14 @@ export default function statRoutes(prisma: any, app: Express) {
     }
   });
 
-  app.get("/dagstats", async (req: Request, res: Response) => {
-    console.log(req.body);
+  app.get("/dagstats/status", async (req: Request, res: Response) => {
+    console.log(req.params);
     let status;
-    if (req.body.status === "alle") {
+    if (req.params.status === "alle") {
       return;
-    } else if (req.body.status === "voltooid") {
+    } else if (req.params.status === "voltooid") {
       status = true;
-    } else if (req.body.status === "onvoltooid") {
+    } else if (req.params.status === "onvoltooid") {
       status = false;
     }
     try {
