@@ -77,7 +77,7 @@ export default function statRoutes(prisma: any, app: Express) {
     }
   });
 
-  app.get("/dagstats/status", async (req: Request, res: Response) => {
+  app.get("/dagstats/:status", async (req: Request, res: Response) => {
     console.log(req.params);
     let status;
     if (req.params.status === "alle") {
