@@ -14,6 +14,7 @@ export default function DagenStats() {
         params: { statusFilter },
       });
       setDagstats(res.data);
+      console.log(data);
     } catch (error) {
       console.error(error);
     }
