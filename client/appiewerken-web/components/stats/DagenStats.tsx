@@ -57,7 +57,8 @@ export default function DagenStats() {
       const zondag =
         dagstats[dagstats?.findIndex((d: any) => d.dag == "ZONDAG")]?._count
           .dag || 0;
-
+      const totaal =
+        maandag + dinsdag + woensdag + donderdag + vrijdag + zaterdag + zondag;
       setDagencount({
         maandag,
         dinsdag,
@@ -66,6 +67,7 @@ export default function DagenStats() {
         vrijdag,
         zaterdag,
         zondag,
+        totaal,
       });
     }
   }, [dagstats]);
@@ -114,6 +116,10 @@ export default function DagenStats() {
       },
     ],
   };
+
+  function calculatePercentage(count: any) {
+    return ((count / dagencount?.totaal) * 100).toFixed(2);
+  }
   return (
     <div className="w-[100%] flex  flex-col bg-slate-100 mt-4 rounded-md p-4  mr-2 row-span-3">
       <h1 className="text-xl font-semibold text-sky-500">Gewerkte Dagen:</h1>
@@ -146,25 +152,32 @@ export default function DagenStats() {
       <Pie data={data} />
       <div className="grid grid-cols-2 mt-4">
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Maandag: {dagencount?.maandag}
+          Maandag: {dagencount?.maandag} |{" "}
+          {calculatePercentage(dagencount?.maandag)}%
         </p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Dinsdag: {dagencount?.dinsdag}
+          Dinsdag: {dagencount?.dinsdag} |{" "}
+          {calculatePercentage(dagencount?.dinsdag)}%
         </p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Woensdag: {dagencount?.woensdag}
+          Woensdag: {dagencount?.woensdag} |{" "}
+          {calculatePercentage(dagencount?.woensdag)}%
         </p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Donderdag: {dagencount?.donderdag}
+          Donderdag: {dagencount?.donderdag} |{" "}
+          {calculatePercentage(dagencount?.donderdag)}%
         </p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Vrijdag: {dagencount?.vrijdag}
+          Vrijdag: {dagencount?.vrijdag} |{" "}
+          {calculatePercentage(dagencount?.vrijdag)}%
         </p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Zaterdag: {dagencount?.zaterdag}
+          Zaterdag: {dagencount?.zaterdag} |{" "}
+          {calculatePercentage(dagencount?.zaterdag)}%
         </p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
-          Zondag: {dagencount?.zondag}
+          Zondag: {dagencount?.zondag} |{" "}
+          {calculatePercentage(dagencount?.zondag)}%
         </p>
       </div>
     </div>
