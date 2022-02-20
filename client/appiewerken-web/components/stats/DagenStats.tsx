@@ -7,7 +7,7 @@ export default function DagenStats() {
   ChartJS.register(ArcElement, Tooltip, Legend);
   const [dagstats, setDagstats] = useState<any>();
   const [dagencount, setDagencount] = useState<any>();
-  const [statusFilter, setStatusFilter] = useState("onvoltooid");
+  const [statusFilter, setStatusFilter] = useState("alle");
   async function getDagstats() {
     try {
       const res = await axios.get("https://ahwapi.d22nk.nl/dagstats", {
@@ -21,7 +21,8 @@ export default function DagenStats() {
 
   useEffect(() => {
     getDagstats();
-  }, []);
+    console.log(statusFilter);
+  }, [statusFilter]);
 
   useEffect(() => {
     if (dagstats) {
