@@ -9,6 +9,7 @@ export default function notificationRoutes(prisma: any, app: Express) {
         data: {
           sub: req.body.sub as Prisma.JsonArray,
           device: req.get("User-Agent"),
+          username: "Temp",
         },
       });
 
@@ -22,7 +23,7 @@ export default function notificationRoutes(prisma: any, app: Express) {
 
   app.get("/subs", async (req: Request, res: Response) => {
     const subs = await prisma.notificationSubscribers.findMany();
-    res.json(JSON.parse(subs[0].sub));
+    res.json(subs);
   });
 
   app.get("/test-all", async (req: Request, res: Response) => {

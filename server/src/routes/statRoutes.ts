@@ -78,11 +78,20 @@ export default function statRoutes(prisma: any, app: Express) {
   });
 
   app.get("/dagstats", async (req: Request, res: Response) => {
+    let status;
+    if ((req.body.status = "alle")) {
+      return;
+    } else if ((req.body.status = "voltooid")) {
+      status = true;
+    } else if ((req.body.status = "onvoltooid")) {
+      status = true;
+    }
     try {
       const dagen = await prisma.shifts.groupBy({
         where: {
           ziek: false,
           bcd: false,
+          voltooid: status,
         },
         by: ["dag"],
         _count: {

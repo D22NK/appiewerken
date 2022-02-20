@@ -7,7 +7,7 @@ export default function DagenStats() {
   ChartJS.register(ArcElement, Tooltip, Legend);
   const [dagstats, setDagstats] = useState<any>();
   const [dagencount, setDagencount] = useState<any>();
-
+  const [statusFilter, setStatusFilter] = useState("alle");
   async function getDagstats() {
     try {
       const res = await axios.get("https://ahwapi.d22nk.nl/dagstats");
@@ -113,7 +113,32 @@ export default function DagenStats() {
   return (
     <div className="w-[100%] flex  flex-col bg-slate-100 mt-4 rounded-md p-4  mr-2 row-span-3">
       <h1 className="text-xl font-semibold text-sky-500">Gewerkte Dagen:</h1>
-
+      <div className="flex flex-col md:flex-row">
+        <h2
+          onClick={() => {
+            setStatusFilter("alle");
+          }}
+          className="text-sky-600 font-semibold m-2 cursor-pointer hover:bg-slate-200 p-2 rounded-md"
+        >
+          Alle
+        </h2>
+        <h2
+          onClick={() => {
+            setStatusFilter("voltooid");
+          }}
+          className="text-sky-600 font-semibold m-2 cursor-pointer hover:bg-slate-200 p-2 rounded-md"
+        >
+          Voltooid
+        </h2>
+        <h2
+          onClick={() => {
+            setStatusFilter("onvoltooid");
+          }}
+          className="text-sky-600 font-semibold m-2 cursor-pointer hover:bg-slate-200 p-2 rounded-md"
+        >
+          Onvoltooid
+        </h2>
+      </div>
       <Pie data={data} />
       <div className="grid grid-cols-2 mt-4">
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">

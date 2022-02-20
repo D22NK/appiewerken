@@ -132,7 +132,7 @@ export default function PeriodeDetails() {
               Uren gewerkt: {periodeUren().urengewerkt}
             </p>
             <p className="text-slate-400">
-              Uren gewerkt: {periodeUren().urenbetaald}
+              Uren betaald: {periodeUren().urenbetaald}
             </p>
           </div>
         </div>
