@@ -11,7 +11,7 @@ export default function DagenStats() {
   async function getDagstats() {
     try {
       const res = await axios.get("https://ahwapi.d22nk.nl/dagstats", {
-        params: { statusFilter },
+        params: { status: statusFilter },
       });
       setDagstats(res.data);
       console.log(data);

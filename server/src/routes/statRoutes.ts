@@ -85,7 +85,7 @@ export default function statRoutes(prisma: any, app: Express) {
     } else if (req.body.status === "voltooid") {
       status = true;
     } else if (req.body.status === "onvoltooid") {
-      status = true;
+      status = false;
     }
     try {
       const dagen = await prisma.shifts.groupBy({
