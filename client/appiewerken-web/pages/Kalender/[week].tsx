@@ -17,7 +17,7 @@ import {
 export default function Dag() {
   const router = useRouter();
 
-  const [jaarweek, setJaarweek] = useState("");
+  const [jaarweek, setJaarweek] = useState<any>("");
   const [weekshifts, setWeekshifts] = useState<any>([]);
   const [formattedWeek, setFormattedWeek] = useState<any>();
   const [weekStats, setWeekStats] = useState<any>();
