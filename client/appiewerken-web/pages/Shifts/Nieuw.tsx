@@ -18,7 +18,7 @@ export default function NieuweShift() {
     "7cf9ab85-fe4e-47a8-bafe-ff34d86ae0a7"
   );
   const [uurloon, setUurloon] = useState<String>(
-    "935d7659-b59a-4988-98c6-c9d117f45233"
+    "2e384112-3266-4bf5-9c76-9e77f88a7de7"
   );
   const [betaalperiode, setBetaalperiode] = useState<String>();
   const [urengewerkt, setUrengewerkt] = useState<number>(0);
@@ -356,7 +356,10 @@ export default function NieuweShift() {
                 required
                 className="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"
                 name="uurloon"
-                onChange={(e) => setUurloon(e.target.value)}
+                onChange={(e) => {
+                  setUurloon(e.target.value);
+                  console.log(uurloon);
+                }}
               >
                 <option selected disabled value="">
                   Kies uurloon
