@@ -21,7 +21,7 @@ export default function NieuweShift() {
   const [betaalperiode, setBetaalperiode] = useState<String>();
   const [urengewerkt, setUrengewerkt] = useState<number>(0);
   const [urenbetaald, setUrenbetaald] = useState<number>(0);
-  const [voltooid, setVoltooid] = useState(true);
+  const [voltooid, setVoltooid] = useState(false);
   const [feestdag, setFeestdag] = useState(false);
   const [ziek, setZiek] = useState(false);
   const [bcd, setBcd] = useState(false);
