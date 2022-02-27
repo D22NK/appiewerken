@@ -17,13 +17,11 @@ export default function NieuweShift() {
   const [winkel, setWinkel] = useState<String>(
     "7cf9ab85-fe4e-47a8-bafe-ff34d86ae0a7"
   );
-  const [uurloon, setUurloon] = useState<String>(
-    "2e384112-3266-4bf5-9c76-9e77f88a7de7"
-  );
+  const [uurloon, setUurloon] = useState<string>();
   const [betaalperiode, setBetaalperiode] = useState<String>();
   const [urengewerkt, setUrengewerkt] = useState<number>(0);
   const [urenbetaald, setUrenbetaald] = useState<number>(0);
-  const [voltooid, setVoltooid] = useState(true);
+  const [voltooid, setVoltooid] = useState(false);
   const [feestdag, setFeestdag] = useState(false);
   const [ziek, setZiek] = useState(false);
   const [bcd, setBcd] = useState(false);
@@ -146,6 +144,33 @@ export default function NieuweShift() {
         getWeekNumber(new Date(e.target.value))
     );
 
+    // Voor nu is dit even hardcoded, dit kan later beter worden verplaatst naar de backend
+    const uurloonCheckdate = new Date(e.target.value);
+    const achtienvan = new Date("2022-01-29");
+    const achtientot = new Date("2023-01-28");
+
+    const zeventienvan = new Date("2021-01-29");
+    const zeventientot = new Date("2022-01-28");
+
+    const zestienvan = new Date("2020-01-29");
+    const zestientot = new Date("2021-01-28");
+    if (uurloonCheckdate >= achtienvan && uurloonCheckdate < achtientot) {
+      const index = fields.uurlonen.findIndex((t: any) => t.loon == "7.03");
+      setUurloon(fields.uurlonen[index].id);
+    } else if (
+      uurloonCheckdate >= zeventienvan &&
+      uurloonCheckdate < zeventientot
+    ) {
+      const index = fields.uurlonen.findIndex((t: any) => t.loon == "6.41");
+      setUurloon(fields.uurlonen[index].id);
+    } else if (
+      uurloonCheckdate >= zestienvan &&
+      uurloonCheckdate < zestientot
+    ) {
+      const index = fields.uurlonen.findIndex((t: any) => t.loon == "5.61");
+      setUurloon(fields.uurlonen[index].id);
+    }
+
     switch (dag) {
       case 0:
         setDag("ZONDAG");
@@ -188,6 +213,11 @@ export default function NieuweShift() {
     // } else {
     setBcd(!bcd);
     // }
+  }
+
+  function formatUurloon() {
+    const index = fields.uurlonen.findIndex((t: any) => t.id == uurloon);
+    return fields.uurlonen[index].loon;
   }
 
   return (
@@ -361,17 +391,24 @@ export default function NieuweShift() {
                   console.log(uurloon);
                 }}
               >
-                <option selected disabled value="">
-                  Kies uurloon
-                </option>
+                {uurloon ? (
+                  <option selected value={uurloon}>
+                    {formatUurloon()}
+                  </option>
+                ) : (
+                  <option selected disabled value="">
+                    Kies uurloon
+                  </option>
+                )}
+
                 {fields.uurlonen?.map((uurloon: any, index: any) => {
-                  if (uurloon.loon == 7.03) {
-                    return (
-                      <option key={uurloon.id} value={uurloon.id} selected>
-                        {uurloon.loon}
-                      </option>
-                    );
-                  }
+                  // if (uurloon.loon == 7.03) {
+                  //   return (
+                  //     <option key={uurloon.id} value={uurloon.id} selected>
+                  //       {uurloon.loon}
+                  //     </option>
+                  //   );
+                  // }
                   return (
                     <option key={uurloon.id} value={uurloon.id}>
                       {uurloon.loon}
