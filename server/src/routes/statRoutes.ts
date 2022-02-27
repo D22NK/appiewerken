@@ -73,6 +73,9 @@ export default function statRoutes(prisma: any, app: Express) {
             include: {
               shifts: true,
             },
+		where: {
+		betaling: null
+}
           }),
         ]);
 
