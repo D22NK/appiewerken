@@ -73,9 +73,9 @@ export default function statRoutes(prisma: any, app: Express) {
             include: {
               shifts: true,
             },
-		where: {
-		betaling: null
-}
+            where: {
+              betaling: null,
+            },
           }),
         ]);
 
@@ -296,10 +296,16 @@ export default function statRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
 
-     app.get("/overigestats", async (req: Request, res: Response) => {
-    try {
-      const [ziek, totaalverdiensten, urengewerkt, urenbetaald,totaalperiodes, totaalshifts] =
-        await prisma.$transaction([
+    app.get("/overigestats", async (req: Request, res: Response) => {
+      try {
+        const [
+          ziek,
+          totaalverdiensten,
+          urengewerkt,
+          urenbetaald,
+          totaalperiodes,
+          totaalshifts,
+        ] = await prisma.$transaction([
           prisma.shifts.aggregate({
             where: {
               ziek: true,
@@ -308,13 +314,13 @@ export default function statRoutes(prisma: any, app: Express) {
               ziek: true,
             },
           }),
-              prisma.betalingen.aggregate({
+          prisma.betalingen.aggregate({
             _sum: {
               bedrag: true,
             },
           }),
 
-            prisma.shifts.aggregate({
+          prisma.shifts.aggregate({
             where: {
               voltooid: true,
             },
@@ -323,7 +329,7 @@ export default function statRoutes(prisma: any, app: Express) {
             },
           }),
 
-            prisma.shifts.aggregate({
+          prisma.shifts.aggregate({
             where: {
               voltooid: true,
             },
@@ -331,7 +337,7 @@ export default function statRoutes(prisma: any, app: Express) {
               urenGewerkt: true,
             },
           }),
-             prisma.shifts.count({
+          prisma.shifts.count({
             where: {
               ziek: false,
               bcd: false,
@@ -339,10 +345,18 @@ export default function statRoutes(prisma: any, app: Express) {
           }),
         ]);
 
-      res.json({ ziek,totaalverdiensten, urengewerkt, urenbetaald, totaalperiodes, totaalshifts });
-    } catch (error) {
-      console.log(error);
-      res.sendStatus(500);
-    }
+        res.json({
+          ziek,
+          totaalverdiensten,
+          urengewerkt,
+          urenbetaald,
+          totaalperiodes,
+          totaalshifts,
+        });
+      } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+      }
+    });
   });
 }

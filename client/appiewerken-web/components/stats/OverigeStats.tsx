@@ -5,7 +5,7 @@ export default function OverigeStats() {
   const [urenStats, setUrenstats] = useState<any>();
   async function getUrenStats() {
     try {
-      const res = await axios.get("https://ahwapi.d22nk.nl/urenbetaaldstats");
+      const res = await axios.get("https://ahwapi.d22nk.nl/overigestats");
       setUrenstats(res.data);
     } catch (error) {
       console.error(error);
@@ -31,7 +31,7 @@ export default function OverigeStats() {
       </h1>
 
       <div className="grid grid-cols-1 mt-4">
-        <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">2020:</p>
+        <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">{}</p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">2021:</p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">2022:</p>
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">Totaal:</p>
