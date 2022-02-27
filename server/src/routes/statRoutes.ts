@@ -167,7 +167,7 @@ export default function statRoutes(prisma: any, app: Express) {
               },
             },
           }),
-          prisma.betaalperiodes.count(),
+          prisma.betaalperiodes.count({}),
         ]);
 
       res.json({ totaal, totaal2020, totaal2021, totaal2022, totaalperiodes });
