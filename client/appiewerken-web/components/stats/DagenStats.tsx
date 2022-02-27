@@ -121,7 +121,7 @@ export default function DagenStats() {
     return ((count / dagencount?.totaal) * 100).toFixed(2);
   }
   return (
-    <div className="w-[100%] flex  flex-col bg-slate-100 mt-4 rounded-md p-4  mr-2 row-span-3">
+    <div className="w-[100%] flex  flex-col bg-slate-100 mt-4 rounded-md p-4  mr-2 row-span-3 h-min">
       <h1 className="text-xl font-semibold text-sky-500">Gewerkte Dagen:</h1>
       <div className="flex flex-col md:flex-row">
         <h2
@@ -180,6 +180,10 @@ export default function DagenStats() {
           {calculatePercentage(dagencount?.zondag)}%
         </p>
       </div>
+      <p className="italic text-slate-400 text-xs">
+        In deze statistiek zijn de shifts met alleen bcd of ziek niet mee
+        gerekend.
+      </p>
     </div>
   );
 }
