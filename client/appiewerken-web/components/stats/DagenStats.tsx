@@ -121,14 +121,16 @@ export default function DagenStats() {
     return ((count / dagencount?.totaal) * 100).toFixed(2);
   }
   return (
-    <div className="w-[100%] flex  flex-col bg-slate-100 mt-4 rounded-md p-4  mr-2 row-span-3 h-min">
+    <div className="w-[100%] flex  flex-col bg-slate-100 mt-4 rounded-md p-4  mr-2 row-span-2 ">
       <h1 className="text-xl font-semibold text-sky-500">Gewerkte Dagen:</h1>
       <div className="flex flex-col md:flex-row">
         <h2
           onClick={() => {
             setStatusFilter("alle");
           }}
-          className="text-sky-600 font-semibold m-2 cursor-pointer hover:bg-slate-200 p-2 rounded-md"
+          className={`text-sky-600 font-semibold m-2 cursor-pointer hover:bg-slate-200 p-2 rounded-md ${
+            statusFilter == "alle" && "border border-sky-600 border-4"
+          }`}
         >
           Alle
         </h2>
@@ -136,7 +138,9 @@ export default function DagenStats() {
           onClick={() => {
             setStatusFilter("voltooid");
           }}
-          className="text-sky-600 font-semibold m-2 cursor-pointer hover:bg-slate-200 p-2 rounded-md"
+          className={`text-sky-600 font-semibold m-2 cursor-pointer hover:bg-slate-200 p-2 rounded-md ${
+            statusFilter == "voltooid" && "border border-sky-600 border-4"
+          }`}
         >
           Voltooid
         </h2>
@@ -144,7 +148,9 @@ export default function DagenStats() {
           onClick={() => {
             setStatusFilter("onvoltooid");
           }}
-          className="text-sky-600 font-semibold m-2 cursor-pointer hover:bg-slate-200 p-2 rounded-md"
+          className={`text-sky-600 font-semibold m-2 cursor-pointer hover:bg-slate-200 p-2 rounded-md ${
+            statusFilter == "onvoltooid" && "border border-sky-600 border-4"
+          }`}
         >
           Onvoltooid
         </h2>

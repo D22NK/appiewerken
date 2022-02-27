@@ -172,6 +172,9 @@ export default function statRoutes(prisma: any, app: Express) {
       const [totaal, totaal2020, totaal2021, totaal2022] =
         await prisma.$transaction([
           prisma.shifts.aggregate({
+            where: {
+              voltooid: true,
+            },
             _sum: {
               urenGewerkt: true,
             },
@@ -180,6 +183,7 @@ export default function statRoutes(prisma: any, app: Express) {
             where: {
               ziek: false,
               bcd: false,
+              voltooid: true,
               datum: {
                 gt: "2020-01-01T00:00:00.000Z",
                 lt: "2020-12-31T00:01:00.000Z",
@@ -193,6 +197,7 @@ export default function statRoutes(prisma: any, app: Express) {
             where: {
               ziek: false,
               bcd: false,
+              voltooid: true,
               datum: {
                 gt: "2021-01-01T00:00:00.000Z",
                 lt: "2021-12-31T00:01:00.000Z",
@@ -206,6 +211,7 @@ export default function statRoutes(prisma: any, app: Express) {
             where: {
               ziek: false,
               bcd: false,
+              voltooid: true,
               datum: {
                 gt: "2022-01-01T00:00:00.000Z",
                 lt: "2022-12-31T00:01:00.000Z",
@@ -229,6 +235,9 @@ export default function statRoutes(prisma: any, app: Express) {
       const [totaal, totaal2020, totaal2021, totaal2022] =
         await prisma.$transaction([
           prisma.shifts.aggregate({
+            where: {
+              voltooid: true,
+            },
             _sum: {
               urenBetaald: true,
             },
@@ -239,6 +248,7 @@ export default function statRoutes(prisma: any, app: Express) {
                 gt: "2020-01-01T00:00:00.000Z",
                 lt: "2020-12-31T00:01:00.000Z",
               },
+              voltooid: true,
             },
             _sum: {
               urenBetaald: true,
@@ -250,6 +260,7 @@ export default function statRoutes(prisma: any, app: Express) {
                 gt: "2021-01-01T00:00:00.000Z",
                 lt: "2021-12-31T00:01:00.000Z",
               },
+              voltooid: true,
             },
             _sum: {
               urenBetaald: true,
@@ -261,6 +272,7 @@ export default function statRoutes(prisma: any, app: Express) {
                 gt: "2022-01-01T00:00:00.000Z",
                 lt: "2022-12-31T00:01:00.000Z",
               },
+              voltooid: true,
             },
             _sum: {
               urenBetaald: true,
