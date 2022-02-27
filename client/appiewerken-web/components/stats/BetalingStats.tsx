@@ -62,10 +62,21 @@ export default function BetalingStats() {
       },
     ],
   };
+
+  function calculateNextPeriod() {
+    let bedrag = 0;
+    betalingstats?.volgendeperiode[0].shifts?.forEach((i: any) => {
+      bedrag = bedrag + i.urenBetaald * 7.03;
+    });
+    return bedrag.toFixed(2);
+  }
   return (
     <div className="w-[100%] flex  flex-col bg-slate-100 mt-4 rounded-md p-4 mr-2 row-span-1 h-min">
       <h1 className="text-xl font-semibold text-sky-500">Betalingen:</h1>
-
+      <p>
+        Geschatte aankomende betaling:{" "}
+        {betalingstats?.volgendeperiode && calculateNextPeriod()}
+      </p>
       <Bar options={options} data={data} />
       <div className="grid grid-cols-2 mt-4">
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
