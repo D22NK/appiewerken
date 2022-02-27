@@ -68,7 +68,7 @@ export default function statRoutes(prisma: any, app: Express) {
               bedrag: true,
             },
           }),
-          prisma.periode.findMany({
+          prisma.betaalperiodes.findMany({
             take: 1,
             include: {
               shifts: true,
