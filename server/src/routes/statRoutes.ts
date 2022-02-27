@@ -166,4 +166,112 @@ export default function statRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
+
+  app.get("/urengewerktstats", async (req: Request, res: Response) => {
+    try {
+      const [totaal, totaal2020, totaal2021, totaal2022] =
+        await prisma.$transaction([
+          prisma.shifts.aggregate({
+            _sum: {
+              urenGewerkt: true,
+            },
+          }),
+          prisma.shifts.aggregate({
+            where: {
+              ziek: false,
+              bcd: false,
+              datum: {
+                gt: "2020-01-01T00:00:00.000Z",
+                lt: "2020-12-31T00:01:00.000Z",
+              },
+            },
+            _sum: {
+              urenGewerkt: true,
+            },
+          }),
+          prisma.shifts.aggregate({
+            where: {
+              ziek: false,
+              bcd: false,
+              datum: {
+                gt: "2021-01-01T00:00:00.000Z",
+                lt: "2021-12-31T00:01:00.000Z",
+              },
+            },
+            _sum: {
+              urenGewerkt: true,
+            },
+          }),
+          prisma.shifts.aggregate({
+            where: {
+              ziek: false,
+              bcd: false,
+              datum: {
+                gt: "2022-01-01T00:00:00.000Z",
+                lt: "2022-12-31T00:01:00.000Z",
+              },
+            },
+            _sum: {
+              urenGewerkt: true,
+            },
+          }),
+        ]);
+
+      res.json({ totaal, totaal2020, totaal2021, totaal2022 });
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
+
+  app.get("/urenbetaaldstats", async (req: Request, res: Response) => {
+    try {
+      const [totaal, totaal2020, totaal2021, totaal2022] =
+        await prisma.$transaction([
+          prisma.shifts.aggregate({
+            _sum: {
+              urenBetaald: true,
+            },
+          }),
+          prisma.shifts.aggregate({
+            where: {
+              datum: {
+                gt: "2020-01-01T00:00:00.000Z",
+                lt: "2020-12-31T00:01:00.000Z",
+              },
+            },
+            _sum: {
+              urenBetaald: true,
+            },
+          }),
+          prisma.shifts.aggregate({
+            where: {
+              datum: {
+                gt: "2021-01-01T00:00:00.000Z",
+                lt: "2021-12-31T00:01:00.000Z",
+              },
+            },
+            _sum: {
+              urenBetaald: true,
+            },
+          }),
+          prisma.shifts.aggregate({
+            where: {
+              datum: {
+                gt: "2022-01-01T00:00:00.000Z",
+                lt: "2022-12-31T00:01:00.000Z",
+              },
+            },
+            _sum: {
+              urenBetaald: true,
+            },
+          }),
+        ]);
+
+      res.json({ totaal, totaal2020, totaal2021, totaal2022 });
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
 }
