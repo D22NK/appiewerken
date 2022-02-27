@@ -73,10 +73,7 @@ export default function BetalingStats() {
   return (
     <div className="w-[100%] flex  flex-col bg-slate-100 mt-4 rounded-md p-4 mr-2 row-span-1 h-min">
       <h1 className="text-xl font-semibold text-sky-500">Betalingen:</h1>
-      <p>
-        Geschatte aankomende betaling:{" "}
-        {betalingstats?.volgendeperiode && calculateNextPeriod()}
-      </p>
+
       <Bar options={options} data={data} />
       <div className="grid grid-cols-2 mt-4">
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
@@ -92,6 +89,10 @@ export default function BetalingStats() {
           Totaal: €{betalingstats?.totaal._sum.bedrag.toFixed(2)}
         </p>
       </div>
+      <p>
+        Geschatte aankomende betaling:{" "}
+        {betalingstats?.volgendeperiode && calculateNextPeriod()}
+      </p>
       <p className="italic text-slate-400 text-xs">
         Het gaat hier om het jaar waarin de betaling is ontvangen, het kan dus
         voorkomen dat een betaling in jaar B verdiensten bevat van jaar A.

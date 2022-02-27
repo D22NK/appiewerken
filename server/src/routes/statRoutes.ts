@@ -164,7 +164,7 @@ export default function statRoutes(prisma: any, app: Express) {
               },
             },
           }),
-          prisma.betaalperiodes.count(),
+          prisma.betaalperiodes.count({}),
         ]);
 
       res.json({ totaal, totaal2020, totaal2021, totaal2022, totaalperiodes });
@@ -288,6 +288,55 @@ export default function statRoutes(prisma: any, app: Express) {
         ]);
 
       res.json({ totaal, totaal2020, totaal2021, totaal2022 });
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+
+     app.get("/overigestats", async (req: Request, res: Response) => {
+    try {
+      const [ziek, totaalverdiensten, urengewerkt, urenbetaald,totaalperiodes, totaalshifts] =
+        await prisma.$transaction([
+          prisma.shifts.aggregate({
+            where: {
+              ziek: true,
+            },
+            _sum: {
+              ziek: true,
+            },
+          }),
+              prisma.betalingen.aggregate({
+            _sum: {
+              bedrag: true,
+            },
+          }),
+
+            prisma.shifts.aggregate({
+            where: {
+              voltooid: true,
+            },
+            _sum: {
+              urenBetaald: true,
+            },
+          }),
+
+            prisma.shifts.aggregate({
+            where: {
+              voltooid: true,
+            },
+            _sum: {
+              urenGewerkt: true,
+            },
+          }),
+             prisma.shifts.count({
+            where: {
+              ziek: false,
+              bcd: false,
+            },
+          }),
+        ]);
+
+      res.json({ ziek,totaalverdiensten, urengewerkt, urenbetaald, totaalperiodes, totaalshifts });
     } catch (error) {
       console.log(error);
       res.sendStatus(500);

@@ -83,7 +83,7 @@ export default function ShiftStats() {
       <p>
         Gemiddeld{" "}
         <span className="text-sky-500 font-semibold">
-          {shiftStats?.totaal / shiftStats?.totaalperiodes}
+          {(shiftStats?.totaal / shiftStats?.totaalperiodes).toFixed(0)}
         </span>{" "}
         shifts per periode
       </p>

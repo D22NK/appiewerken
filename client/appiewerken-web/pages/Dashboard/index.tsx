@@ -5,6 +5,7 @@ import DagenStats from "../../components/stats/DagenStats";
 import ShiftStats from "../../components/stats/ShiftsStats";
 import UrenGewerktStats from "../../components/stats/UrenGewerktStats";
 import UrenBetaaldStats from "../../components/stats/urenBetaaldStats";
+import OverigeStats from "../../components/stats/OverigeStats";
 export default function Dashboard() {
   return (
     <MainLayout parentPage="Dashboard">
@@ -16,6 +17,7 @@ export default function Dashboard() {
         <ShiftStats />
         <UrenGewerktStats />
         <UrenBetaaldStats />
+        <OverigeStats />
       </div>
     </MainLayout>
   );
