@@ -325,7 +325,7 @@ export default function statRoutes(prisma: any, app: Express) {
               voltooid: true,
             },
             _sum: {
-              urenBetaald: true,
+              urenGewerkt: true,
             },
           }),
 
@@ -334,9 +334,10 @@ export default function statRoutes(prisma: any, app: Express) {
               voltooid: true,
             },
             _sum: {
-              urenGewerkt: true,
+              urenBetaald: true,
             },
           }),
+          prisma.betaalperiodes.count({}),
           prisma.shifts.count({
             where: {
               ziek: false,
