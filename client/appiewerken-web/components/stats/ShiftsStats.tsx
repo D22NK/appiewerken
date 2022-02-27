@@ -65,7 +65,6 @@ export default function ShiftStats() {
   return (
     <div className="w-[100%]  group-focus-visible:flex bg-slate-100 mt-4 rounded-md p-4  mr-2 row-span-1">
       <h1 className="text-xl font-semibold text-sky-500">Shifts:</h1>
-
       <Bar options={options} data={data} />
       <div className="grid grid-cols-2 mt-4">
         <p className="p-2 bg-slate-200 rounded-md mb-2 mx-2">
@@ -81,6 +80,14 @@ export default function ShiftStats() {
           Totaal: {shiftStats?.totaal}
         </p>
       </div>
+      <p>
+        Gemiddeld{" "}
+        <span className="text-sky-500 font-semibold">
+          {shiftStats?.totaal / shiftStats?.totaalperiodes}
+        </span>{" "}
+        shifts per periode
+      </p>
+
       <p className="italic text-slate-400 text-xs">
         In deze statistiek zijn de shifts met alleen bcd of ziek niet mee
         gerekend. Shifts die onvoltooid zijn worden ook niet meegenomen in deze

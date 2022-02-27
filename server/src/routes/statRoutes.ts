@@ -125,7 +125,7 @@ export default function statRoutes(prisma: any, app: Express) {
 
   app.get("/shiftstats", async (req: Request, res: Response) => {
     try {
-      const [totaal, totaal2020, totaal2021, totaal2022] =
+      const [totaal, totaal2020, totaal2021, totaal2022, totaalperiodes] =
         await prisma.$transaction([
           prisma.shifts.count({
             where: {
@@ -164,9 +164,10 @@ export default function statRoutes(prisma: any, app: Express) {
               },
             },
           }),
+          prisma.betaalperiodes.count(),
         ]);
 
-      res.json({ totaal, totaal2020, totaal2021, totaal2022 });
+      res.json({ totaal, totaal2020, totaal2021, totaal2022, totaalperiodes });
     } catch (error) {
       console.log(error);
       res.sendStatus(500);
