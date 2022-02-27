@@ -1,6 +1,69 @@
 import { Express, Request, Response } from "express";
 
 export default function statRoutes(prisma: any, app: Express) {
+  app.get("/stats", async (req: Request, res: Response) => {
+    try {
+      const [
+        ziek,
+        totaalverdiensten,
+        urengewerkt,
+        urenbetaald,
+        totaalperiodes,
+        totaalshifts,
+      ] = await prisma.$transaction([
+        prisma.shifts.aggregate({
+          where: {
+            ziek: true,
+          },
+          _sum: {
+            ziek: true,
+          },
+        }),
+        prisma.betalingen.aggregate({
+          _sum: {
+            bedrag: true,
+          },
+        }),
+
+        prisma.shifts.aggregate({
+          where: {
+            voltooid: true,
+          },
+          _sum: {
+            urenGewerkt: true,
+          },
+        }),
+
+        prisma.shifts.aggregate({
+          where: {
+            voltooid: true,
+          },
+          _sum: {
+            urenBetaald: true,
+          },
+        }),
+        prisma.betaalperiodes.count({}),
+        prisma.shifts.count({
+          where: {
+            ziek: false,
+            bcd: false,
+          },
+        }),
+      ]);
+
+      res.json({
+        ziek,
+        totaalverdiensten,
+        urengewerkt,
+        urenbetaald,
+        totaalperiodes,
+        totaalshifts,
+      });
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
   app.get("/totaal", async (req: Request, res: Response) => {
     try {
       const totaal = await prisma.betalingen.aggregate({
@@ -295,69 +358,5 @@ export default function statRoutes(prisma: any, app: Express) {
       console.log(error);
       res.sendStatus(500);
     }
-
-    app.get("/overigestats", async (req: Request, res: Response) => {
-      try {
-        const [
-          ziek,
-          totaalverdiensten,
-          urengewerkt,
-          urenbetaald,
-          totaalperiodes,
-          totaalshifts,
-        ] = await prisma.$transaction([
-          prisma.shifts.aggregate({
-            where: {
-              ziek: true,
-            },
-            _sum: {
-              ziek: true,
-            },
-          }),
-          prisma.betalingen.aggregate({
-            _sum: {
-              bedrag: true,
-            },
-          }),
-
-          prisma.shifts.aggregate({
-            where: {
-              voltooid: true,
-            },
-            _sum: {
-              urenGewerkt: true,
-            },
-          }),
-
-          prisma.shifts.aggregate({
-            where: {
-              voltooid: true,
-            },
-            _sum: {
-              urenBetaald: true,
-            },
-          }),
-          prisma.betaalperiodes.count({}),
-          prisma.shifts.count({
-            where: {
-              ziek: false,
-              bcd: false,
-            },
-          }),
-        ]);
-
-        res.json({
-          ziek,
-          totaalverdiensten,
-          urengewerkt,
-          urenbetaald,
-          totaalperiodes,
-          totaalshifts,
-        });
-      } catch (error) {
-        console.log(error);
-        res.sendStatus(500);
-      }
-    });
   });
 }
