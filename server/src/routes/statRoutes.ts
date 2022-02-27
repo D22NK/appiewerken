@@ -11,11 +11,8 @@ export default function statRoutes(prisma: any, app: Express) {
         totaalperiodes,
         totaalshifts,
       ] = await prisma.$transaction([
-        prisma.shifts.aggregate({
+        prisma.shifts.count({
           where: {
-            ziek: true,
-          },
-          _sum: {
             ziek: true,
           },
         }),
