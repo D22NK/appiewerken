@@ -22,7 +22,7 @@ export default function statRoutes(prisma: any, app: Express) {
 
   app.get("/betalingstats", async (req: Request, res: Response) => {
     try {
-      const [totaal, totaal2020, totaal2021, totaal2022] =
+      const [totaal, totaal2020, totaal2021, totaal2022, volgendeperiode] =
         await prisma.$transaction([
           prisma.betalingen.aggregate({
             _sum: {
@@ -68,9 +68,15 @@ export default function statRoutes(prisma: any, app: Express) {
               bedrag: true,
             },
           }),
+          prisma.periode.findMany({
+            take: 1,
+            include: {
+              shifts: true,
+            },
+          }),
         ]);
 
-      res.json({ totaal, totaal2020, totaal2021, totaal2022 });
+      res.json({ totaal, totaal2020, totaal2021, totaal2022, volgendeperiode });
     } catch (error) {
       console.log(error);
       res.sendStatus(500);

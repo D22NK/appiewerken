@@ -58,7 +58,7 @@ export default function UrenBetaaldStats() {
 
           urenStats?.totaal2022._sum.urenBetaald.toFixed(2),
         ],
-        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        backgroundColor: "rgba(153, 102, 255, 0.2)",
       },
     ],
   };

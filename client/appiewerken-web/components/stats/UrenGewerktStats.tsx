@@ -58,7 +58,7 @@ export default function UrenGewerktStats() {
 
           urenStats?.totaal2022._sum.urenGewerkt.toFixed(2),
         ],
-        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        backgroundColor: "rgba(75, 192, 192, 0.2)",
       },
     ],
   };

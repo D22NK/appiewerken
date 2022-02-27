@@ -58,7 +58,7 @@ export default function BetalingStats() {
           betalingstats?.totaal2021._sum.bedrag.toFixed(2),
           betalingstats?.totaal2022._sum.bedrag.toFixed(2),
         ],
-        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        backgroundColor: "rgba(255, 206, 86, 0.2)",
       },
     ],
   };
