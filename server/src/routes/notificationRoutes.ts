@@ -10,6 +10,10 @@ export default function notificationRoutes(prisma: any, app: Express) {
           sub: req.body.sub as Prisma.JsonArray,
           device: req.get("User-Agent"),
           username: "Temp",
+          daily: true,
+          newShift: true,
+          updatedShift: true,
+          removedShift: true,
         },
       });
 

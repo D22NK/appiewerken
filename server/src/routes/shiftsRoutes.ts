@@ -35,8 +35,7 @@ export default function shiftsRoutes(prisma: any, app: Express) {
             `1 nieuwe shift voor Daan op ${req.body.datum} van ${
               shift.tijdslot.slot.split("-")[0]
             } tot ${shift.tijdslot.slot.split("-")[1]} `,
-            JSON.parse(sub.sub),
-            shift.id
+            JSON.parse(sub.sub)
           );
         });
       }
