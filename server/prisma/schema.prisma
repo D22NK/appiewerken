@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgres://ahw:twins2901@192.168.68.121:5432/appiewerkenprod"
 }
 
 model Shifts {
