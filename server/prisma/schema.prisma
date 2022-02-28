@@ -92,10 +92,10 @@ model NotificationSubscribers {
   sub          Json
   device       String
   username     String
-  newShift     Boolean
-  daily        Boolean
-  updatedShift Boolean
-  removedShift Boolean
+  newShift     Boolean @default(false)
+  daily        Boolean @default(false)
+  updatedShift Boolean @default(false)
+  removedShift Boolean @default(false)
 }
 
 enum Dag {
