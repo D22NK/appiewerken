@@ -88,10 +88,14 @@ model Tijdslots {
 }
 
 model NotificationSubscribers {
-  id       String @id @unique @default(uuid())
-  sub      Json
-  device   String
-  username String
+  id           String  @id @unique @default(uuid())
+  sub          Json
+  device       String
+  username     String
+  newShift     Boolean
+  daily        Boolean
+  updatedShift Boolean
+  removedShift Boolean
 }
 
 enum Dag {

@@ -5,7 +5,7 @@ self.addEventListener("push", function onPush(event) {
       title: JSON.parse(event.data.text()).title,
       icon: "https://ahw.d22nk.nl/ah.png",
       actions: [
-        { action: "shift", title: "Bekijk" },
+        { action: `shift-${JSON.parse(event.data.text()).shiftid}`, title: "Bekijk" },
         { action: "shifts", title: "Alle Shifts" },
       ],
     })
@@ -16,10 +16,10 @@ self.addEventListener("notificationclick", function (event) {
   event.notification.close();
   if (event.action === "shifts") {
     event.waitUntil(clients.openWindow("https://ahw.d22nk.nl/Shifts"));
-  } else if (event.action === "shift") {
+  } else if (event.action.includes("shift-")) {
     event.waitUntil(
       clients.openWindow(
-        `https://ahw.d22nk.nl/Shift/${event.data.text().shiftid}`
+        `https://ahw.d22nk.nl/Shift/${event.action.split("-")[1]}`
       )
     );
   } else {

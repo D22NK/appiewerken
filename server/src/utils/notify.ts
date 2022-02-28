@@ -23,7 +23,7 @@ const pushSubscription = {
   },
 };
 
-export default function notify(title: any, body: any, sub: any) {
+export default function notify(title: any, body: any, sub: any, shiftid: any) {
   webpush.setVapidDetails(
     "mailto:example@yourdomain.org",
     vapidKeys.publicKey,
@@ -35,6 +35,7 @@ export default function notify(title: any, body: any, sub: any) {
     JSON.stringify({
       title: title,
       body: body,
+      shiftid: shiftid,
     })
   );
 }
