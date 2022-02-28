@@ -30,13 +30,15 @@ export default function shiftsRoutes(prisma: any, app: Express) {
       if (!req.body.voltooid) {
         const subs = await prisma.notificationSubscribers.findMany();
         subs.forEach((sub: any) => {
-          notify(
-            "Shifts",
-            `1 nieuwe shift voor Daan op ${req.body.datum} van ${
-              shift.tijdslot.slot.split("-")[0]
-            } tot ${shift.tijdslot.slot.split("-")[1]} `,
-            JSON.parse(sub.sub)
-          );
+          if (sub.newShift) {
+            notify(
+              "Shifts",
+              `1 nieuwe shift voor Daan op ${req.body.datum} van ${
+                shift.tijdslot.slot.split("-")[0]
+              } tot ${shift.tijdslot.slot.split("-")[1]} `,
+              JSON.parse(sub.sub)
+            );
+          }
         });
       }
     } catch (error) {
