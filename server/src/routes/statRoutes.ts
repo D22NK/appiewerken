@@ -364,14 +364,18 @@ export default function statRoutes(prisma: any, app: Express) {
           prisma.shifts.count({
             where: {
               ziek: true,
-              winkel: req.params.winkel,
+              winkel: {
+                id: req.params.winkel,
+              },
             },
           }),
 
           prisma.shifts.aggregate({
             where: {
               voltooid: true,
-              winkel: req.params.winkel,
+              winkel: {
+                id: req.params.winkel,
+              },
             },
             _sum: {
               urenGewerkt: true,
@@ -381,7 +385,9 @@ export default function statRoutes(prisma: any, app: Express) {
           prisma.shifts.aggregate({
             where: {
               voltooid: true,
-              winkel: req.params.winkel,
+              winkel: {
+                id: req.params.winkel,
+              },
             },
             _sum: {
               urenBetaald: true,
@@ -392,7 +398,9 @@ export default function statRoutes(prisma: any, app: Express) {
             where: {
               ziek: false,
               bcd: false,
-              winkel: req.params.winkel,
+              winkel: {
+                id: req.params.winkel,
+              },
             },
           }),
         ]);
