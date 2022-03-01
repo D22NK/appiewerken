@@ -356,4 +356,56 @@ export default function statRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
+
+  app.get("/winkelstats/:winkel", async (req: Request, res: Response) => {
+    try {
+      const [ziek, urengewerkt, urenbetaald, totaalshifts] =
+        await prisma.$transaction([
+          prisma.shifts.count({
+            where: {
+              ziek: true,
+              winkel: req.params.winkel,
+            },
+          }),
+
+          prisma.shifts.aggregate({
+            where: {
+              voltooid: true,
+              winkel: req.params.winkel,
+            },
+            _sum: {
+              urenGewerkt: true,
+            },
+          }),
+
+          prisma.shifts.aggregate({
+            where: {
+              voltooid: true,
+              winkel: req.params.winkel,
+            },
+            _sum: {
+              urenBetaald: true,
+            },
+          }),
+
+          prisma.shifts.count({
+            where: {
+              ziek: false,
+              bcd: false,
+              winkel: req.params.winkel,
+            },
+          }),
+        ]);
+
+      res.json({
+        ziek,
+        urengewerkt,
+        urenbetaald,
+        totaalshifts,
+      });
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
 }

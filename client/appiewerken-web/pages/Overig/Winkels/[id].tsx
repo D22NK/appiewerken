@@ -13,9 +13,10 @@ import {
   ClockIcon,
 } from "@heroicons/react/outline";
 import axios from "axios";
-import dateformatter from "../../../functions/dateformatter";
-import dagformatter from "../../../functions/dagformatter";
+
 import ShiftList from "../../../components/Shifts/ShiftList";
+
+import WinkelStats from "../../../components/stats/WinkelStats";
 export default function WinkelDetails() {
   const { confirm } = useConfirm();
   const router = useRouter();
@@ -72,6 +73,7 @@ export default function WinkelDetails() {
             <p>{bericht}</p>
           </div>
         )}
+
         <div
           key={winkel.id}
           className="flex flex-col  items-center my-2 md:m-2 p-4 bg-slate-100  w-[100%] lg:w-max rounded-md  h-min"
@@ -100,6 +102,7 @@ export default function WinkelDetails() {
             </h2>
             <p className="text-slate-400">{winkel.adres}</p>
           </div>
+          <WinkelStats winkelid={winkel.id} />
         </div>
 
         <div className="flex-1 my-2 md:m-2 p-4 bg-slate-100 w-[100%] rounded-md ">
