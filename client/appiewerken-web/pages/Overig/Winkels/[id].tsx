@@ -102,7 +102,7 @@ export default function WinkelDetails() {
             </h2>
             <p className="text-slate-400">{winkel.adres}</p>
           </div>
-          <WinkelStats winkelid={winkel.id} />
+          {winkel.id && <WinkelStats winkelid={winkel.id} />}
         </div>
 
         <div className="flex-1 my-2 md:m-2 p-4 bg-slate-100 w-[100%] rounded-md ">
