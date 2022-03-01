@@ -44,6 +44,7 @@ export default function statRoutes(prisma: any, app: Express) {
           where: {
             ziek: false,
             bcd: false,
+            voltooid: true,
           },
         }),
       ]);
@@ -396,6 +397,8 @@ export default function statRoutes(prisma: any, app: Express) {
 
           prisma.shifts.count({
             where: {
+              voltooid: true,
+
               ziek: false,
               bcd: false,
               winkel: {
