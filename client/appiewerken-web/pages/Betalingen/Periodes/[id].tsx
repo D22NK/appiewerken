@@ -20,8 +20,10 @@ export default function PeriodeDetails() {
   const [periode, setPeriode] = useState<any>([]);
   const { confirm } = useConfirm();
   const [bericht, setBericht] = useState<any>("");
+  const [periodeStats, setPeriodeStats] = useState<any>([]);
   useEffect(() => {
     getPeriode();
+    calculateStats();
   }, [router]);
 
   async function getPeriode() {
@@ -60,14 +62,25 @@ export default function PeriodeDetails() {
     }
   }
 
-  function periodeUren() {
-    let urengewerkt = 0,
-      urenbetaald = 0;
-    periode.shifts?.forEach((shift: any) => {
-      urengewerkt += shift.urenGewerkt;
-      urenbetaald += shift.urenBetaald;
+  function calculateStats() {
+    let ug = 0;
+    let ub = 0;
+    let ugv = 0;
+    let ubv = 0;
+    let bedrag = 0;
+    let bedragv = 0;
+    periode?.shifts?.forEach((shift: any) => {
+      console.log("CALCCCCCCC", shift);
+      ug += shift.urenGewerkt;
+      ub += shift.urenBetaald;
+      // bedrag = bedrag + shift.uurloon.loon * shift.urenBetaald;
+      if (shift.voltooid) {
+        ugv += shift.urenGewerkt;
+        ubv += shift.urenBetaald;
+        // bedragv = bedragv + shift.uurloon.loon * shift.urenBetaald;
+      }
     });
-    return { urenbetaald, urengewerkt };
+    setPeriodeStats({ ug, ub, ugv, ubv });
   }
 
   return (
@@ -132,10 +145,10 @@ export default function PeriodeDetails() {
             )}
 
             <p className="text-slate-400">
-              Uren gewerkt: {periodeUren().urengewerkt}
+              Uren gewerkt: {periodeStats?.ug} (voltooid: {periodeStats?.ugv})
             </p>
             <p className="text-slate-400">
-              Uren betaald: {periodeUren().urenbetaald}
+              {/* Uren betaald: {periodeUren().urenbetaald} */}
             </p>
           </div>
         </div>
