@@ -1,5 +1,16 @@
 import { Express, Request, Response } from "express";
 import notify from "../utils/notify";
+
+let cachedShifts: any = {
+  all: null,
+  voltooid: null,
+  onvoltooid: null,
+};
+let cacheTime: any = {
+  all: null,
+  voltooid: null,
+  onvoltooid: null,
+};
 export default function shiftsRoutes(prisma: any, app: Express) {
   app.post("/shifts", async (req: Request, res: Response) => {
     try {
@@ -48,6 +59,9 @@ export default function shiftsRoutes(prisma: any, app: Express) {
   });
 
   app.get("/shifts", async (req: Request, res: Response) => {
+    if (cacheTime.all && cacheTime.all > Date.now() - 60 * 1000) {
+      return res.json(cachedShifts.all);
+    }
     try {
       const shifts = await prisma.shifts.findMany({
         orderBy: [
@@ -63,6 +77,8 @@ export default function shiftsRoutes(prisma: any, app: Express) {
         },
       });
       console.log("shifts", shifts);
+      cachedShifts.all = shifts;
+      cacheTime.all = Date.now();
       res.json(shifts);
     } catch (error) {
       console.log(error);
@@ -71,6 +87,9 @@ export default function shiftsRoutes(prisma: any, app: Express) {
   });
 
   app.get("/shifts/voltooid", async (req: Request, res: Response) => {
+    if (cacheTime.voltooid && cacheTime.voltooid > Date.now() - 60 * 1000) {
+      return res.json(cachedShifts.voltooid);
+    }
     try {
       const shifts = await prisma.shifts.findMany({
         orderBy: [
@@ -89,6 +108,8 @@ export default function shiftsRoutes(prisma: any, app: Express) {
         },
       });
       console.log("shifts", shifts);
+      cachedShifts.voltooid = shifts;
+      cacheTime.voltooid = Date.now();
       res.json(shifts);
     } catch (error) {
       console.log(error);
@@ -97,6 +118,9 @@ export default function shiftsRoutes(prisma: any, app: Express) {
   });
 
   app.get("/shifts/onvoltooid", async (req: Request, res: Response) => {
+    if (cacheTime.onvoltooid && cacheTime.onvoltooid > Date.now() - 60 * 1000) {
+      return res.json(cachedShifts.onvoltooid);
+    }
     try {
       const shifts = await prisma.shifts.findMany({
         orderBy: [
@@ -115,6 +139,8 @@ export default function shiftsRoutes(prisma: any, app: Express) {
         },
       });
       console.log("shifts", shifts);
+      cachedShifts.onvoltooid = shifts;
+      cacheTime.onvoltooid = Date.now();
       res.json(shifts);
     } catch (error) {
       console.log(error);
