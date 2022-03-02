@@ -24,6 +24,7 @@ export default function Dag() {
 
   const [bericht, setBericht] = useState<String>("");
   const [loading, setLoading] = useState(true);
+  const currentjaarweek = jaarWeekGen(0).jaar + "-" + jaarWeekGen(0).week;
 
   useEffect(() => {
     async function load() {
@@ -216,7 +217,16 @@ export default function Dag() {
       return;
     }
 
-    const newJaarWeek = jaarWeekGen(0);
+    let newJaarWeek = jaarWeekGen(0);
+
+    newJaarWeek = newJaarWeek.jaar + "-" + newJaarWeek.week;
+    router.push(
+      {
+        pathname: `/Kalender/${newJaarWeek}`,
+      },
+      undefined,
+      { shallow: true }
+    );
     setJaarweek(newJaarWeek.jaar + "-" + newJaarWeek.week);
     getWeekShifts(newJaarWeek.jaar + "-" + newJaarWeek.week);
   }
@@ -276,8 +286,12 @@ export default function Dag() {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7">
           {formattedWeek &&
             Object.keys(formattedWeek).map((key: any) => {
+              console.log(jaarweek, currentjaarweek);
               let currentdayborder;
-              if (new Date().getDate() == formattedWeek[key].dag) {
+              if (
+                new Date().getDate() == formattedWeek[key].dag &&
+                jaarweek == currentjaarweek
+              ) {
                 currentdayborder = " border border-[4px] border-purple-500 ";
               }
               if (!formattedWeek[key].weekshift) {
