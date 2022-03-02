@@ -125,9 +125,12 @@ export default function PeriodeDetails() {
                 </div>
               )}
             </div>
-            <p className="text-slate-400">
-              Betaling: € {periode.betaling && periode.betaling.bedrag}
-            </p>
+            {periode.betaling && (
+              <p className="text-slate-400">
+                Betaling: € {periode.betaling.bedrag}
+              </p>
+            )}
+
             <p className="text-slate-400">
               Uren gewerkt: {periodeUren().urengewerkt}
             </p>
