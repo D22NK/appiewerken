@@ -35,6 +35,9 @@ export default function shiftsRoutes(prisma: any, app: Express) {
         },
       });
       console.log(shift);
+      cachedShifts.all = null;
+      cachedShifts.voltooid = null;
+      cachedShifts.onvoltooid = null;
 
       res.sendStatus(200);
 
