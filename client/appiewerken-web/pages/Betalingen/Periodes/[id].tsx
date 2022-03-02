@@ -23,9 +23,11 @@ export default function PeriodeDetails() {
   const [periodeStats, setPeriodeStats] = useState<any>([]);
   useEffect(() => {
     getPeriode();
-    calculateStats();
   }, [router]);
 
+  useEffect(() => {
+    calculateStats();
+  }, [periode]);
   async function getPeriode() {
     try {
       const { id } = await router.query;
@@ -73,14 +75,14 @@ export default function PeriodeDetails() {
       console.log("CALCCCCCCC", shift);
       ug += shift.urenGewerkt;
       ub += shift.urenBetaald;
-      // bedrag = bedrag + shift.uurloon.loon * shift.urenBetaald;
+      bedrag = bedrag + shift.uurloon.loon * shift.urenBetaald;
       if (shift.voltooid) {
         ugv += shift.urenGewerkt;
         ubv += shift.urenBetaald;
-        // bedragv = bedragv + shift.uurloon.loon * shift.urenBetaald;
+        bedragv = bedragv + shift.uurloon.loon * shift.urenBetaald;
       }
     });
-    setPeriodeStats({ ug, ub, ugv, ubv });
+    setPeriodeStats({ ug, ub, ugv, ubv, bedrag, bedragv });
   }
 
   return (
@@ -148,7 +150,9 @@ export default function PeriodeDetails() {
               Uren gewerkt: {periodeStats?.ug} (voltooid: {periodeStats?.ugv})
             </p>
             <p className="text-slate-400">
-              {/* Uren betaald: {periodeUren().urenbetaald} */}
+              Uren betaald: {periodeStats?.ub} (€{" "}
+              {periodeStats?.bedrag?.toFixed(2)}) (voltooid: {periodeStats?.ubv}
+              )
             </p>
           </div>
         </div>
