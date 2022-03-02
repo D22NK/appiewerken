@@ -61,32 +61,53 @@ export default function Dag() {
   }
 
   function formatWeek() {
-    const maandag = weekshifts[
-      weekshifts?.findIndex((d: any) => d.dag == "MAANDAG")
-    ] || { string: "-Maandag-" };
-    const dinsdag = weekshifts[
-      weekshifts?.findIndex((d: any) => d.dag == "DINSDAG")
-    ] || { string: "-Dinsdag-" };
+    const maandag = {
+      weekshift:
+        weekshifts[weekshifts?.findIndex((d: any) => d.dag == "MAANDAG")],
+      dag: 0,
+      string: "-Maandag-",
+    };
+    const dinsdag = {
+      weekshift:
+        weekshifts[weekshifts?.findIndex((d: any) => d.dag == "DINSDAG")],
+      dag: 1,
+      string: "-Dinsdag-",
+    };
 
-    const woensdag = weekshifts[
-      weekshifts?.findIndex((d: any) => d.dag == "WOENSDAG")
-    ] || { string: "-Woensdag-" };
+    const woensdag = {
+      weekshift:
+        weekshifts[weekshifts?.findIndex((d: any) => d.dag == "WOENSDAG")],
+      dag: 2,
+      string: "-Woensdag-",
+    };
 
-    const donderdag = weekshifts[
-      weekshifts?.findIndex((d: any) => d.dag == "DONDERDAG")
-    ] || { string: "-Donderdag-" };
+    const donderdag = {
+      weekshift:
+        weekshifts[weekshifts?.findIndex((d: any) => d.dag == "DONDERDAG")],
+      dag: 3,
+      string: "-Donderdag-",
+    };
 
-    const vrijdag = weekshifts[
-      weekshifts?.findIndex((d: any) => d.dag == "VRIJDAG")
-    ] || { string: "-Vrijdag-" };
+    const vrijdag = {
+      weekshift:
+        weekshifts[weekshifts?.findIndex((d: any) => d.dag == "VRIJDAG")],
+      dag: 4,
+      string: "-Vrijdag-",
+    };
 
-    const zaterdag = weekshifts[
-      weekshifts?.findIndex((d: any) => d.dag == "ZATERDAG")
-    ] || { string: "-Zaterdag-" };
+    const zaterdag = {
+      weekshift:
+        weekshifts[weekshifts?.findIndex((d: any) => d.dag == "ZATERDAG")],
+      dag: 5,
+      string: "-Zaterdag-",
+    };
 
-    const zondag = weekshifts[
-      weekshifts?.findIndex((d: any) => d.dag == "ZONDAG")
-    ] || { string: "-Zondag-" };
+    const zondag = {
+      weekshift:
+        weekshifts[weekshifts?.findIndex((d: any) => d.dag == "ZONDAG")],
+      dag: 6,
+      string: "-Zondag-",
+    };
 
     setFormattedWeek({
       maandag,
@@ -255,58 +276,69 @@ export default function Dag() {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-7">
           {formattedWeek &&
             Object.keys(formattedWeek).map((key: any) => {
-              if (formattedWeek[key].string) {
+              let currentdayborder;
+              if (new Date().getDate() == formattedWeek[key].dag) {
+                currentdayborder = " border border-[4px] border-purple-500 ";
+              }
+              if (!formattedWeek[key].weekshift) {
                 return (
                   <Link href="/Shifts/Nieuw">
-                    <div className="flex flex-col m-2 items-center justify-center rounded-xl p-2 bg-sky-200 font-mono text-sky-500 hover:bg-sky-300">
+                    <div
+                      className={`${currentdayborder} flex flex-col m-2 items-center justify-center rounded-xl p-2 bg-sky-200 font-mono text-sky-500 hover:bg-sky-300`}
+                    >
                       {formattedWeek[key].string}
                     </div>
                   </Link>
                 );
               }
-              if (!formattedWeek[key].string) {
+              if (formattedWeek[key].weekshift) {
                 const boxStyle = kalenderStyle(
-                  formattedWeek[key].voltooid,
-                  formattedWeek[key].bcd,
-                  formattedWeek[key].ziek
+                  formattedWeek[key].weekshift?.voltooid,
+                  formattedWeek[key].weekshift?.bcd,
+                  formattedWeek[key].weekshift?.ziek
                 );
                 return (
                   <Link
-                    key={formattedWeek[key]?.id}
-                    href={"/Shifts/" + formattedWeek[key]?.id}
+                    key={formattedWeek[key]?.weekshift?.id}
+                    href={"/Shifts/" + formattedWeek[key]?.weekshift?.id}
                   >
                     <div
-                      className={`flex flex-col m-2 items-center justify-center rounded-xl p-2 cursor-pointer ${boxStyle} `}
+                      className={`${currentdayborder} flex flex-col m-2 items-center justify-center rounded-xl p-2 cursor-pointer ${boxStyle} `}
                     >
                       <h2 className="text-sky-700 font-bold flex flex-row">
-                        {formattedWeek[key]?.dag &&
-                          dagformatter(formattedWeek[key]?.dag)}
+                        {formattedWeek[key]?.weekshift?.dag &&
+                          dagformatter(formattedWeek[key]?.weekshift?.dag)}
                       </h2>
-                      {formattedWeek[key]?.voltooid && (
+                      {formattedWeek[key]?.weekshift?.voltooid && (
                         <p className="text-sky-800">
-                          {daysBetween(formattedWeek[key]?.datum)} dagen geleden
+                          {daysBetween(formattedWeek[key]?.weekshift?.datum)}{" "}
+                          dagen geleden
                         </p>
                       )}
-                      {!formattedWeek[key]?.voltooid && (
+                      {!formattedWeek[key]?.weekshift?.voltooid && (
                         <p className="text-sky-800 ">
                           over{" "}
-                          {formattedWeek[key]?.datum &&
-                            daysBetween(formattedWeek[key]?.datum)}{" "}
+                          {formattedWeek[key]?.weekshift?.datum &&
+                            daysBetween(
+                              formattedWeek[key]?.weekshift?.datum
+                            )}{" "}
                           dagen
                         </p>
                       )}
                       <h3>
-                        {formattedWeek[key]?.datum &&
-                          dateformatter(formattedWeek[key]?.datum)}
+                        {formattedWeek[key]?.weekshift?.datum &&
+                          dateformatter(formattedWeek[key]?.weekshift?.datum)}
                       </h3>
-                      <h3>AH{formattedWeek[key]?.winkel?.winkelNr}</h3>
-                      <h3>{formattedWeek[key]?.tijdslot?.slot}</h3>
+                      <h3>
+                        AH{formattedWeek[key]?.weekshift?.winkel?.winkelNr}
+                      </h3>
+                      <h3>{formattedWeek[key]?.weekshift?.tijdslot?.slot}</h3>
                       <div className="flex flex-row">
-                        {formattedWeek[key]?.feestdag && (
+                        {formattedWeek[key]?.weekshift?.feestdag && (
                           <SparklesIcon className="ml-4 w-4 text-amber-400" />
                         )}
 
-                        {formattedWeek[key]?.voltooid && (
+                        {formattedWeek[key]?.weekshift?.voltooid && (
                           <BadgeCheckIcon className="md:ml-4 w-4 text-violet-500" />
                         )}
                       </div>
