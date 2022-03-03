@@ -4,15 +4,19 @@ import { PrismaClient } from "@prisma/client";
 
 export default async function cronjobs() {
   const prisma = new PrismaClient();
-  const jaar = new Date().getFullYear().toString();
-  let maand = (new Date().getMonth() + 1).toString();
-  const dag = new Date().getDate().toString();
-  if (maand.length == 1) {
-    maand = "0" + maand;
-  }
-  const today = jaar + "-" + maand + "-" + dag + "T00:00:00.000Z";
 
-  cron.schedule("0 7 * * *", async () => {
+  cron.schedule("* 7 * * *", async () => {
+    const jaar = new Date().getFullYear().toString();
+    let maand = (new Date().getMonth() + 1).toString();
+    let dag = new Date().getDate().toString();
+    if (maand.length == 1) {
+      maand = "0" + maand;
+    }
+    if (dag.length == 1) {
+      dag = "0" + dag;
+    }
+    const today = jaar + "-" + maand + "-" + dag + "T00:00:00.000Z";
+    console.log(today);
     const subs = await prisma.notificationSubscribers.findMany();
 
     const shift = await prisma.shifts.findMany({
