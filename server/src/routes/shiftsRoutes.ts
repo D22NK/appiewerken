@@ -1,16 +1,6 @@
 import { Express, Request, Response } from "express";
 import notify from "../utils/notify";
 
-let cachedShifts: any = {
-  all: null,
-  voltooid: null,
-  onvoltooid: null,
-};
-let cacheTime: any = {
-  all: null,
-  voltooid: null,
-  onvoltooid: null,
-};
 export default function shiftsRoutes(prisma: any, app: Express) {
   app.post("/shifts", async (req: Request, res: Response) => {
     try {
@@ -34,11 +24,6 @@ export default function shiftsRoutes(prisma: any, app: Express) {
           tijdslot: true,
         },
       });
-      console.log(shift);
-      cachedShifts.all = null;
-      cachedShifts.voltooid = null;
-      cachedShifts.onvoltooid = null;
-
       res.sendStatus(200);
 
       if (!req.body.voltooid) {
@@ -55,96 +40,6 @@ export default function shiftsRoutes(prisma: any, app: Express) {
           }
         });
       }
-    } catch (error) {
-      console.log(error);
-      res.sendStatus(500);
-    }
-  });
-
-  app.get("/shifts", async (req: Request, res: Response) => {
-    if (cacheTime.all && cacheTime.all > Date.now() - 60 * 1000) {
-      return res.json(cachedShifts.all);
-    }
-    try {
-      const shifts = await prisma.shifts.findMany({
-        orderBy: [
-          {
-            datum: "desc",
-          },
-        ],
-        include: {
-          winkel: true,
-          tijdslot: true,
-          uurloon: true,
-          betaalperiode: true,
-        },
-      });
-      console.log("shifts", shifts);
-      cachedShifts.all = shifts;
-      cacheTime.all = Date.now();
-      res.json(shifts);
-    } catch (error) {
-      console.log(error);
-      res.sendStatus(500);
-    }
-  });
-
-  app.get("/shifts/voltooid", async (req: Request, res: Response) => {
-    if (cacheTime.voltooid && cacheTime.voltooid > Date.now() - 60 * 1000) {
-      return res.json(cachedShifts.voltooid);
-    }
-    try {
-      const shifts = await prisma.shifts.findMany({
-        orderBy: [
-          {
-            datum: "desc",
-          },
-        ],
-        include: {
-          winkel: true,
-          tijdslot: true,
-          uurloon: true,
-          betaalperiode: true,
-        },
-        where: {
-          voltooid: true,
-        },
-      });
-      console.log("shifts", shifts);
-      cachedShifts.voltooid = shifts;
-      cacheTime.voltooid = Date.now();
-      res.json(shifts);
-    } catch (error) {
-      console.log(error);
-      res.sendStatus(500);
-    }
-  });
-
-  app.get("/shifts/onvoltooid", async (req: Request, res: Response) => {
-    if (cacheTime.onvoltooid && cacheTime.onvoltooid > Date.now() - 60 * 1000) {
-      return res.json(cachedShifts.onvoltooid);
-    }
-    try {
-      const shifts = await prisma.shifts.findMany({
-        orderBy: [
-          {
-            datum: "asc",
-          },
-        ],
-        include: {
-          winkel: true,
-          tijdslot: true,
-          uurloon: true,
-          betaalperiode: true,
-        },
-        where: {
-          voltooid: false,
-        },
-      });
-      console.log("shifts", shifts);
-      cachedShifts.onvoltooid = shifts;
-      cacheTime.onvoltooid = Date.now();
-      res.json(shifts);
     } catch (error) {
       console.log(error);
       res.sendStatus(500);

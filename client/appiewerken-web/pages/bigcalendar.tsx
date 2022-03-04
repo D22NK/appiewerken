@@ -8,7 +8,9 @@ export default function Shifts() {
 
   async function getShifts() {
     try {
-      const res = await axios.get("https://ahwapi.d22nk.nl/shifts");
+      const res = await axios.get(
+        "https://ahwapi.d22nk.nl/filteredshifts/Alle/Alle/Alle/Alle"
+      );
       setShifts(res.data);
     } catch (error) {
       console.error(error);
