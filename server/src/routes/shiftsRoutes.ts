@@ -227,41 +227,59 @@ export default function shiftsRoutes(prisma: any, app: Express) {
     }
   });
 
-  app.get("/filteredshifts/:dag", async (req: Request, res: Response) => {
-    try {
-      const dagFilter =
-        req.params.dag != "Alle"
-          ? [{ dag: req.params.dag }]
-          : [
-              { dag: "MAANDAG" },
-              { dag: "DINSDAG" },
-              { dag: "WOENSDAG" },
-              { dag: "DONDERDAG" },
-              { dag: "VRIJDAG" },
-              { dag: "ZATERDAG" },
-              { dag: "ZONDAG" },
-            ];
-      const shifts = await prisma.shifts.findMany({
-        orderBy: [
-          {
-            datum: "desc",
-          },
-        ],
-        include: {
-          winkel: true,
-          tijdslot: true,
-          uurloon: true,
-          betaalperiode: true,
-        },
-        where: {
-          OR: dagFilter,
-        },
-      });
+  app.get(
+    "/filteredshifts/:dag/:tijdslot/:winkel",
+    async (req: Request, res: Response) => {
+      try {
+        const dagFilter =
+          req.params.dag != "Alle"
+            ? [{ dag: req.params.dag }]
+            : [
+                { dag: "MAANDAG" },
+                { dag: "DINSDAG" },
+                { dag: "WOENSDAG" },
+                { dag: "DONDERDAG" },
+                { dag: "VRIJDAG" },
+                { dag: "ZATERDAG" },
+                { dag: "ZONDAG" },
+              ];
 
-      res.json(shifts);
-    } catch (error) {
-      console.log(error);
-      res.sendStatus(500);
+        let tijdslotfilter, winkelfilter;
+
+        if (req.params.tijdslot !== "Alle") {
+          tijdslotfilter = req.params.tijdslot;
+        }
+        if (req.params.winkel !== "Alle") {
+          winkelfilter = req.params.winkel;
+        }
+        const shifts = await prisma.shifts.findMany({
+          orderBy: [
+            {
+              datum: "desc",
+            },
+          ],
+          include: {
+            winkel: true,
+            tijdslot: true,
+            uurloon: true,
+            betaalperiode: true,
+          },
+          where: {
+            OR: dagFilter,
+            tijdslot: {
+              id: tijdslotfilter,
+            },
+            winkel: {
+              winkelNr: winkelfilter,
+            },
+          },
+        });
+
+        res.json(shifts);
+      } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+      }
     }
-  });
+  );
 }
