@@ -12,9 +12,12 @@ export default function Shifts() {
   const [opendag, setOpendag] = useState<boolean>(false);
   const [openwinkel, setOpenWinkel] = useState<boolean>(false);
   const [opentijdslot, setOpentijdslot] = useState<boolean>(false);
+  const [openstatus, setOpenStatus] = useState<boolean>(false);
+
   const [dag, setDag] = useState<any>("Alle");
   const [winkel, setWinkel] = useState<any>("Alle");
   const [tijdslot, setTijdslot] = useState<any>("Alle");
+  const [status, setStatus] = useState<any>("Alle");
   const [displayTijdslot, setDisplayTijdslot] =
     useState<string>("Alle Tijdslots");
   const [fields, setFields] = useState<any>([]);
@@ -23,7 +26,7 @@ export default function Shifts() {
     setLoading(true);
     try {
       const res = await axios.get(
-        `https://ahwapi.d22nk.nl/filteredshifts/${dag}/${tijdslot}/${winkel}`
+        `https://ahwapi.d22nk.nl/filteredshifts/${dag}/${tijdslot}/${winkel}/${status}`
       );
       setShifts(res.data);
       setLoading(false);
@@ -44,7 +47,7 @@ export default function Shifts() {
   }
   useEffect(() => {
     getShifts();
-  }, [dag, tijdslot, winkel]);
+  }, [dag, tijdslot, winkel, status]);
   useEffect(() => {
     getFields();
   });
@@ -201,7 +204,7 @@ export default function Shifts() {
             aria-expanded="true"
             aria-haspopup="true"
             onClick={() => {
-              setOpenWinkel(!opentijdslot);
+              setOpenWinkel(!openwinkel);
             }}
           >
             {winkel == "Alle" ? "Alle Winkels" : winkel}
@@ -255,24 +258,93 @@ export default function Shifts() {
           </div>
         )}
       </div>
+      <div className="relative inline-block text-left m-2 z-1">
+        <div>
+          <button
+            type="button"
+            className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+            id="menu-button"
+            aria-expanded="true"
+            aria-haspopup="true"
+            onClick={() => {
+              setOpenStatus(!openstatus);
+            }}
+          >
+            Statuscurrent
+            <svg
+              className="-mr-1 ml-2 h-5 w-5"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {openstatus && (
+          <div
+            className="origin-top-right absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="menu-button"
+          >
+            <div className="p-1 " role="none">
+              {["Alle Shifts", "Onvoltooide Shifts", "Voltooide Shifts"].map(
+                (s: any) => {
+                  return (
+                    <div
+                      className=" border-b-[1px] border-slate-200 p-2 cursor-pointer"
+                      onClick={() => {
+                        setStatus(s);
+                        setOpenStatus(!openstatus);
+                      }}
+                    >
+                      {s}
+                    </div>
+                  );
+                }
+              )}
+            </div>
+          </div>
+        )}
+      </div>
       <button
         className="ml-4 bg-slate-200 flex-1 font-bold text-xs py-1 px-2 rounded-md hover:bg-transparent border-slate-200 border-2"
         onClick={() => {
           setWinkel("Alle");
           setTijdslot("Alle");
           setDag("Alle");
+          setStatus("Alle Shifts");
         }}
       >
         Reset filters
       </button>
       {loading && <Loader />}
-      {shifts.length == 0 ? (
-        <p className="mx-4 font-semibold italic">Geen shifts gevonden</p>
-      ) : (
+      {!loading &&
+        (shifts.length == 0 ? (
+          <p className="mx-4 font-semibold italic text-lg text-zinc-700">
+            <span className="text-rose-500 text-xl font-bold">0</span>{" "}
+            resultaten
+          </p>
+        ) : (
+          <p className="mx-4 font-semibold italic text-lg text-zinc-700">
+            <span className="text-sky-500  text-xl font-bold">
+              {shifts.length}
+            </span>{" "}
+            resultaten
+          </p>
+        ))}
+
+      {shifts.length != 0 &&
         shifts.map((shift: any) => {
           return <ShiftCard shift={shift} />;
-        })
-      )}
+        })}
     </MainLayout>
   );
 }

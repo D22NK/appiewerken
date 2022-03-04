@@ -228,7 +228,7 @@ export default function shiftsRoutes(prisma: any, app: Express) {
   });
 
   app.get(
-    "/filteredshifts/:dag/:tijdslot/:winkel",
+    "/filteredshifts/:dag/:tijdslot/:winkel/:status",
     async (req: Request, res: Response) => {
       try {
         const dagFilter =
@@ -244,13 +244,20 @@ export default function shiftsRoutes(prisma: any, app: Express) {
                 { dag: "ZONDAG" },
               ];
 
-        let tijdslotfilter, winkelfilter;
+        let tijdslotfilter, winkelfilter, statusfilter;
 
         if (req.params.tijdslot !== "Alle") {
           tijdslotfilter = req.params.tijdslot;
         }
         if (req.params.winkel !== "Alle") {
           winkelfilter = req.params.winkel;
+        }
+        if (req.params.status !== "Alle Shifts") {
+          if (req.params.status == "Onvoltooide Shifts") {
+            statusfilter = false;
+          } else if (req.params.status == "Voltooide Shifts") {
+            statusfilter = true;
+          }
         }
         const shifts = await prisma.shifts.findMany({
           orderBy: [
@@ -272,6 +279,7 @@ export default function shiftsRoutes(prisma: any, app: Express) {
             winkel: {
               winkelNr: winkelfilter,
             },
+            voltooid: statusfilter,
           },
         });
 
