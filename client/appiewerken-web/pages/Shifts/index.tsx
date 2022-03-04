@@ -255,6 +255,16 @@ export default function Shifts() {
           </div>
         )}
       </div>
+      <button
+        className="ml-4 bg-slate-200 flex-1 font-bold text-xs py-1 px-2 rounded-md hover:bg-transparent border-slate-200 border-2"
+        onClick={() => {
+          setWinkel("Alle");
+          setTijdslot("Alle");
+          setDag("Alle");
+        }}
+      >
+        Reset filters
+      </button>
       {loading && <Loader />}
       {shifts.length == 0 ? (
         <p className="mx-4 font-semibold italic">Geen shifts gevonden</p>
