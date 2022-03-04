@@ -12,6 +12,7 @@ export default function Shifts() {
   const [opendag, setOpendag] = useState<boolean>(false);
   const [opentijdslot, setOpentijdslot] = useState<boolean>(false);
   const [dag, setDag] = useState<any>("Alle");
+  const [fields, setFields] = useState<any>([]);
 
   async function getShifts() {
     setLoading(true);
@@ -27,10 +28,21 @@ export default function Shifts() {
     }
   }
 
+  async function getFields() {
+    try {
+      const res = await axios.get("https://ahwapi.d22nk.nl/shiftfields");
+      console.log(res.data);
+      setFields(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   useEffect(() => {
     getShifts();
   }, [dag]);
-
+  useEffect(() => {
+    getFields();
+  });
   return (
     <MainLayout parentPage="Shifts">
       <ShiftHeader page="Alle Shifts" />
@@ -47,7 +59,9 @@ export default function Shifts() {
               setOpendag(!opendag);
             }}
           >
-            {dag}
+            {dag == "Alle"
+              ? "Alle Dagen"
+              : dag.charAt(0) + dag.slice(1).toLowerCase()}
             <svg
               className="-mr-1 ml-2 h-5 w-5"
               xmlns="http://www.w3.org/2000/svg"
@@ -81,69 +95,27 @@ export default function Shifts() {
               >
                 Alle Dagen
               </div>
-              <div
-                className=" border-b-[1px] border-slate-200 p-2 cursor-pointer"
-                onClick={() => {
-                  setDag("MAANDAG");
-                  setOpendag(!opendag);
-                }}
-              >
-                Maandag
-              </div>
-              <div
-                className=" border-b-[1px] border-slate-200 p-2 cursor-pointer"
-                onClick={() => {
-                  setDag("DINSDAG");
-                  setOpendag(!opendag);
-                }}
-              >
-                Dinsdag
-              </div>
-              <div
-                className=" border-b-[1px] border-slate-200 p-2 cursor-pointer"
-                onClick={() => {
-                  setDag("WOENSDAG");
-                  setOpendag(!opendag);
-                }}
-              >
-                Woensdag
-              </div>
-              <div
-                className=" border-b-[1px] border-slate-200 p-2 cursor-pointer"
-                onClick={() => {
-                  setDag("DONDERDAG");
-                  setOpendag(!opendag);
-                }}
-              >
-                Donderdag
-              </div>
-              <div
-                className=" border-b-[1px] border-slate-200 p-2 cursor-pointer"
-                onClick={() => {
-                  setDag("VRIJDAG");
-                  setOpendag(!opendag);
-                }}
-              >
-                Vrijdag
-              </div>
-              <div
-                className=" border-b-[1px] border-slate-200 p-2 cursor-pointer"
-                onClick={() => {
-                  setDag("ZATERDAG");
-                  setOpendag(!opendag);
-                }}
-              >
-                Zaterdag
-              </div>
-              <div
-                className=" p-2 cursor-pointer"
-                onClick={() => {
-                  setDag("ZONDAG");
-                  setOpendag(!opendag);
-                }}
-              >
-                Zondag
-              </div>
+              {[
+                "MAANDAG",
+                "DINSDAG",
+                "WOENSDAG",
+                "DONDERDAG",
+                "VRIJDAG",
+                "ZATERDAG",
+                "ZONDAG",
+              ].map((dag) => {
+                return (
+                  <div
+                    className=" border-b-[1px] border-slate-200 p-2 cursor-pointer"
+                    onClick={() => {
+                      setDag(dag);
+                      setOpendag(!opendag);
+                    }}
+                  >
+                    {dag.charAt(0) + dag.slice(1).toLowerCase()}
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
