@@ -11,13 +11,14 @@ export default function Shifts() {
   const [loading, setLoading] = useState<boolean>(false);
   const [opendag, setOpendag] = useState<boolean>(false);
   const [opentijdslot, setOpentijdslot] = useState<boolean>(false);
-  const [dag, setDag] = useState<any>("Alle Dagen");
-  //   let winkels: any = [];
+  const [dag, setDag] = useState<any>("Alle");
+
   async function getShifts() {
     setLoading(true);
     try {
-      const res = await axios.get("https://ahwapi.d22nk.nl/shifts");
-      //   winkels = res.data;
+      const res = await axios.get(
+        `https://ahwapi.d22nk.nl/filteredshifts/${dag}`
+      );
       setShifts(res.data);
       setLoading(false);
     } catch (error) {
@@ -28,7 +29,7 @@ export default function Shifts() {
 
   useEffect(() => {
     getShifts();
-  }, []);
+  }, [dag]);
 
   return (
     <MainLayout parentPage="Shifts">
@@ -74,7 +75,7 @@ export default function Shifts() {
               <div
                 className=" border-b-[1px] border-slate-200 p-2 cursor-pointer"
                 onClick={() => {
-                  setDag("Alle Dagen");
+                  setDag("Alle");
                   setOpendag(!opendag);
                 }}
               >
@@ -148,7 +149,7 @@ export default function Shifts() {
         )}
       </div>
 
-      <div className="relative inline-block text-left m-2">
+      {/* <div className="relative inline-block text-left m-2">
         <div>
           <button
             type="button"
@@ -197,7 +198,7 @@ export default function Shifts() {
             </div>
           </div>
         )}
-      </div>
+      </div> */}
 
       {loading && <Loader />}
       {shifts.map((shift: any) => {

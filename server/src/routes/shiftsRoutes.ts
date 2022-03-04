@@ -226,4 +226,42 @@ export default function shiftsRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
+
+  app.get("/filteredshifts/:dag", async (req: Request, res: Response) => {
+    try {
+      const dagFilter =
+        req.params.dag != "Alle"
+          ? [{ dag: req.params.dag }]
+          : [
+              { dag: "MAANDAG" },
+              { dag: "DINSDAG" },
+              { dag: "WOENSDAG" },
+              { dag: "DONDERDAG" },
+              { dag: "VRIJDAG" },
+              { dag: "ZATERDAG" },
+              { dag: "ZONDAG" },
+            ];
+      const shifts = await prisma.shifts.findMany({
+        orderBy: [
+          {
+            datum: "desc",
+          },
+        ],
+        include: {
+          winkel: true,
+          tijdslot: true,
+          uurloon: true,
+          betaalperiode: true,
+        },
+        where: {
+          OR: dagFilter,
+        },
+      });
+
+      res.json(shifts);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
 }
