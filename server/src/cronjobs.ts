@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 export default async function cronjobs() {
   const prisma = new PrismaClient();
 
-  cron.schedule("* 7 * * *", async () => {
+  cron.schedule("0 7 * * *", async () => {
     const jaar = new Date().getFullYear().toString();
     let maand = (new Date().getMonth() + 1).toString();
     let dag = new Date().getDate().toString();
