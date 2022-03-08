@@ -289,7 +289,7 @@ export default function Dag() {
               console.log(jaarweek, currentjaarweek);
               let currentdayborder;
               if (
-                new Date().getDate() == formattedWeek[key].dag &&
+                new Date().getDay() == formattedWeek[key].dag &&
                 jaarweek == currentjaarweek
               ) {
                 currentdayborder = " border border-[4px] border-purple-500 ";
