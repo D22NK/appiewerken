@@ -311,6 +311,9 @@ export default function Dag() {
                   formattedWeek[key].weekshift?.bcd,
                   formattedWeek[key].weekshift?.ziek
                 );
+                const dagentussen = daysBetween(
+                  formattedWeek[key]?.weekshift?.datum
+                );
                 return (
                   <Link
                     key={formattedWeek[key]?.weekshift?.id}
@@ -325,18 +328,18 @@ export default function Dag() {
                       </h2>
                       {formattedWeek[key]?.weekshift?.voltooid && (
                         <p className="text-sky-800">
-                          {daysBetween(formattedWeek[key]?.weekshift?.datum)}{" "}
-                          dagen geleden
+                          {dagentussen == 1 &&
+                          formattedWeek[key]?.dag == new Date().getDay()
+                            ? "Vandaag"
+                            : `${dagentussen} dagen geleden`}{" "}
                         </p>
                       )}
                       {!formattedWeek[key]?.weekshift?.voltooid && (
                         <p className="text-sky-800 ">
-                          over{" "}
-                          {formattedWeek[key]?.weekshift?.datum &&
-                            daysBetween(
-                              formattedWeek[key]?.weekshift?.datum
-                            )}{" "}
-                          dagen
+                          {dagentussen == 1 &&
+                          formattedWeek[key]?.dag == new Date().getDay()
+                            ? "Vandaag"
+                            : `over ${dagentussen} dagen`}
                         </p>
                       )}
                       <h3>
