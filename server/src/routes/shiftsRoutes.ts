@@ -1,7 +1,8 @@
 import { Express, Request, Response } from "express";
 import notify from "../utils/notify";
-
+import { ShiftCache } from "../utils/shiftCache";
 export default function shiftsRoutes(prisma: any, app: Express) {
+  const shiftCache = new ShiftCache();
   app.post("/shifts", async (req: Request, res: Response) => {
     try {
       const shift = await prisma.shifts.create({
@@ -24,7 +25,9 @@ export default function shiftsRoutes(prisma: any, app: Express) {
           tijdslot: true,
         },
       });
+
       res.sendStatus(200);
+      shiftCache.removeAllGroups();
 
       if (!req.body.voltooid) {
         const subs = await prisma.notificationSubscribers.findMany();
@@ -60,6 +63,7 @@ export default function shiftsRoutes(prisma: any, app: Express) {
         },
       });
       console.log("shift", shift);
+
       res.json(shift);
     } catch (error) {
       console.log(error);
@@ -79,6 +83,8 @@ export default function shiftsRoutes(prisma: any, app: Express) {
       });
 
       if (shift) {
+        shiftCache.removeAllGroups();
+
         res.sendStatus(200);
       }
     } catch (error) {
@@ -99,6 +105,8 @@ export default function shiftsRoutes(prisma: any, app: Express) {
       });
 
       if (shift) {
+        shiftCache.removeAllGroups();
+
         res.sendStatus(200);
       }
     } catch (error) {
@@ -115,6 +123,7 @@ export default function shiftsRoutes(prisma: any, app: Express) {
         },
       });
       console.log(shift);
+      shiftCache.removeAllGroups();
       res.sendStatus(200);
     } catch (error) {
       console.log(error);
@@ -125,6 +134,16 @@ export default function shiftsRoutes(prisma: any, app: Express) {
   app.get(
     "/filteredshifts/:dag/:tijdslot/:winkel/:status",
     async (req: Request, res: Response) => {
+      const { dag, tijdslot, winkel, status } = req.params;
+      const cacheStatus = shiftCache.hasGroupCache(
+        dag,
+        tijdslot,
+        winkel,
+        status
+      );
+      if (cacheStatus.status) {
+        return res.json(shiftCache.getGroupCache(cacheStatus.checkId));
+      }
       try {
         const dagFilter =
           req.params.dag != "Alle"
@@ -177,7 +196,7 @@ export default function shiftsRoutes(prisma: any, app: Express) {
             voltooid: statusfilter,
           },
         });
-
+        shiftCache.newFilteredGroup(dag, tijdslot, winkel, status, shifts);
         res.json(shifts);
       } catch (error) {
         console.log(error);
