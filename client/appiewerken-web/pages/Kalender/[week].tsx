@@ -65,48 +65,48 @@ export default function Dag() {
     const maandag = {
       weekshift:
         weekshifts[weekshifts?.findIndex((d: any) => d.dag == "MAANDAG")],
-      dag: 0,
+      dag: 1,
       string: "-Maandag-",
     };
     const dinsdag = {
       weekshift:
         weekshifts[weekshifts?.findIndex((d: any) => d.dag == "DINSDAG")],
-      dag: 1,
+      dag: 2,
       string: "-Dinsdag-",
     };
 
     const woensdag = {
       weekshift:
         weekshifts[weekshifts?.findIndex((d: any) => d.dag == "WOENSDAG")],
-      dag: 2,
+      dag: 3,
       string: "-Woensdag-",
     };
 
     const donderdag = {
       weekshift:
         weekshifts[weekshifts?.findIndex((d: any) => d.dag == "DONDERDAG")],
-      dag: 3,
+      dag: 4,
       string: "-Donderdag-",
     };
 
     const vrijdag = {
       weekshift:
         weekshifts[weekshifts?.findIndex((d: any) => d.dag == "VRIJDAG")],
-      dag: 4,
+      dag: 5,
       string: "-Vrijdag-",
     };
 
     const zaterdag = {
       weekshift:
         weekshifts[weekshifts?.findIndex((d: any) => d.dag == "ZATERDAG")],
-      dag: 5,
+      dag: 6,
       string: "-Zaterdag-",
     };
 
     const zondag = {
       weekshift:
         weekshifts[weekshifts?.findIndex((d: any) => d.dag == "ZONDAG")],
-      dag: 6,
+      dag: 0,
       string: "-Zondag-",
     };
 
@@ -289,7 +289,7 @@ export default function Dag() {
               console.log(jaarweek, currentjaarweek);
               let currentdayborder;
               if (
-                new Date().getDate() == formattedWeek[key].dag &&
+                new Date().getDay() == formattedWeek[key].dag &&
                 jaarweek == currentjaarweek
               ) {
                 currentdayborder = " border border-[4px] border-purple-500 ";
@@ -311,6 +311,9 @@ export default function Dag() {
                   formattedWeek[key].weekshift?.bcd,
                   formattedWeek[key].weekshift?.ziek
                 );
+                const dagentussen = daysBetween(
+                  formattedWeek[key]?.weekshift?.datum
+                );
                 return (
                   <Link
                     key={formattedWeek[key]?.weekshift?.id}
@@ -325,18 +328,18 @@ export default function Dag() {
                       </h2>
                       {formattedWeek[key]?.weekshift?.voltooid && (
                         <p className="text-sky-800">
-                          {daysBetween(formattedWeek[key]?.weekshift?.datum)}{" "}
-                          dagen geleden
+                          {dagentussen == 1 &&
+                          formattedWeek[key]?.dag == new Date().getDay()
+                            ? "Vandaag"
+                            : `${dagentussen} dagen geleden`}{" "}
                         </p>
                       )}
                       {!formattedWeek[key]?.weekshift?.voltooid && (
                         <p className="text-sky-800 ">
-                          over{" "}
-                          {formattedWeek[key]?.weekshift?.datum &&
-                            daysBetween(
-                              formattedWeek[key]?.weekshift?.datum
-                            )}{" "}
-                          dagen
+                          {dagentussen == 1 &&
+                          formattedWeek[key]?.dag == new Date().getDay()
+                            ? "Vandaag"
+                            : `over ${dagentussen} dagen`}
                         </p>
                       )}
                       <h3>

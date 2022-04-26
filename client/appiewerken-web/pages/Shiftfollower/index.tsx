@@ -18,8 +18,10 @@ export default function OnvoltooideShifts() {
   async function getShifts() {
     setLoading(true);
     try {
-      const res = await axios.get("https://ahwapi.d22nk.nl/shifts/onvoltooid");
-      setShifts(res.data);
+      const res = await axios.get(
+        "https://ahwapi.d22nk.nl/filteredshifts/Alle/Alle/Alle/Onvoltooide Shifts"
+      );
+      setShifts(res.data.reverse());
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -53,7 +55,9 @@ export default function OnvoltooideShifts() {
                     )}
                   </h2>
                   <p className="text-slate-400 md:ml-2">
-                    over {daysUntil(shift.datum)} dagen
+                    {new Date(shift.datum).getDay() == new Date().getDay()
+                      ? "Vandaag"
+                      : ` over ${daysUntil(shift.datum)} dagen`}
                   </p>
                 </div>
                 <p className="text-slate-400 flex-1 flex flex-row md:ml-2 md:items-center">
