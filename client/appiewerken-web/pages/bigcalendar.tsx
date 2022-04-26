@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import dateformatter from "../functions/dateformatter";
 
-export default function Shifts() {
+export default function BigCalendar() {
   const [shifts, setShifts] = useState<any>([]);
 
   async function getShifts() {
