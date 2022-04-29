@@ -64,4 +64,23 @@ export default function winkelRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
+
+  app.put("/winkel/:id", async (req: Request, res: Response) => {
+    try {
+      const winkel = await prisma.winkels.update({
+        where: {
+          id: req.params.id,
+        },
+        data: {
+          winkelNr: req.body.winkelnummer,
+          adres: req.body.adres,
+        },
+      });
+      console.log(winkel);
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
 }
