@@ -75,4 +75,23 @@ export default function uurloonRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
+
+  app.put("/uurloon/:id", async (req: Request, res: Response) => {
+    try {
+      const uurloon = await prisma.uurlonen.update({
+        where: {
+          id: req.params.id,
+        },
+        data: {
+          loon: req.body.loon,
+          leeftijd: req.body.loon,
+        },
+      });
+      console.log(uurloon);
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
 }

@@ -54,7 +54,10 @@ export default function UurloonDetails() {
       return;
     }
   }
-
+  async function editUurloon() {
+    const { id } = await router.query;
+    router.push(`/Overig/Uurlonen/edit/${id}`);
+  }
   return (
     <MainLayout parentPage="Overig">
       <OverigHeader page="Uurloon Informatie" />
@@ -77,8 +80,8 @@ export default function UurloonDetails() {
             </button>
 
             <button
-              disabled
-              className="mr-2 bg-slate-200 hover:bg-slate-200 text-white font-bold text-xs px-2 py-2  rounded-md "
+              onClick={() => editUurloon()}
+              className="mr-2 bg-amber-300 hover:bg-amber-500 text-white font-bold text-xs px-2 py-2  rounded-md "
             >
               <PencilAltIcon className=" w-4 text-white" />
             </button>

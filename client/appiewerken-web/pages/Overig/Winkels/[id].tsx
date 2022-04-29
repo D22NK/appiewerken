@@ -64,6 +64,11 @@ export default function WinkelDetails() {
     }
   }
 
+  async function editWinkel() {
+    const { id } = await router.query;
+    router.push(`/Overig/Winkels/edit/${id}`);
+  }
+
   return (
     <MainLayout parentPage="Overig">
       <OverigHeader page="Winkel Informatie" />
@@ -87,8 +92,8 @@ export default function WinkelDetails() {
             </button>
 
             <button
-              disabled
-              className="mr-2 bg-slate-200 hover:bg-slate-200 text-white font-bold text-xs px-2 py-2  rounded-md "
+              onClick={() => editWinkel()}
+              className="mr-2 bg-amber-300 hover:bg-amber-500 text-white font-bold text-xs px-2 py-2  rounded-md "
             >
               <PencilAltIcon className=" w-4 text-white" />
             </button>
