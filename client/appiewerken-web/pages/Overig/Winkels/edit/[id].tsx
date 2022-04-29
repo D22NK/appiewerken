@@ -14,10 +14,6 @@ export default function EditWinkel() {
     getWinkel();
   }, [router]);
 
-  useEffect(() => {
-    console.log(winkelnummer, adres);
-  }, [adres, winkelnummer]);
-
   async function getWinkel() {
     console.log("GETTING _______________---");
     try {
@@ -28,8 +24,9 @@ export default function EditWinkel() {
         if (!res.data) {
           router.push("/Overig/Winkels");
         } else {
-          setAdres(res.data?.winkel?.id);
-          setWinkelnummer(res.data?.winkel?.winkelNr);
+          setAdres(res.data?.adres);
+          setWinkelnummer(res.data?.winkelNr);
+          console.log(res.data?.winkelNr);
         }
       }
     } catch (error) {
@@ -37,36 +34,36 @@ export default function EditWinkel() {
     }
   }
 
-  useEffect(() => {
-    document.addEventListener("keydown", (e) => {
-      if (e.code === "Enter") {
-        editWinkel();
-      }
-    });
-  });
-  function editWinkel() {
+  // useEffect(() => {
+  //   document.addEventListener("keydown", (e) => {
+  //     if (e.code === "Enter") {
+  //       editWinkel();
+  //     }
+  //   });
+  // });
+  async function editWinkel() {
     setBericht("");
+    const { id } = await router.query;
+    axios
+      .put(`https://ahwapi.d22nk.nl/winkel/${id}`, {
+        winkelnummer: winkelnummer,
+        adres: adres,
+      })
+      .then(function (response) {
+        if (response.status === 200) {
+          setBericht("Winkel Aangepast");
 
-    // axios
-    //   .post("https://ahwapi.d22nk.nl/Winkels", {
-    //     winkelnummer: winkelnummer,
-    //     adres: adres,
-    //   })
-    //   .then(function (response) {
-    //     if (response.status === 200) {
-    //       setBericht("Winkel toegevoegd");
-
-    //       setTimeout(() => {
-    //         router.push("/Overig/Winkels");
-    //       }, 1500);
-    //     } else if (response.status === 500) {
-    //       setBericht("Er ging iets mis");
-    //     }
-    //   })
-    //   .catch(function (error) {
-    //     setBericht("Er ging iets mis");
-    //     console.log(error);
-    //   });
+          setTimeout(() => {
+            router.push(`/Overig/Winkels/${id}`);
+          }, 1000);
+        } else if (response.status === 500) {
+          setBericht("Er ging iets mis");
+        }
+      })
+      .catch(function (error) {
+        setBericht("Er ging iets mis");
+        console.log(error);
+      });
   }
   return (
     <>
@@ -91,13 +88,12 @@ export default function EditWinkel() {
             >
               Winkelnummer:
             </label>
+
             <input
               required
               className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
               type="text"
               name="winkelnummer"
-              // placeholder="xxxx"
-              key={winkelnummer}
               value={winkelnummer}
               onChange={(e) => {
                 setWinkelnummer(e.target.value);
@@ -111,7 +107,6 @@ export default function EditWinkel() {
               className="w-full h-10 px-3 mb-2 text-base text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"
               type="text"
               name="adres"
-              // placeholder="Melkweg 1, De Maan"
               value={adres}
               onChange={(e) => setAdres(e.target.value)}
             />

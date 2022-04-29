@@ -87,4 +87,26 @@ export default function tijdslotRoutes(prisma: any, app: Express) {
       res.sendStatus(500);
     }
   });
+
+  app.put("/tijdslot/:id", async (req: Request, res: Response) => {
+    try {
+      const tijdslot = await prisma.tijdslots.update({
+        where: {
+          id: req.params.id,
+        },
+        data: {
+          slot: req.body.slot,
+          begin: req.body.begin,
+          eind: req.body.eind,
+          urenGewerkt: parseFloat(req.body.urenGewerkt),
+          urenBetaald: parseFloat(req.body.urenBetaald),
+        },
+      });
+      console.log(tijdslot);
+      res.sendStatus(200);
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  });
 }
